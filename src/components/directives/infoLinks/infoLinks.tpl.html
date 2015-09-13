@@ -1,0 +1,12 @@
+<div class="info-link-sidebar">
+  <div class="info-link-container">
+    <h4 class="text-center sidebar-head">IMPORTANT INFORMATION ABOUT YOUR CRUISE</h4>
+
+    <p class="sidebar-body-copy">The following links will help you prepare for your cruise vacation.</p>
+
+    <div ng-repeat="infoLink in infoLinks | filter: isAlaskaFilter">
+      <a id="{{ preTag }}{{ infoLink.tag }}" ng-href="{{infoLink.link}}" target="_blank"><small> {{ infoLink.text }} </small></a>
+    </div>
+
+  </div>
+</div>

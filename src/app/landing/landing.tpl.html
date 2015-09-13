@@ -1,0 +1,71 @@
+<div class="col-md-6">
+  <form role="form" ng-submit="login(loginCredentials)">
+    <h2>Sign In</h2>
+    <hr class="colorgraph">
+
+    <div class="form-group">
+      <input ng-model="loginCredentials.email" type="text" name="email" class="form-control input-lg" placeholder="Email" tabindex="3">
+    </div>
+
+    <div class="form-group">
+      <input ng-model="loginCredentials.password" type="password" name="password" class="form-control input-lg" placeholder="Password" tabindex="3">
+    </div>
+
+    <hr class="colorgraph">
+    <div class="row">
+      <div class="col-xs-12 col-md-12">
+        <input type="submit" value="Sign In" class="btn btn-primary btn-block btn-lg" tabindex="7">
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="col-md-6">
+  <form role="form" ng-submit="register(registerCredentials)">
+    <h2>Register</h2>
+    <hr class="colorgraph">
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="form-group">
+          <input ng-model="registerCredentials.name" type="text" name="name" id="name" class="form-control input-lg" placeholder="Name" tabindex="2">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <input ng-model="registerCredentials.phone" type="text" name="phone" id="phone" class="form-control input-lg" placeholder="Phone (optional)" tabindex="3">
+    </div>
+
+    <div class="form-group">
+      <input ng-model="registerCredentials.email" type="email" name="email" id="email" class="form-control input-lg" placeholder="Email Address" tabindex="4">
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-6 col-md-6">
+        <div class="form-group">
+          <input ng-model="registerCredentials.password" type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" tabindex="5">
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-sm-6 col-md-6">
+        <div class="form-group">
+          <input ng-model="registerCredentials.passwordConfirm" type="password" name="passwordConfirm" id="passwordConfirm" class="form-control input-lg" placeholder="Confirm Password" tabindex="6">
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12">
+         By clicking <strong class="label label-primary">Register</strong>, you agree to the <a href="#" data-toggle="modal" data-target="#t_and_c_m">Terms and Conditions</a> set out by this site, including our Cookie Use.
+      </div>
+    </div>
+
+    <hr class="colorgraph">
+    <div class="row">
+      <div class="col-xs-12 col-md-12">
+        <input type="submit" value="Register" class="btn btn-primary btn-block btn-lg" tabindex="7">
+      </div>
+    </div>
+  </form>
+</div>

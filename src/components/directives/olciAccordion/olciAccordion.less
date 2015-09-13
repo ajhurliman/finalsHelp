@@ -1,0 +1,88 @@
+
+h4.panel-title { 
+    background-color: inherit;
+    a {
+        text-decoration: none;
+    }
+
+}
+
+
+.panel-group {
+    margin-bottom: 15px;
+
+    & .panel + .panel {
+        margin-top: 15px;
+    }
+}
+
+.panel-default {
+    border-color: @darkThemeColor;
+
+    & > .panel-heading {
+        .Gradient(top, white, @mediumLightThemeColor);
+        background-color: transparent;
+        position: relative;
+        padding: 38px 0 0 0;
+
+        div {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            left: 0;
+            top: 0;
+            padding: 8px 10px;
+        }
+
+        i {
+            font: normal normal normal 20px/1 FontAwesome;
+            padding-top: 2px;
+        }
+
+        .overlay {
+            .Transition(background-color, 0.15s);
+        }
+
+        & + .panel-collapse .panel-body {
+            border: none;
+        }
+
+        &:hover {
+            .Gradient(top, white, lighten(@mediumLightThemeColor, 3%));
+        }
+    }
+
+
+    &.open > .panel-heading .overlay {
+        background-color: white;
+        .Transition(background-color, 0.15s);
+    }
+
+    .panel-title .status-svg {
+        position: absolute;
+        width: 16px;
+        top: 11px;
+        left: 7px;
+    }
+
+    &.complete .panel-title div:last-child,
+    &.incomplete .panel-title div:last-child {
+        padding-left: 30px;
+
+        &:after {
+            font-size: 0.75rem;
+            color: #666666;
+            font-weight: 400;
+            text-transform: none;
+        }
+    }
+
+    &.incomplete .panel-title div:last-child:after {
+        content: '(Incomplete)';
+    }
+
+    &.complete .panel-title div:last-child:after {
+        content: '(Complete)';
+    }
+
+}

@@ -1,0 +1,20 @@
+<div class='home-page'>
+  Drop File:
+      <div ngf-drop ngf-select ng-model="files" class="drop-box" 
+          ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true"
+          accept="image/*,application/pdf">Drop pdfs or images here or click to upload</div>
+      <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
+      Files:
+      <ul>
+          <li ng-repeat="f in files" style="font:smaller">{{f.name}}</li>
+      </ul>
+      Upload Log:
+      <pre>{{log}}</pre>
+
+      <pdf-viewer
+        delegate-handle="main-pdf-container"
+        url="mainPdfData"
+        scale="1"
+        show-toolbar="true">
+      </pdf-viewer>
+</div>

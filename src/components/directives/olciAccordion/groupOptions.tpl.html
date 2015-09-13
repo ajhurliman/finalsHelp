@@ -1,0 +1,60 @@
+
+<h4 translate="preferencesPage.clubBenefitsLabel"></h4>
+<div ng-repeat="partyMember in loyaltySummary.bookingLoyaltyPreferenceGuests | orderBy:'-loyaltyPreferencesDetail.loyaltyTierLevelId'" ng-if="partyMember.tierLevel !== 'Club Member'">
+	<div ng-repeat="passenger in passengers" ng-if="passenger.seqNumber == partyMember.partyNumber">
+  	<h5 translate="preferencesPage.memberBenefitsLabel" translate-values='{ loyaltyTier: "{{partyMember.tierLevel}}", firstName: "{{passenger.firstName}}", lastName: "{{passenger.lastName}}" }'></h5>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label" translate="preferencesPage.selectLabel" translate-values='{numOptions: partyMember.loyaltyPreferencesDetail.preferenceAllowLimit}'></label>
+		
+
+		<div class="col-sm-9 checkbox-group">
+			<!-- shared benefits -->
+	    <div class="checkbox" 
+	    	ng-repeat="loyaltyPreference in partyMember.loyaltyPreferencesDetail.preferenceListforTier" 
+	    	ng-if=" loyaltyPreference.codeLoyalty !== 'TDEWELC'"
+	    	> 
+	      <label>
+	        <input type="checkbox" 
+	        	ng-model="bool" 
+	        	name=""
+	        	value=""
+	        	ng-change="toggleCheckbox(bool, partyMember, loyaltyPreference)"
+	        	ng-checked="isPreferenceSelected(partyMember, loyaltyPreference)" 
+	        	ng-disabled="disabledSharedCheckbox(partyMember, loyaltyPreference, loyaltySummary.bookingLoyaltyPreferenceGuests)"> 
+	        {{loyaltyPreference.description}}
+	      </label>
+	      <span ng-if="loyaltyPreference.benefitType === 'S'"><strong>Shared Benefit</strong></span>
+	    </div>
+
+			<!-- personal benefits -->
+	    <!-- <div class="checkbox" 
+	    	ng-repeat="loyaltyPreference in partyMember.loyaltyPreferencesDetail.preferenceListforTier" 
+	    	ng-if="loyaltyPreference.benefitType === 'B' && 
+	    		loyaltyPreference.codeLoyalty !== 'TDEWELC' &&
+	    		partyMember.tierLevel !== 'Club Member'">
+	      <label>
+	        <input type="checkbox" 
+	        	value=""
+	        	name=""
+	        	ng-model="bool" 
+	        	ng-change="toggleCheckbox(bool, partyMember, loyaltyPreference)"
+	        	ng-checked="isPreferenceSelected(partyMember, loyaltyPreference" 
+	        	ng-disabled="disabledCheckbox(partyMember, loyaltyPreference, loyaltySummary.bookingLoyaltyPreferenceGuests)">
+	        {{loyaltyPreference.description}}
+	      </label>
+	    </div> -->
+	  </div>
+
+	</div>
+</div>
+
+<br>
+<div ng-if="areThereAnyClubMembers(loyaltySummary.bookingLoyaltyPreferenceGuests)">
+	No Preferences For: 
+	<div ng-repeat="partyMember in loyaltySummary.bookingLoyaltyPreferenceGuests" ng-if="partyMember.tierLevel === 'Club Member'">
+		<div ng-repeat="passenger in passengers" ng-if="passenger.seqNumber == partyMember.partyNumber">
+			<span>{{passenger.firstName + ' ' + passenger.lastName}}</span>
+		</div>
+	</div>
+</div>

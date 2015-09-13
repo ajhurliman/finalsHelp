@@ -1,0 +1,110 @@
+/*
+ * halHeader.less
+ *
+ * Created: Monday, February 03, 2014
+ * (c) Copyright 2014 Holland America, Inc. - All Rights Reserved
+ * This is unpublished proprietary source code of Holland America, Inc.
+ * The copyright notice above does not evidence any actual or intended
+ * publication of such source code.
+ */
+
+
+.hal-header {
+    position: relative;
+    z-index: 10;
+    min-height: 0px;
+
+    nav li {
+        display: inline;
+    }
+
+    .header-container {
+        height: 46px;
+        padding: 5px 20px;
+        & > div {
+            float: left;
+        }
+    }
+
+    .greeting-nav {
+        position: relative;
+        padding-right: 20px;
+        height: 100%;
+        width: 100px;
+    }
+
+    .logo {
+        // margin: 20px 0 20px 20px;
+        display: inline-block; //needed to make A tag wrap img properly
+
+        img {
+            // width: 307px;
+            height: 36px;
+        }
+    }
+
+    .phone-icon {
+        max-height: 14px;
+    }
+
+    .topnav {
+    }
+
+    .secondarynav {
+        bottom: 0;
+        position: absolute;
+        right: 20px;
+        font-size: 1.5rem;
+
+        span {
+            margin-left: 10px;
+            color: @darkThemeColor;
+        }
+        a {
+            color: @darkThemeColor;
+            text-decoration: none;
+            &:nth-of-type(2) {
+                border-right: 1px solid @darkThemeColor;
+                padding-right: 5px;
+            }
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+
+@media (min-width: @screen-sm) {
+    .hal-header {
+        .header-container {
+            height: 56px;
+            // padding: 20px 20px;
+        }
+        .logo {
+            img {
+                height: 46px;
+            }
+        }
+    }
+}
+
+@media (min-width: @screen-md) {
+    .hal-header {
+        .header-container {
+            height: 86px;
+            padding: 10px 20px;
+        }
+        .logo {
+            img {
+                height: 66px;
+            }
+        }
+        .greeting-nav {
+            width: 380px;
+        }
+        .secondarynav {
+            font-size: 1rem;
+        }
+    }
+}

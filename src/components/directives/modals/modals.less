@@ -1,0 +1,118 @@
+.login {
+    &.modal-header,
+    &.modal-body {
+        padding-bottom: 0;
+    }
+
+    .logo {
+        width: 100%;
+        & img {
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+    }
+}
+
+.modal-content {
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.modal-header {
+    border-bottom: 1px solid @darkThemeColor;
+    .logo {
+        // margin: 20px 0 20px 20px;
+        display: inline-block; //needed to make A tag wrap img properly
+
+        img {
+            width: 307px;
+            height: 46px;
+        }
+    }
+
+    padding: 15px 20px;
+    & > span {
+        float: right;
+        &:before {
+            margin-right: 5px;
+            position: relative;
+            top: 2px;
+        }
+    }
+    & > .glyphicon-print {
+        margin-right: 15px;
+    }
+
+    & > .glyphicon-remove {
+        margin-right: 15px;
+        top: auto;
+        bottom: 5px;
+    }
+}
+
+.modal-body {
+    margin-bottom:0.5em;
+    .login-form {
+        .forgot-password {
+            padding-top: 7px;
+            padding-left: 0;
+            margin-left: -5px;
+            white-space: nowrap;
+        }
+        .forgot-password-mobile {
+            text-align: right;
+        }
+    }
+    .title {
+        margin-bottom: 15px;
+        .no-account {
+            padding-left: 0;
+        }
+    }
+    padding: 20px 20px 30px;
+
+    .error-message {
+        text-align: center;
+    }
+}
+
+.modal-footer {
+    padding: 5px;
+    border: none;
+    p.text-center {
+        margin-left:4em;
+    }
+    .modal-close {
+        i {
+            display:inline-block;
+            border-radius:1em;
+            padding: 3px;
+        }
+    }
+
+}
+
+.modal-dialog {
+    width: auto;
+    max-width: 600px;
+}
+
+
+
+@media (min-width: @screen-sm) {
+    
+    .modal-body {
+        .title {
+            h1 {
+                display: inline;
+            } 
+            .no-account {
+                display: inline;
+                padding-left: 15px;
+            }
+        }
+        padding: 20px 20px 30px;
+    }  
+
+}

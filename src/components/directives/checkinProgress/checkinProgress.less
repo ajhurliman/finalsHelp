@@ -1,0 +1,149 @@
+#checkin-progress { 
+    height: 60px;
+    margin: 0 -20px;
+    // TODO: Should these be @border?
+    border-top: 1px solid @darkThemeColor; 
+    border-bottom: 1px solid @darkThemeColor;
+    background-color: #e8eaf0;
+    box-sizing: border-box;
+
+    .steps {
+        font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Liberation Sans', Verdana, 'Verdana Ref', sans-serif;
+        font-size: 1.125rem;
+        line-height: 20px;
+        overflow: hidden;
+        margin: 0 20px;
+        padding: 0;
+        list-style: none;
+        counter-reset: li;  // What does this do?
+        position: relative;
+    }
+
+    li {
+        line-height: 60px;
+        position: relative;
+        float: left;
+        width: 1/7 * 100%;
+        height: 60px;
+        margin-left: 0;
+        list-style-type: none;
+        list-style-image: none;
+        text-align: center;
+    }
+
+    li a {
+        text-decoration: none;
+        div {
+            height: 100%;
+        }
+    }
+    li a:hover {
+        text-decoration: underline;
+    }
+
+    li .svg-container {
+        position: relative;
+        display: inline;
+    }
+    li .icon-svg {
+        height: 100%;
+        width: 27px;
+
+    }
+    li .status-svg {
+        position: absolute;
+        width: 16px;
+        bottom: 13px;
+        right: -3px;
+    }
+
+    li span {
+        vertical-align: top;
+      // display: block;
+      // padding: 9px 28px 9px 9px;
+    }
+    li.current {
+      color: #fff;
+      background: #fff;
+    }
+
+
+    /*ul.steps li.step1 {
+      z-index: 9;
+    }
+    ul.steps li.step2 {
+      z-index: 8;
+    }
+    ul.steps li.step3 {
+      z-index: 7;
+    }
+    ul.steps li.step4 {
+      z-index: 6;
+    }
+    ul.steps li.step5 {
+      z-index: 5;
+    }
+    ul.steps li.step6 {
+      z-index: 4;
+    }
+    ul.steps li.step7 {
+      z-index: 3;
+    }
+    ul.steps li.step8 {
+      z-index: 2;
+    }
+    ul.steps li.step9 {
+      z-index: 1;
+    }
+    ul.steps li.step10 {
+      z-index: 0;
+    }*/
+
+
+
+    @media (min-width: @screen-lg) {
+        span:before {
+            position: absolute;
+            top: 32.5%;
+            left: 0;
+            height: 35%;
+            content: '';
+            border-left: 1px solid;
+        }
+
+        li:first-child span:before {
+            border: none;
+        }
+        li.current span:before {
+            border: none;
+        }
+        li.current + li span:before {
+            border: none;
+        }
+    }
+
+    /*this is located in main.less & main.sbn.less because we need to switch between the two*/
+    @media (min-width: @screen-md) and (max-width: @screen-md-max) {
+        // .steps {
+        //     text-align: justify;
+        //     line-height: 0;
+        // }
+        // .steps:after {
+        //     content: '';
+        //     display: inline-block;
+        //     width: 100%;
+        // }
+        // li {
+        //     width: auto;
+        //     display: inline-block;
+        //     float: none;
+        // }
+        
+    }
+
+    @media (min-width: @screen-sm) and (max-width: @screen-sm-max) {
+        li .icon-svg {
+            width: 35px;
+        }
+    }
+}

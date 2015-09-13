@@ -1,0 +1,433 @@
+/**
+ * This is the main application stylesheet. It should include or import all
+ * stylesheets used throughout the application as this is the only stylesheet in
+ * the Grunt configuration that is automatically processed.
+ */
+
+@font-face {
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Source Sans Pro'), local('SourceSansPro-Regular'), url(https://fonts.gstatic.com/s/sourcesanspro/v9/ODelI1aHBYDBqgeIAH2zlNHq-FFgoDNV3GTKpHwuvtI.woff) format('woff');
+}
+
+@media print {
+    #hal-header {
+        display: none;
+    }
+    .button-green {
+        display: none;
+    }
+}
+
+/**
+ * Before including our own style, we include the Twitter Bootstrap LESS files.
+ * Only the ones used in the project should be imported as the rest are just wasting space.
+ */
+
+@import 'bootstrap.less';
+
+/**
+ * Next, fontawesome
+ **/
+
+@import 'font-awesome.less';
+
+/**
+ * Constants and mixins, some of which may override Bootstrap and Font-awesome defaults
+ */
+@import 'variables.less';
+@import 'mixins.less';
+
+
+/**
+ * Color re-definitions
+ */
+
+
+@darkThemeColor: #5A413B;
+@transparentDark: fade(@darkThemeColor, 85%);
+@tileHeader: #0f3a6b;
+@tileMainBg: #F7F4F0;
+@tileBottomStrip: #e1f0f8;
+
+//travelOptions Color Declarations
+
+@darkHeadline: #193d64;
+
+//Ratings and Reviews
+
+@border: #4C242B;
+
+@mediumThemeColor: #5C423B;
+@mediumLightThemeColor: #F7F4F0;
+@selectGuestText: #5C423B;
+
+svg {
+    .fillColor {
+        fill: @darkThemeColor;
+    }
+    .strokeColor {
+        stroke: @darkThemeColor;
+    }
+}
+
+
+/**
+ * Global style
+ */
+
+ /* Document level adjustments */
+html, body {
+  font-size: 12px;
+}
+@media (min-width: @screen-md) {
+  html, body { font-size: 14px; }
+}
+@media (min-width: @screen-lg) {
+  html, body { font-size: 16px; }
+}
+
+/* Type will scale with document */
+h1 {
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: @darkThemeColor;
+}
+h2,
+h4.panel-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: @darkThemeColor;
+}
+h3 {
+  font-size: 1rem;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+h4 {
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+label {
+  font-weight: bold;
+}
+p{
+    font-size: 0.875rem;
+}
+.control-label {
+    font-size: 0.875rem;
+}
+
+a {
+    color: @darkThemeColor;
+    text-decoration: underline;
+}
+
+a[ng-click] {
+    cursor: pointer;
+}
+.sidebar-caption {
+    font-size: 0.75rem;
+}
+.btn.btn-primary {
+    font-size: 0.875rem;
+}
+
+.note {
+    font-size: 0.75rem;
+    color: #666666;
+    line-height: 1rem;
+}
+
+body {
+    background-color: #656565;
+    // font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
+    /*font-size: 14px;*/
+}
+
+
+// select.form-control,
+// input.form-control {
+//     font-size: 0.8125rem;
+//     height: 26px;
+//     padding-top: 8px;
+// }
+
+.olci-btn {
+    width: 100%;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, .35);
+    text-transform: uppercase;
+    border-color: #333333;
+    border-width: 1px;
+    color: white;
+    line-height: 1em;
+
+    &:hover, &:active, &:focus {
+        color: white;
+    }
+
+    &.blue-btn {
+        height: 50px;
+        font-size: 0.875rem;
+        position: relative;
+        .Gradient(top, #A6938F, @mediumThemeColor);
+        &:hover, &:active, &.selected {
+            .Gradient(top, @mediumThemeColor, #A6938F);
+            box-shadow: inset 0 5px 5px rgba(0, 0, 0, .35);
+        }
+
+        &.checkbox-btn {
+            &:after {
+                content: ' ';
+                width: 16px;
+                height: 16px;
+                background-color: white;
+                border: 1px solid @mediumThemeColor;
+                right: 5px;
+                bottom: 5px;
+                position: absolute;
+                color: #339933;
+            }
+            &.selected:after {
+                content: '✓';
+                // content: '';
+                // font: normal normal normal 20px/1 FontAwesome;
+                border-color: #339933;
+            }
+        }
+    }
+
+    &.green-btn {
+        height: 44px;
+        font-size: 1.125em;
+        .Gradient(top, #228822, #115522);
+        box-shadow: 1px 1px 1px rgba(0, 0, 0, .35);
+        font-weight: 700;
+        &:hover {
+            .Gradient(top, #22BB33, #227733);
+        }
+    }
+
+}
+
+
+
+.hal-container {
+    width: 100%;
+    background: #fff;
+    margin: 0 auto;
+    padding: 0 10px;
+    @media (min-width: @screen-sm) {
+        padding: 0px 10px;     
+    }
+    @media (min-width: @screen-md) {
+        padding: 0px 20px;     
+    }
+    @media (min-width: @screen-lg) {
+        width: 1000px;
+    }
+}
+
+.browser-update {
+    border: 2px solid @errorRed;
+    max-width: 980px;
+    background-color: lighten(@errorRed, 50%);
+    padding: 5px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#main {
+    position: relative;
+    clear: both;
+}
+
+@media (min-width: @screen-lg) {
+    .content {
+        padding-right: 10px
+    }
+}
+
+.sidebar {
+    padding-left: 10px;
+}
+
+.info {
+    // position: relative;
+    // display: table-cell;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    // vertical-align: middle;
+    color: white;
+    border-radius: 100%;
+    background-color: #3B74AB;
+    cursor: pointer;    
+}
+
+
+// This fixes the jump when a div is collapsing.  That occurs because margins
+// are collapsed when overflow is set to hidden.  A pixel of padding will
+// uncollapse the margins.
+
+.collapse-helper {
+    &.collapse.in {
+      display: inherit;
+      visibility: visible;
+      padding-top: 1px;
+    }
+    &.collapse {
+      display: inherit;
+      visibility: hidden;
+      padding-top: 1px;
+      overflow: hidden;
+    }
+    &.collapsing {
+      padding-top: 1px;
+    }
+}
+
+
+.hal-value-proposition {
+    text-align: center;
+    color: @gray-light;
+    font-weight: bold;
+
+    p {
+        margin: 0;
+        padding: 5px 0px;
+    }
+}
+
+.fluid {
+    display: block;
+    overflow: hidden;
+    .box-sizing(border-box);
+    margin: 0px;
+    padding: 0px;
+}
+
+.dark-box {
+    .fluid;
+    color: #fff;
+    background-color: @transparentDark;
+    text-shadow: 0 0px 1px rgba(0, 0, 0, .75);
+}
+
+.buy-now, .button-confirm, .continue-button, .select-button {
+    color: #fff;
+    display: block;
+    border: 1px solid #2b822b;
+    border-radius: 5px;
+    #gradient .vertical(#63c963, #2c832c);
+    padding: 4px 0;
+    text-align: center;
+    text-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+    min-width: 200px;
+    &:hover, &:active {
+        color: #fff;
+        #gradient .vertical(#3e8c45, #235229);
+    }
+
+    &.disabled, &:disabled{
+        background: #aaa;
+        border-color: #666;
+        cursor: not-allowed;
+        .reset-filter();
+    }
+}
+
+.shorex-section-title, .gift-section-title {
+    display: inline-block;
+    font: 24px/30px @sourceSans;
+    margin: 0 10px 15px 0;
+}
+
+.section-title-view-all {
+    font-size: 12px;
+}
+
+.can-see-false {
+    display: none !important;
+}
+
+// .form-page {
+//     margin-left: 15px;
+//     margin-right: 15px;
+// }
+
+// .form-control {
+//     height: 26px;
+// }
+
+// .ui-select-placeholder {
+//     font-size: .8125em;
+// }
+
+.error-text {
+    color:red;
+}
+
+// FOR TESTING PURPOSES ONLY
+// DELETE 
+
+.grid-wrapper {
+    position: relative;
+    pointer-events: none;
+    & > div {
+        position: absolute;
+        width: 100%;
+        height: 1000px;
+        z-index: 10;
+    }
+    .grid-column {
+        min-height: 100%;
+        padding: 0;
+        border-left: 1px solid #999;
+
+        &:nth-child(even) {
+            background-color: fade(red, 25%);
+        }
+    }
+    .grid-toggle {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 10px;
+      height: 10px;
+      z-index: 50;
+      border: 1px solid;
+      pointer-events: auto;
+    }
+}
+
+// END TEST LESS
+
+
+/**
+ * LESS files from modules and directives
+ **/
+@import './importCommon.less';
+
+@import '../components/directives/halHeader/halHeader.sbn.less';
+@import '../components/directives/checkinProgress/checkinProgress.sbn.less';
+@import '../components/directives/itineraryPhoto/itineraryPhoto.sbn.less';
+@import '../components/directives/buttonGreen/buttonGreen.sbn.less';
+@import '../components/directives/infoLinks/infoLinks.sbn.less';
+@import '../app/landing/landing.sbn.less';
+@import '../app/account/account.sbn.less';
+@import '../app/contract/contract.sbn.less';
+@import '../app/details/details.sbn.less';
+@import '../app/emergency/emergency.sbn.less';
+@import '../app/findBooking/findBooking.sbn.less';
+@import '../app/flights/flights.sbn.less';
+@import '../app/summary/summary.sbn.less';
+@import '../app/selectGuest/selectGuest.sbn.less';
+@import '../components/directives/modals/modals.sbn.less';
+@import '../components/directives/olciAccordion/olciAccordion.sbn.less';
+@import '../components/directives/fieldValidation/fieldValidation.sbn.less';
+@import '../components/directives/fieldRequiredValidation/fieldRequiredValidation.sbn.less';

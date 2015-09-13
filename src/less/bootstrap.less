@@ -1,0 +1,388 @@
+/**
+ * First, we include the Twitter Bootstrap LESS files. Only the ones used in the
+ * project should be imported as the rest are just wasting space.
+ */
+
+// Core variables and mixins
+@import "../../vendor/bootstrap/less/variables.less";
+@import "../../vendor/bootstrap/less/mixins.less";
+
+// Reset
+@import "../../vendor/bootstrap/less/normalize.less";
+@import "../../vendor/bootstrap/less/print.less";
+
+// Core CSS
+@import "../../vendor/bootstrap/less/scaffolding.less";
+@import "../../vendor/bootstrap/less/type.less";
+@import "../../vendor/bootstrap/less/code.less";
+@import "../../vendor/bootstrap/less/grid.less";
+@import "../../vendor/bootstrap/less/tables.less";
+@import "../../vendor/bootstrap/less/forms.less";
+@import "../../vendor/bootstrap/less/buttons.less";
+
+// Components
+@import "../../vendor/bootstrap/less/component-animations.less";
+@import "../../vendor/bootstrap/less/glyphicons.less";
+@import "../../vendor/bootstrap/less/dropdowns.less";
+@import "../../vendor/bootstrap/less/button-groups.less";
+@import "../../vendor/bootstrap/less/input-groups.less";
+@import "../../vendor/bootstrap/less/navs.less";
+@import "../../vendor/bootstrap/less/navbar.less";
+@import "../../vendor/bootstrap/less/breadcrumbs.less";
+@import "../../vendor/bootstrap/less/pagination.less";
+@import "../../vendor/bootstrap/less/pager.less";
+@import "../../vendor/bootstrap/less/labels.less";
+@import "../../vendor/bootstrap/less/badges.less";
+@import "../../vendor/bootstrap/less/jumbotron.less";
+@import "../../vendor/bootstrap/less/thumbnails.less";
+@import "../../vendor/bootstrap/less/alerts.less";
+@import "../../vendor/bootstrap/less/progress-bars.less";
+@import "../../vendor/bootstrap/less/media.less";
+@import "../../vendor/bootstrap/less/list-group.less";
+@import "../../vendor/bootstrap/less/panels.less";
+@import "../../vendor/bootstrap/less/wells.less";
+@import "../../vendor/bootstrap/less/close.less";
+
+// Components w/ JavaScript
+@import "../../vendor/bootstrap/less/modals.less";
+@import "../../vendor/bootstrap/less/tooltip.less";
+@import "../../vendor/bootstrap/less/popovers.less";
+@import "../../vendor/bootstrap/less/carousel.less";
+
+// Utility classes
+@import "../../vendor/bootstrap/less/utilities.less";
+@import "../../vendor/bootstrap/less/responsive-utilities.less";
+
+
+/**
+ * Overwrite starts here
+ */
+
+
+hr {
+    margin: 10px 0 10px 0;
+    color: @yetAnotherGrey;
+    background-color: @yetAnotherGrey;
+    height: 1px;
+}
+/**
+ * Variables used in bootstrap/less/navbar.less
+ **/
+
+.navbar {
+    margin-bottom: 0px;
+}
+
+// Basics of a navbar
+@navbar-height: 40px;
+@navbar-border-radius: 0px;
+
+// Navbar links
+@navbar-default-link-color:                 #fff;
+@navbar-default-brand-color:                @darkThemeColor;
+
+@navbar-default-link-hover-color:           @darkThemeColor;
+@navbar-default-link-hover-bg:              #fff;
+@navbar-default-link-active-color:          @darkThemeColor;
+@navbar-default-link-active-bg:             #fff;
+
+.navbar-nav {
+    float: left;
+    margin: 0;
+}
+
+
+@grid-gutter-width: 40px;
+
+
+@screen-sm: 460px;
+@screen-md: 768px;
+@screen-lg: 1000px;
+
+
+// This gets the form-groups to follow the grid.
+.form-horizontal .form-group {
+    // margin-left: 0;
+    // margin-right: 0;
+
+    .checkbox,
+    & > div {
+        // padding-left: 0;
+    }
+
+    & > label {
+        padding-right: 0;
+    }
+}
+
+// Makes placeholder for dropdown not jump around.
+.ui-select-placeholder {
+    margin-top: -1px;
+    display: block;
+}
+
+// Alignment for selected option in dropdown.
+// .ui-select-match-text {
+//     margin-top: -3px;
+// }
+
+// Turns off underlining for dropdown selections.
+.ui-select-bootstrap .ui-select-choices-row > a {
+    text-decoration: none;
+}
+
+// Makes sure blank selection still takes up full height and shows -- to cancel.
+.ui-select-choices-row:nth-child(3) > a > span:empty:after {
+    content:'--';
+    color: #ccc;
+}
+
+// Accounts for different input height.
+.form-horizontal .control-label, 
+.form-horizontal .radio, 
+.form-horizontal .checkbox, 
+.form-horizontal .radio-inline, 
+.form-horizontal .checkbox-inline {
+    padding-top: 5px;
+}
+
+.inline-3 {
+    & div:first-child {
+        padding-right: 6.66666px;
+    }
+    & div:nth-child(2) {
+        padding: 0 13.33333px;
+    }
+    & div:last-child {
+        padding-left: 6.66666px;
+    }
+}
+.inline-2 {
+    & div:first-child {
+        padding-right: 10px;
+    }
+    & div:last-child {
+        padding-left: 10px;
+    }
+}
+
+
+.btn-group.lines-2 {
+    width: inherit;
+    .btn {
+        max-width: inherit;
+        height: 60px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+@media (max-width: @screen-sm) {
+    .btn-group {
+        &.mobile-vertical {
+            width: 100%;
+            & > .btn {
+                border-radius: 0;
+                width: 100%;
+                margin: 0;
+
+                &:not(:first-child) {
+                    margin-top: -1px;
+                }
+
+                &:first-child:not(:last-child):not(.dropdown-toggle) {
+                    border-radius: 4px 4px 0 0;
+                }
+                &:last-child {
+                    border-radius: 0 0 4px 4px;
+                }
+            }
+        }
+        &.full-width-2 {
+            width: 100%;
+            & > .btn {
+                width: 50%;
+            }
+        }
+        &.full-width-3 {
+            width: 100%;
+            & > .btn {
+                width: 33%;
+            }
+        }
+    }
+}
+
+@media (min-width: @screen-sm) {
+    .btn-group {
+        &.full-width-2 {
+            width: 120px;
+            & > .btn {
+                width: 50%;
+            }
+        }
+        &.lines-2 {
+            min-width: 50%;
+            max-width: 75%;
+            .btn {
+                max-width: 65%;
+            }
+        }
+    }
+}
+@media (min-width: @screen-md) {
+    .btn-group {
+        &.full-width-2 {
+            width: 150px;
+        }
+        &.lines-2 {
+            .btn {
+                max-width: 75%;
+            }
+        }
+    }
+}
+
+
+
+.guest-buttons {
+    height: 70px;
+    // width: 104.5%;
+    background-color: @mediumLightThemeColor;
+    margin: -15px;
+    margin-top: 25px;
+    padding: 15px;
+
+    .olci-btn.blue-btn {//-no-checkbox {
+        width: inherit;
+        height: 40px;
+        &:first-child {
+            padding-left: 35px;
+            &:before {
+                content: '';
+                font: normal normal normal 20px/1 FontAwesome;
+                padding-top: 5px;
+                margin-top: 5px;
+                position: absolute;
+                top: -4px;
+                font-size: 26px;
+                left: 13px;
+            }
+        }
+        &:last-child {
+            padding-right: 35px;
+            &:before {
+                content: '';
+                font: normal normal normal 20px/1 FontAwesome;
+                padding-top: 5px;
+                margin-top: 5px;
+                position: absolute;
+                top: -4px;
+                font-size: 26px;
+                right: 13px;
+            }
+        }
+    }
+}
+.panel-group > div {
+    margin-bottom: 20px;
+    &:first-child .guest-buttons .blue-btn:first-child {
+        display: none;
+    }
+    &:last-child .guest-buttons .blue-btn:last-child {
+        display: none;
+    }
+}
+
+// This is for collapsing sections.
+.panel-default {
+    .collapse.in {
+      display: inherit;
+      visibility: inherit;
+      padding-top: 0;
+    }
+    .collapse {
+      display: none;
+      visibility: inherit;
+      padding-top: 0;
+      overflow: hidden;
+    }
+    .collapsing {
+      padding-top: 0;
+    }
+}
+
+
+// Button groups.
+.btn-group-blue {
+    .btn {
+        border-color: @darkThemeColor;
+        height: 40px;
+        background-color: @tileMainBg;
+        color: @darkThemeColor;
+        font-weight: 700;
+        padding-top: 9px;
+        // padding-bottom: 0;
+        &:hover,
+        &:active,
+        &:focus {
+            background-color: @tileMainBg;
+            color: @darkThemeColor;
+            box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+        }
+
+        &.active,
+        &.active:hover,
+        &.active:active,
+        &.active:focus  {
+            background-color: @darkThemeColor;
+            color: white;
+            &:before {
+                content: '✓';
+                // content: '';
+                // font: normal normal normal 20px/1 FontAwesome;
+                padding-right: 5px;
+            }
+        }
+    }
+}
+
+
+/**
+ * Variables used at /bootstrap/less/dropdowns.less
+ */ 
+
+@dropdownBackground: #FFF;
+
+/**
+ * Clobber navtabs CSS
+ */
+
+@import 'navtabs.less';
+
+/**
+ * Modal footer has text-align right by default
+ * override this
+ */
+
+.modal-footer {
+    text-align:inherit;
+}
+
+//Overwriting Typography Sheet --->>>>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

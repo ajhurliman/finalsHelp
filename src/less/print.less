@@ -1,0 +1,76 @@
+@media print {
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  body {
+    color:#000;
+    background: #fff;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    color:#000;
+    background: none;
+  }
+  h2,h3 {
+    page-break-after: avoid;
+  }
+  img {
+    max-width: 100% !important;
+  }
+  nav, aside {
+    display: none;
+  }
+  article {
+    page-break-before: always;
+  }
+  article a {
+    font-weight: bolder;
+    text-decoration: none;
+  }
+  article a[href^=http]:after {
+    content:" <" attr(href) "> ";
+  }
+  article a[href^="#"]:after {
+    content: "";
+  }
+  ul, img {
+    page-break-inside: avoid;
+  }
+  body, article {
+    width:100%;
+    margin: 0;
+    padding: 0;
+  }
+  @page {
+    margin: 2cm;
+  }
+
+  //itinerary page specifics
+  .hero-map {
+    display: hidden;
+  }
+  .itinerary-hero-map {
+    display: none;
+  }
+  .hero {
+    display:none;
+  }
+  .hero-vertical-strip {
+      display: none;
+  }
+  .hal-value-proposition {
+    display: none;
+  }
+  .itinerary-summary-container {
+    padding-top: 40px;
+  }
+  //Confirmation View
+  .confirmation-print {
+    display: none;
+  }
+
+  .confirmation-tiles {
+    display:none;
+  }
+  
+}
