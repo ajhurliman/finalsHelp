@@ -11,7 +11,7 @@ var constants = {
     VENDOR_ASSET_FILES: [
         'vendor/font-awesome/fonts/*',
         'vendor/bootstrap/fonts/*',
-        'src/assets/*'
+        'src/assets/**/*'
     ],
 
     VENDOR_CSS_FILES: [

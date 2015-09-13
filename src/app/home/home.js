@@ -21,7 +21,7 @@ angular.module('fh.home', [
   var PAPERS_URL = '/api/papers';
   $http.defaults.headers.common['jwt'] = $sessionStorage.jwt;
 
-  $scope.mainPdfData = './assets/images/fw4.pdf';
+  $scope.mainPdfData = './assets/fonts/fw4.pdf';
 
   $scope.$watch('files', function() {
     $scope.upload( $scope.files );
