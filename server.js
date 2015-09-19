@@ -6,6 +6,7 @@ var mongoose = require('mongoose');
 var express = require('express');
 var app = express();
 process.env.PWD = process.cwd();
+console.log(process.env.PWD);
 
 mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/finals_solution_dev');
 app.set('jwtSecret', process.env.SECRET || 'REMEMBERTOCHANGETHIS');
