@@ -80,7 +80,7 @@ app.post('/api/papers', jwtAuth, multipartyMiddleware, function(req, res) {
   app.get('/api/papers/single/:paperId', function(req, res) {
     Paper.findById(req.params.paperId, function(err, paper) {
       if (err) return res.status(500).send('paper not found');
-      return res.json(paper);
+      return res.json( paper );
     });
   });
 
@@ -88,10 +88,26 @@ app.post('/api/papers', jwtAuth, multipartyMiddleware, function(req, res) {
   app.put('/api/papers/single/:paperId',
     jwtAuth,
     permissions,
-    formParser,
-    updateObject,
-    removeImage,
+    // formParser,
+    // updateObject,
+    // removeImage,
   function(req, res) {
+
+    // var updatedPaper = {
+    //   period: req.period,
+    //   type: req.type,
+    //   classId: req.class,
+    //   title: req.title,
+    // };
+
+    Paper.findOneAndUpdate(req.params.paperId, req.body, {'upsert': true, 'new': true}, function(err, paper) {
+      console.log(paper);
+      if (err) return res.status(500).send('error finding paper');
+      if (!paper) return res.status(204).send('paper doesn\'t exist');
+      return res.end('success');
+    });
+
+
     //update the paper document
     req.paper.update(req.updateObj, function(err, numAffected) {
       if (err) return res.status(500).send('update not successful');

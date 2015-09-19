@@ -8,8 +8,9 @@ var paperSchema = mongoose.Schema({
   // title: {type: String, required: true},
   // descrip: {type: String, required: true},
   title: {type: String},
-  descrip: {type: String},
   date: Date,
+  period: String,
+  type: String,
   img: { data: Buffer, contentType: String }
 });
 

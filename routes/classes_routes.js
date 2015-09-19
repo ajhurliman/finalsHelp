@@ -21,6 +21,12 @@ module.exports = function(app, appSecret, mongoose) {
     });
   });
 
+  app.get('/api/classes/all', jwtAuth, formParser, function(req, res) {
+    Class.find({}, function( err, data ) {
+      res.json(data);
+    });
+  });
+
   //delete a class
   // app.delete('/api/classes/:classId', jwtAuth, formParser, permissions, function(req, res) {
   //   if (req.class) {

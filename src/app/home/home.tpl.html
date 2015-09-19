@@ -1,20 +1,109 @@
 <div class='home-page'>
-  Drop File:
-      <div ngf-drop ngf-select ng-model="files" class="drop-box" 
-          ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true"
-          accept="image/*,application/pdf">Drop pdfs or images here or click to upload</div>
-      <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
-      Files:
-      <ul>
-          <li ng-repeat="f in files" style="font:smaller">{{f.name}}</li>
-      </ul>
-      Upload Log:
-      <pre>{{log}}</pre>
 
-      <pdf-viewer
-        delegate-handle="main-pdf-container"
-        url="mainPdfData"
-        scale="1"
-        show-toolbar="true">
-      </pdf-viewer>
+  <div class="col-sm-3">
+    Drop File:
+    <div ngf-drop ngf-select ng-model="files" class="drop-box" 
+        ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true"
+        accept="image/*,application/pdf">Drop pdfs or images here or click to upload</div>
+    <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
+  </div>
+
+  <div class="col-sm-6">
+    <div class="row">
+      <!-- season picker -->
+      <div class="col-sm-4">
+        <ui-select ng-model="editData.season" theme="bootstrap">
+          <ui-select-match placeholder="Pick a season">{{$select.selected.name}}</ui-select-match>
+          <ui-select-choices repeat="season.code as season in seasons | filter:$select.search">
+            {{season.name}}
+            <div ng-bind-html="season.name | highlight: $select.search"></div>
+          </ui-select-choices>
+        </ui-select>
+      </div>
+
+      <!-- year picker -->
+      <div class="col-sm-4">
+        <ui-select ng-model="editData.year" theme="bootstrap">
+          <ui-select-match placeholder="Pick a year">{{$select.selected.name}}</ui-select-match>
+          <ui-select-choices repeat="year.code as year in years | filter:$select.search">
+            {{year.name}}
+            <div ng-bind-html="year.name | highlight: $select.search"></div>
+          </ui-select-choices>
+        </ui-select>
+      </div>
+
+      <!-- type picker -->
+      <div class="col-sm-4">
+        <ui-select ng-model="editData.type" theme="bootstrap">
+          <ui-select-match placeholder="Pick a type">{{$select.selected.name}}</ui-select-match>
+          <ui-select-choices repeat="type.code as type in types | filter:$select.search">
+            {{type.name}}
+            <div ng-bind-html="type.name | highlight: $select.search"></div>
+          </ui-select-choices>
+        </ui-select>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <!-- back button -->
+      <div class="col-sm-4">
+        <button type="button" class="btn btn-primary">Back</button>
+      </div>
+
+      <!-- class -->
+      <div class="col-sm-4">
+        <ui-select ng-model="editData.class" theme="bootstrap">
+          <ui-select-match placeholder="Pick a class">{{$select.selected.title}}</ui-select-match>
+          <ui-select-choices repeat="class.title as class in allClasses | filter:$select.search">
+            {{class.title}}
+            <div ng-bind-html="class.title | highlight: $select.search"></div>
+          </ui-select-choices>
+        </ui-select>
+      </div>
+
+      <!-- next button -->
+      <div class="col-sm-4">
+        <button type="button" class="btn btn-primary" ng-click="submitEditedPaper( papersToEdit[0], editData )">Next</button>
+      </div>
+    </div>
+
+    <br>
+
+    <canvas id="main-viewer"></canvas>
+
+  </div>
+  
+  <div class="col-sm-3">
+    <h4>Up Next:</h4>
+    <canvas id="next-up-pdf-container"></canvas>
+    <!-- <pdf-viewer
+      delegate-handle="next-up-pdf-container"
+      url="mainPdfData"
+      scale=".2"
+      show-toolbar="false">
+    </pdf-viewer> -->
+  </div>
+
+  <br><hr><br>
+
+  <div class="col-sm-12">
+    Files:
+    <ul>
+        <li ng-repeat="f in files" style="font:smaller">{{f.name}}</li>
+    </ul>
+    Upload Log:
+    <pre>{{log}}</pre>
+  </div>
+
+  <br><br>
+
+  <form ng-submit="addClass(newClass)">
+    <div class="col-sm-3">
+      <label for="newClass">New Class</label>
+      <input ng-model="newClass" type="text" class="form-control" placeholder="E.g. BIO180">
+      <button class="btn btn-primary">Add Class</button>
+    </div>
+  </form>
+
+      
 </div>
