@@ -1,14 +1,14 @@
 <div class="search-page">
 
   <div class="row">
-    <div class="col-sm-offset-4 col-sm-4">
-      <h1 class="text-center">Find papers</h1>
+    <div class="col-sm-4">
+      <h1 class="text-left">Find papers</h1>
     </div>
   </div>
 
   <!-- class -->
   <div class="row">
-    <div class="col-sm-offset-4 col-sm-4">
+    <div class="col-sm-4">
       <ui-select ng-model="query.classId" theme="bootstrap">
         <ui-select-match placeholder="Pick a class">{{$select.selected.title}}</ui-select-match>
         <ui-select-choices repeat="class._id as class in allClasses | filter:$select.search">
@@ -23,7 +23,7 @@
 
   <!-- type -->
   <div class="row">
-    <div class="col-sm-offset-4 col-sm-4">
+    <div class="col-sm-4">
       <ui-select ng-model="query.typeCode" theme="bootstrap">
         <ui-select-match placeholder="Pick a type">{{$select.selected.name}}</ui-select-match>
         <ui-select-choices repeat="type.code as type in types | filter:$select.search">
@@ -37,7 +37,7 @@
   <br>
 
   <div class="row">
-    <div class="col-sm-offset-4 col-sm-4">
+    <div class="col-sm-4">
       <button class="btn btn-lg btn-block btn-primary" ng-click="findClasses( query )">Go!</button>
     </div>
   </div>

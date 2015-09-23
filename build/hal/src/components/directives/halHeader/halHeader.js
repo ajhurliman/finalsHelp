@@ -42,8 +42,7 @@ angular.module('fh.directives.halHeader', [
         restrict: 'A',
         replace: true,
         templateUrl: 'directives/halHeader/halHeader.tpl.html',
-        controller: function() {
-
+        controller: function( $scope, $state ) {
         }
     };
 });

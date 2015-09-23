@@ -93,6 +93,8 @@ app.post('/api/papers', jwtAuth, multipartyMiddleware, function(req, res) {
     // removeImage,
   function(req, res) {
 
+    console.log(req.params.paperId);
+
     // var updatedPaper = {
     //   period: req.period,
     //   type: req.type,
@@ -100,8 +102,8 @@ app.post('/api/papers', jwtAuth, multipartyMiddleware, function(req, res) {
     //   title: req.title,
     // };
 
-    Paper.findOneAndUpdate(req.params.paperId, req.body, {'upsert': true, 'new': true}, function(err, paper) {
-      console.log(paper);
+    Paper.findOneAndUpdate({_id: req.params.paperId}, req.body, {'upsert': true, 'new': true}, function(err, paper) {
+      console.log('found paper, about to edit:', paper);
       if (err) return res.status(500).send('error finding paper');
       if (!paper) return res.status(204).send('paper doesn\'t exist');
       return res.end('success');

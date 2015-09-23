@@ -611,6 +611,7 @@ gulp.task('buildSync', function() {
         'cssminSync',
         'halIndexTemplateSync',
         'sbnIndexTemplateSync',
+        'halAssetsSubdirs',
         // 'unitSync',
         'watch'
     );

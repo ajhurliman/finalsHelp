@@ -77,35 +77,37 @@ angular.module('fh.search', [
     if ( !$scope.papers ) return;
     
     $timeout(function() {
-
       for ( var i = 0; i < $scope.papers.length; i++ ) {
-        var canvas = document.getElementById($scope.papers[ i ]._id);
-        var context = canvas.getContext('2d');
-
-        if ( $scope.papers[ i ] ) {
-          PDFJS.getDocument( $scope.papers[ i ].img.data ).then(function( pdf ) {
-            pdf.getPage(1).then(function( page ) {
-
-              var scale = .5;
-              var viewport = page.getViewport(scale);
-
-              canvas.height = viewport.height;
-              canvas.width = viewport.width;
-
-              var renderContext = {
-                canvasContext: context,
-                viewport: viewport
-              };
-              page.render(renderContext);
-            });
-          });
-        } else {
-          context.clearRect(0, 0, canvas.width, canvas.height);
-        }
-
+        renderPdf( $scope.papers[ i ] );
       }
     }, 100);
   });
+
+  function renderPdf( paper ) {
+    var canvas = document.getElementById( paper._id );
+    var context = canvas.getContext('2d');
+
+    if ( paper ) {
+      PDFJS.getDocument( paper.img.data ).then(function( pdf ) {
+        pdf.getPage(1).then(function( page ) {
+
+          var scale = .4;
+          var viewport = page.getViewport(scale);
+
+          canvas.height = viewport.height;
+          canvas.width = viewport.width;
+
+          var renderContext = {
+            canvasContext: context,
+            viewport: viewport
+          };
+          page.render(renderContext);
+        });
+      });
+    } else {
+      context.clearRect(0, 0, canvas.width, canvas.height);
+    }
+  }
 
   $scope.showEditPanel = function(id) {
     $scope[ 'openEditPanel-' + id ] = !$scope[ 'openEditPanel-' + id ];

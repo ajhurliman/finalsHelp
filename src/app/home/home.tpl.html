@@ -12,7 +12,7 @@
     <div class="row">
       <!-- season picker -->
       <div class="col-sm-4">
-        <ui-select ng-model="editData.season" theme="bootstrap">
+        <ui-select id="season-picker" ng-model="editData.season" theme="bootstrap">
           <ui-select-match placeholder="Pick a season">{{$select.selected.name}}</ui-select-match>
           <ui-select-choices repeat="season.code as season in seasons | filter:$select.search">
             {{season.name}}

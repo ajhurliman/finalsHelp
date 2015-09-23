@@ -1,7 +1,8 @@
 angular.module('fh.home', [
   'ui.select',
   'ngStorage',
-  'ngFileUpload'
+  'ngFileUpload',
+  'fh.services.FocusService'
 ])
 
 .config(function homeConfig($stateProvider) {
@@ -32,7 +33,7 @@ angular.module('fh.home', [
   });
 })
 
-.controller('HomeController', function( $scope, $http, $sessionStorage, $timeout, Upload, allClasses ) {
+.controller('HomeController', function( $scope, $http, $sessionStorage, $timeout, giveFocus, Upload, allClasses ) {
   var PAPERS_URL = '/api/papers';
   $http.defaults.headers.common['jwt'] = $sessionStorage.jwt;
   $scope.allClasses = allClasses;
@@ -105,10 +106,14 @@ angular.module('fh.home', [
               config.file.name + 
               ', Response: ' + 
               JSON.stringify( data.title ) + 
+              ', ID: ' +
+              data._id
               '\n' + 
               $scope.log;
 
             $scope.papersToEdit.push( data );
+
+            giveFocus('season-picker');
 
           });
         });
@@ -136,6 +141,7 @@ angular.module('fh.home', [
     });
   };
 
+  // re-renders the main canvas upon change
   $scope.$watch('papersToEdit[0]', function() {
     var canvas = document.getElementById('main-viewer');
     var context = canvas.getContext('2d');
@@ -162,7 +168,7 @@ angular.module('fh.home', [
     }
   });
 
-
+  // re-renders the secondary canvas upon change
   $scope.$watch('papersToEdit[1]', function() {
     var canvas = document.getElementById('next-up-pdf-container');
     var context = canvas.getContext('2d');
