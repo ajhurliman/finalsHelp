@@ -123,14 +123,16 @@ angular.module('fh.search', [
       classId: newData.classId
     };
 
-    $http({
+    paper.success = $http({
       method: 'PUT',
       url: 'api/papers/single/' + paper._id,
       data: putObj
     }).then(function( res ) {
       console.log( res );
+      return true;
     }, function( err ) {
       console.error ( err );
+      return false;
     });
   };
 

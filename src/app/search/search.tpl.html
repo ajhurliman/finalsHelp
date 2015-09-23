@@ -46,6 +46,13 @@
   <div class="block-grid-xs-2 block-grid-sm-3">
     <div class="block-grid-item search-result-block" ng-repeat="paper in papers">
 
+      <p>Title   : {{ paper.title }}</p>
+      <p>Period  : {{ paper.period }}</p>
+      <p>Type    : {{ paper.type }}</p>
+      <p>User ID : {{ paper.userId }}</p>
+      <p>Class ID: {{ paper.classId }}</p>
+      <p>_id     : {{ paper._id }}</p>
+
       <span class="glyphicon glyphicon-edit pull-right" ng-click="showEditPanel(paper._id)">
       </span>
 
@@ -105,15 +112,12 @@
         <div class="row">
           <button class="btn btn-primary btn-block" ng-click="submitEditedPaper( paper, editData )">Make it happen</button>
         </div>
+
+        <p>
+          <small class="success-tag text-center" collapse="!paper.success">Success!</small>
+        </p>
           
       </div>
-
-      <p>Title   : {{ paper.title }}</p>
-      <p>Period  : {{ paper.period }}</p>
-      <p>Type    : {{ paper.type }}</p>
-      <p>User ID : {{ paper.userId }}</p>
-      <p>Class ID: {{ paper.classId }}</p>
-      <p>_id     : {{ paper._id }}</p>
 
       <canvas id="{{paper._id}}" show-pdf-modal></canvas>
 
