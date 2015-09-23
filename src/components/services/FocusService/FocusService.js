@@ -1,4 +1,4 @@
-angular.module('olci.services.FocusService', [])
+angular.module('fh.services.FocusService', [])
 
 .factory('giveFocus', function($timeout) {
     return function(id) {

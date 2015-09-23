@@ -54,7 +54,7 @@ app.post('/api/papers', jwtAuth, multipartyMiddleware, function(req, res) {
         
         if (err) {
           // console.log('error!', err);
-          console.log(req.files.file.headers['content-type']);
+          // console.log(req.files.file.headers['content-type']);
           return res.status(500).send('error reading paper stream');
         }
 
@@ -144,11 +144,21 @@ app.post('/api/papers', jwtAuth, multipartyMiddleware, function(req, res) {
     });
   });
 
-  // get paper by class
+  // get all papers from a class
   app.get('/api/papers/class/:classId', function(req, res) {
     Paper.find({classId: req.params.classId}, function(err, papers) {
       if (err) return res.status(500).send('database error');
       return res.json(papers);
     });
+  });
+
+  //get all papers by type
+  app.get('/api/papers/classAndType/class/:classId/type/:typeCode', function( req, res ) {
+    console.dir(req.params.classId, req.params.typeCode);
+    Paper.find({classId: req.params.classId, type: req.params.typeCode}, function( err, papers) {
+      if (err) return res.status(500).send('database error');
+      return res.json(papers);
+    });
+
   });
 };

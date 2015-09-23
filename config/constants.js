@@ -9,7 +9,6 @@ var constants = {
     APP_JS_FILES: [ 'src/**/*.js', '!src/**/*.spec.js' ],
 
     VENDOR_ASSET_FILES: [
-        'vendor/font-awesome/fonts/*',
         'vendor/bootstrap/fonts/*',
         'src/assets/**/*'
     ],
@@ -30,18 +29,15 @@ var constants = {
         'vendor/angular-translate/angular-translate.js',
         'vendor/steelToe/steelToe.js',
         'vendor/angular-translate-loader-static-files/angular-translate-loader-static-files.js',
-        'vendor/angular-cookies/angular-cookies.js',
         'vendor/ngstorage/ngStorage.min.js',
         'vendor/angular-ui-utils/ui-utils.min.js',
         'vendor/angular-base64/angular-base64.min.js',
         'vendor/angular-ui-select/dist/select.min.js',
-        'vendor/angular-sanitize/angular-sanitize.min.js',
         'vendor/angular-payments/lib/angular-payments.min.js',
         'vendor/angular-busy/dist/angular-busy.min.js',
         'vendor/angular-momentjs-service/release/angular-momentjs-service.min.js',
         'vendor/ng-file-upload/ng-file-upload.min.js',
-        'vendor/pdfjs-dist/build/pdf.combined.js',
-        'vendor/angular-pdf-viewer/dist/angular-pdf-viewer.min.js'
+        'vendor/pdfjs-dist/build/pdf.combined.js'
     ],
 
     // File patterns for test files

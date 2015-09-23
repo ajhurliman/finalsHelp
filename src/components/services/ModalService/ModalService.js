@@ -14,11 +14,10 @@
  * @description These service methods are used with modals to control lifecycle.
  */
 
-angular.module('olci.services.ModalService', [
+angular.module('fh.services.ModalService', [
     'ui.bootstrap.modal',
-    'olci.services.AnalyticsService'
 ])
-.service('ModalService', function($rootScope, $modal, AnalyticsService) {
+.service('ModalService', function($rootScope, $modal) {
     var me = {
         modal: null,
         modalArgs: null,
@@ -27,7 +26,6 @@ angular.module('olci.services.ModalService', [
         },
         openModal: function(args) {
             me.closeModal();
-            AnalyticsService.logModalOpenEvent(args);
             me.modalArgs = args;
             me.modal = $modal.open(args);
 

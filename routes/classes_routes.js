@@ -21,6 +21,7 @@ module.exports = function(app, appSecret, mongoose) {
     });
   });
 
+  //find all classes
   app.get('/api/classes/all', jwtAuth, formParser, function(req, res) {
     Class.find({}, function( err, data ) {
       res.json(data);

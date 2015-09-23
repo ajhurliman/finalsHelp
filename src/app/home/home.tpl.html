@@ -52,9 +52,9 @@
 
       <!-- class -->
       <div class="col-sm-4">
-        <ui-select ng-model="editData.class" theme="bootstrap">
+        <ui-select ng-model="editData.classId" theme="bootstrap">
           <ui-select-match placeholder="Pick a class">{{$select.selected.title}}</ui-select-match>
-          <ui-select-choices repeat="class.title as class in allClasses | filter:$select.search">
+          <ui-select-choices repeat="class._id as class in allClasses | filter:$select.search">
             {{class.title}}
             <div ng-bind-html="class.title | highlight: $select.search"></div>
           </ui-select-choices>

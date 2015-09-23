@@ -12,9 +12,8 @@
  * @name olci.directives.halHeader
  * @description This module populates the header, which may or may not include the pnav.
  */
-angular.module('olci.directives.halHeader', [
+angular.module('fh.directives.halHeader', [
     'ngStorage',
-    'ngCookies',
     'ApplicationConfiguration'
 ])
 
@@ -43,7 +42,7 @@ angular.module('olci.directives.halHeader', [
         restrict: 'A',
         replace: true,
         templateUrl: 'directives/halHeader/halHeader.tpl.html',
-        controller: function($scope, $state, $sessionStorage, FindImageService, Configuration, $cookies, $q) {
+        controller: function() {
 
         }
     };

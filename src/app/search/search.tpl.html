@@ -1,0 +1,127 @@
+<div class="search-page">
+
+  <div class="row">
+    <div class="col-sm-offset-4 col-sm-4">
+      <h1 class="text-center">Find papers</h1>
+    </div>
+  </div>
+
+  <!-- class -->
+  <div class="row">
+    <div class="col-sm-offset-4 col-sm-4">
+      <ui-select ng-model="query.classId" theme="bootstrap">
+        <ui-select-match placeholder="Pick a class">{{$select.selected.title}}</ui-select-match>
+        <ui-select-choices repeat="class._id as class in allClasses | filter:$select.search">
+          {{class.title}}
+          <div ng-bind-html="class.title | highlight: $select.search"></div>
+        </ui-select-choices>
+      </ui-select>
+    </div>
+  </div>
+
+  <br>
+
+  <!-- type -->
+  <div class="row">
+    <div class="col-sm-offset-4 col-sm-4">
+      <ui-select ng-model="query.typeCode" theme="bootstrap">
+        <ui-select-match placeholder="Pick a type">{{$select.selected.name}}</ui-select-match>
+        <ui-select-choices repeat="type.code as type in types | filter:$select.search">
+          {{type.name}}
+          <div ng-bind-html="type.name | highlight: $select.search"></div>
+        </ui-select-choices>
+      </ui-select>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="row">
+    <div class="col-sm-offset-4 col-sm-4">
+      <button class="btn btn-lg btn-block btn-primary" ng-click="findClasses( query )">Go!</button>
+    </div>
+  </div>
+
+  <!-- block grid  -->
+  <div class="block-grid-xs-2 block-grid-sm-3">
+    <div class="block-grid-item search-result-block" ng-repeat="paper in papers">
+
+      <span class="glyphicon glyphicon-edit pull-right" ng-click="showEditPanel(paper._id)">
+      </span>
+
+      <div class="edit-panel" collapse="!isEditPanelOpen(paper._id)">
+        <!-- season picker -->
+        <div class="row">
+          <div class="col-sm-12">
+            <ui-select ng-model="editData.season" theme="bootstrap">
+              <ui-select-match placeholder="New season">{{$select.selected.name}}</ui-select-match>
+              <ui-select-choices repeat="season.code as season in seasons | filter:$select.search">
+                {{season.name}}
+                <div ng-bind-html="season.name | highlight: $select.search"></div>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+
+        <!-- year picker -->
+        <div class="row">
+          <div class="col-sm-12">
+            <ui-select ng-model="editData.year" theme="bootstrap">
+              <ui-select-match placeholder="New year">{{$select.selected.name}}</ui-select-match>
+              <ui-select-choices repeat="year.code as year in years | filter:$select.search">
+                {{year.name}}
+                <div ng-bind-html="year.name | highlight: $select.search"></div>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+
+        <!-- type picker -->
+        <div class="row">
+          <div class="col-sm-12">
+            <ui-select ng-model="editData.type" theme="bootstrap">
+              <ui-select-match placeholder="New type">{{$select.selected.name}}</ui-select-match>
+              <ui-select-choices repeat="type.code as type in types | filter:$select.search">
+                {{type.name}}
+                <div ng-bind-html="type.name | highlight: $select.search"></div>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+
+        <!-- class -->
+        <div class="row">
+          <div class="col-sm-12">
+            <ui-select ng-model="editData.classId" theme="bootstrap">
+              <ui-select-match placeholder="New class">{{$select.selected.title}}</ui-select-match>
+              <ui-select-choices repeat="class._id as class in allClasses | filter:$select.search">
+                {{class.title}}
+                <div ng-bind-html="class.title | highlight: $select.search"></div>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+
+        <div class="row">
+          <button class="btn btn-primary btn-block" ng-click="submitEditedPaper( paper, editData )">Make it happen</button>
+        </div>
+          
+      </div>
+
+      <p>Title   : {{ paper.title }}</p>
+      <p>Period  : {{ paper.period }}</p>
+      <p>Type    : {{ paper.type }}</p>
+      <p>User ID : {{ paper.userId }}</p>
+      <p>Class ID: {{ paper.classId }}</p>
+      <p>_id     : {{ paper._id }}</p>
+
+      <canvas id="{{paper._id}}" show-pdf-modal></canvas>
+
+    </div>
+      
+
+  </div>
+
+
+  
+</div>

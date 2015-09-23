@@ -273,7 +273,7 @@ gulp.task('halLess', function () {
 
 gulp.task('cssmin', ['halLess'/*,'sbnLess'*/],  function() {
     return gulp.src('./build/**/*.css')
-        //.pipe(cssmin())
+        .pipe(cssmin())
         .pipe(gulp.dest('./build'));
 });
 

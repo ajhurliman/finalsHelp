@@ -1,8 +1,7 @@
 angular.module('fh.home', [
   'ui.select',
   'ngStorage',
-  'ngFileUpload',
-  'pdf'
+  'ngFileUpload'
 ])
 
 .config(function homeConfig($stateProvider) {
@@ -33,10 +32,9 @@ angular.module('fh.home', [
   });
 })
 
-.controller('HomeController', function( $scope, $state, $http, $sessionStorage, $timeout, Upload, pdfDelegate, allClasses ) {
+.controller('HomeController', function( $scope, $http, $sessionStorage, $timeout, Upload, allClasses ) {
   var PAPERS_URL = '/api/papers';
   $http.defaults.headers.common['jwt'] = $sessionStorage.jwt;
-  $scope.mainPdfData = './assets/fonts/fw4.pdf';
   $scope.allClasses = allClasses;
 
   $scope.$watch('files', function() {
@@ -49,13 +47,12 @@ angular.module('fh.home', [
     }
   });
 
-  $scope.log = '';
+  $scope.log          = '';
   $scope.papersToEdit = [];
-  $scope.editData = {};
-
-  $scope.newSeason = {};
-  $scope.newYear = {};
-  $scope.newType = {};
+  $scope.editData     = {};
+  // $scope.newSeason    = {};
+  // $scope.newYear      = {};
+  // $scope.newType      = {};
 
   $scope.seasons = [
     {name: 'Spring', code: "SP"},
@@ -123,7 +120,8 @@ angular.module('fh.home', [
     putObj = {
       title: newData.title,
       period: newData.season + newData.year,
-      type: newData.type
+      type: newData.type,
+      classId: newData.classId
     };
 
     $http({
