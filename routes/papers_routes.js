@@ -155,9 +155,9 @@ app.post('/api/papers', jwtAuth, multipartyMiddleware, function(req, res) {
   });
 
   //get all papers by type
-  app.get('/api/papers/classAndType/class/:classId/type/:typeCode', function( req, res ) {
+  app.get('/api/papers/classAndType/class/:classId', function( req, res ) {
     console.dir(req.params.classId, req.params.typeCode);
-    Paper.find({classId: req.params.classId, type: req.params.typeCode}, function( err, papers) {
+    Paper.find({classId: req.params.classId}, function( err, papers) {
       if (err) return res.status(500).send('database error');
       return res.json(papers);
     });

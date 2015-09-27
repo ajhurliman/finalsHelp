@@ -45,6 +45,20 @@ angular.module('fh.search', [
     {name: 'Winter', code: "WI"}
   ];
   $scope.years = [
+    {name: '95', code: '95'},
+    {name: '96', code: '96'},
+    {name: '97', code: '97'},
+    {name: '98', code: '98'},
+    {name: '99', code: '99'},
+    {name: '00', code: '00'},
+    {name: '01', code: '01'},
+    {name: '02', code: '02'},
+    {name: '03', code: '03'},
+    {name: '04', code: '04'},
+    {name: '05', code: '05'},
+    {name: '06', code: '06'},
+    {name: '07', code: '07'},
+    {name: '08', code: '08'},
     {name: '09', code: '09'},
     {name: '10', code: '10'},
     {name: '11', code: '11'},
@@ -65,7 +79,7 @@ angular.module('fh.search', [
   $scope.findClasses = function( query ) {
     $http({
       method: 'GET',
-      url: PAPERS_URL + '/classAndType/class/' + query.classId + '/type/' + query.typeCode
+      url: PAPERS_URL + '/classAndType/class/' + query.classId //+ '/type/' + query.typeCode
     }).then(function( res ) {
       $scope.papers = res.data;
     }, function( err ) {

@@ -23,7 +23,18 @@ angular.module('fh.home', [
           headers: {
             jwt: $sessionStorage.jwt
           }
-        }).then(function (res ) {
+        }).then(function( res ) {
+          return res.data;
+        }, function( err ) {
+          console.log(err);
+        });
+      },
+
+      tokens: function( $http ) {
+        return $http({
+          method: 'GET',
+          url: 'assets/tokens.json'
+        }).then(function( res ) {
           return res.data;
         }, function( err ) {
           console.log(err);
@@ -33,7 +44,7 @@ angular.module('fh.home', [
   });
 })
 
-.controller('HomeController', function( $scope, $http, $sessionStorage, $timeout, giveFocus, Upload, allClasses ) {
+.controller('HomeController', function( $scope, $http, $sessionStorage, $timeout, giveFocus, Upload, allClasses, tokens ) {
   var PAPERS_URL = '/api/papers';
   $http.defaults.headers.common['jwt'] = $sessionStorage.jwt;
   $scope.allClasses = allClasses;
@@ -51,9 +62,6 @@ angular.module('fh.home', [
   $scope.log          = '';
   $scope.papersToEdit = [];
   $scope.editData     = {};
-  // $scope.newSeason    = {};
-  // $scope.newYear      = {};
-  // $scope.newType      = {};
 
   $scope.seasons = [
     {name: 'Spring', code: "SP"},
@@ -62,6 +70,20 @@ angular.module('fh.home', [
     {name: 'Winter', code: "WI"}
   ];
   $scope.years = [
+    {name: '95', code: '95'},
+    {name: '96', code: '96'},
+    {name: '97', code: '97'},
+    {name: '98', code: '98'},
+    {name: '99', code: '99'},
+    {name: '00', code: '00'},
+    {name: '01', code: '01'},
+    {name: '02', code: '02'},
+    {name: '03', code: '03'},
+    {name: '04', code: '04'},
+    {name: '05', code: '05'},
+    {name: '06', code: '06'},
+    {name: '07', code: '07'},
+    {name: '08', code: '08'},
     {name: '09', code: '09'},
     {name: '10', code: '10'},
     {name: '11', code: '11'},
@@ -200,19 +222,33 @@ angular.module('fh.home', [
 
     $http({
       method: 'POST',
-      url: 'api/classes',
+      url: '/api/classes',
       data: postObj
     }).then(function( res ) {
 
       $http({
         method: 'GET',
-        url: 'api/classes/all'
+        url: '/api/classes/all'
       }).then(function (res ) {
         $scope.allClasses = res.data;
       });
 
     }, function( err ) {
       console.log( err );
+    });
+  };
+
+  $scope.addTokens = function() {
+    tokens.tokens.forEach( function( token, index, array) {
+      $http({
+        method: 'POST',
+        url: '/api/makeToken',
+        data: token
+      }).then(function( res ) {
+        console.log('yes');
+      }, function( err ) {
+        console.log('FFFFFFFFFFUUUUU', err);
+      });
     });
   };
 
