@@ -12,7 +12,7 @@
     "url": "https://github.com/ajhurliman/testRepo.git"
   },
   "author": "ajHurliman",
-  "license": "MIT",
+  "license": "proprietary",
   "bugs": {
     "url": "https://github.com/ajhurliman/testRepo/issues"
   },
@@ -70,7 +70,7 @@
     "gulp-uglify": "^1.2.0",
     "gulp-webserver": "^0.9.1",
     "jshint-stylish": "^2.0.1",
-    "karma": "^0.13.3",
+    // "karma": "^0.13.3",
     "q": "^1.4.1",
     "run-sequence": "^1.1.2",
     "yargs": "^3.17.1"
