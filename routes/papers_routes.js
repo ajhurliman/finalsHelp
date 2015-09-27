@@ -53,26 +53,15 @@ app.post('/api/papers', jwtAuth, multipartyMiddleware, function(req, res) {
       newPaper.save(function(err, data) {
         
         if (err) {
-          // console.log('error!', err);
-          // console.log(req.files.file.headers['content-type']);
           return res.status(500).send('error reading paper stream');
         }
 
-        return res.json( data );
+        return res.json( {
+          title: data.title,
+          _id: data._id,
+          period: data.period });
       });
     });
-
-    // // newPaper.classId = req.body.classId;
-    // newPaper.userId = req.user._id;
-    // newPaper.title = req.files.file.name;
-    // // newPaper.descrip = req.body.descrip;
-    // newPaper.creationDate = new Date();
-    // newPaper.img = req.files.file;
-
-    // newPaper.save(function(err, data) {
-    //   if (err) return res.status(500).send('error saving paper');
-    //   return res.json( data );
-    // });
   });
 
 
