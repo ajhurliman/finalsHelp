@@ -1,5 +1,8 @@
 {
   "name": "finalsSolutions",
+  "engines": {
+    "node": "0.12.0"
+  },
   "version": "0.0.1",
   "description": "A repository for finals and tests",
   "main": "server.js",
