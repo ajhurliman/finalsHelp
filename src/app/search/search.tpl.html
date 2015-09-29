@@ -1,1 +1,39 @@
-yo
+<div class="search-page">
+  <div class="row">
+    <div class="col-sm-4">
+      <h1 class="text-left">Find Papers</h1>
+    </div>
+  </div>
+</div>
+
+<!-- class -->
+  <div class="row">
+    <div class="col-sm-4">
+      <ui-select ng-model="query.classId" theme="bootstrap">
+        <ui-select-match placeholder="Pick a class">{{$select.selected.title}}</ui-select-match>
+        <ui-select-choices repeat="class._id as class in allClasses | filter:$select.search">
+          {{class.title}}
+          <div ng-bind-html="class.title | highlight: $select.search"></div>
+        </ui-select-choices>
+      </ui-select>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="row">
+    <div class="col-sm-4">
+      <button class="btn btn-lg btn-block btn-primary" ng-click="findPapersByClass( query )">Go!</button>
+    </div>
+  </div>
+
+  <div ng-repeat="paper in papers">
+    <a href="" ng-click="findImage( paper._id )">
+      {{paper.title}}
+    </a>
+  </div>
+
+  {{paper._id}}
+  {{paper.title}}
+  <br>
+  <canvas id="display-paper" show-pdf-modal></canvas>

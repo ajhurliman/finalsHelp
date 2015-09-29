@@ -127,7 +127,7 @@ app.post('/api/papers', jwtAuth, multipartyMiddleware, function(req, res) {
     });
   });
 
-  //get a particular user's paper
+  //get a particular user's papers
   app.get('/api/papers/user', jwtAuth, function(req, res) {
     Paper.find({userId: req.user._id}, function(err, papers) {
       if (err) return res.status(500).send('server error');
@@ -135,10 +135,13 @@ app.post('/api/papers', jwtAuth, multipartyMiddleware, function(req, res) {
     });
   });
 
-  // get all papers from a class
+  // get all papers from a class without pdf
   app.get('/api/papers/class/:classId', function(req, res) {
     Paper.find({classId: req.params.classId}, function(err, papers) {
       if (err) return res.status(500).send('database error');
+      papers.map(function( paper ) {
+        paper.img = null;
+      });
       return res.json(papers);
     });
   });
