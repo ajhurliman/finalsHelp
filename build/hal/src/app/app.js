@@ -16,7 +16,8 @@ angular.module('fh', [
     'fh.landing',
     'fh.home',
     'fh.search',
-    'fh.directives.halHeader',
+    'fh.findAndEdit',
+    'fh.directives.mainHeader',
     'fh.directives.modals.showPdfModal',
     // 'fh.directives.modals',
     'fh.services.FocusService',
@@ -49,7 +50,7 @@ angular.module('fh', [
         $rootScope.companyCode = Configuration.companyCode;
 
 
-        $state.go('search');
+        $state.go('landing');
 
         //auth check every time the state/page changes
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {

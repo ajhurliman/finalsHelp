@@ -1,6 +1,7 @@
 'use strict';
 
 var User = require('../models/user');
+var Token = require('../models/token');
 
 module.exports = function(app, appSecret, passport, mongoose) {
   var formParser = require('../lib/form-parser')(mongoose.connection.db, mongoose.mongo);
@@ -14,20 +15,28 @@ module.exports = function(app, appSecret, passport, mongoose) {
       if (user) return res.status(500).send('cannot create that user');
       if (req.body.password !== req.body.passwordConfirm) return res.status(500).send('passwords do not match');
 
-      var newUser = new User();
-
-      newUser.basic.email = req.body.email;
-      newUser.basic.password = newUser.generateHash(req.body.password);
-      newUser.name = req.body.name;
-      newUser.phone = req.body.phone;
-
-      // console.dir(newUser.basic);
-
-      newUser.save(function(err) {
+      Token.findOne({'code': req.body.token}, function(err, token) {
         if (err) return res.status(500).send('server error');
-        res.json({jwt: newUser.generateToken(appSecret)});
-      });
+        if (!token) return res.status(500).send('token not found');
+        if (token.redeemed) return res.status(500).send('token already redeemed');
 
+        var newUser = new User();
+
+        newUser.basic.email = req.body.email;
+        newUser.basic.password = newUser.generateHash(req.body.password);
+        newUser.name = req.body.name;
+        newUser.phone = req.body.phone;
+
+        newUser.save(function(err) {
+          if (err) return res.status(500).send('server error');
+          res.json({jwt: newUser.generateToken(appSecret)});
+        });
+
+        token.redeemed = new Date().toString();
+        token.save(function(err) {
+          if (err) return res.status(500).send('server error redeeming token');
+        });
+      });
     });
   });
 

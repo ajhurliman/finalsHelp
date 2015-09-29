@@ -24,7 +24,8 @@ angular.module('fh.landing',[
       phone: credentials.phone,
       email: credentials.email,
       password: credentials.password,
-      passwordConfirm: credentials.passwordConfirm
+      passwordConfirm: credentials.passwordConfirm,
+      token: credentials.addCode
     };
     $http({
       method: 'POST',
