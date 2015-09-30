@@ -238,19 +238,19 @@ angular.module('fh.home', [
     });
   };
 
-  $scope.addTokens = function() {
-    tokens.tokens.forEach( function( token, index, array) {
-      $http({
-        method: 'POST',
-        url: '/api/makeToken',
-        data: token
-      }).then(function( res ) {
-        console.log('yes');
-      }, function( err ) {
-        console.log('FFFFFFFFFFUUUUU', err);
-      });
-    });
-  };
+  // $scope.addTokens = function() {
+  //   tokens.tokens.forEach( function( token, index, array) {
+  //     $http({
+  //       method: 'POST',
+  //       url: '/api/makeToken',
+  //       data: token
+  //     }).then(function( res ) {
+  //       console.log('yes');
+  //     }, function( err ) {
+  //       console.log('FFFFFFFFFFUUUUU', err);
+  //     });
+  //   });
+  // };
 
 
 });

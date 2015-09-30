@@ -37,7 +37,10 @@ angular.module('fh.landing',[
     })
     .success(function(data) {
       console.dir(data);
-      $scope.registerCredentials = {};
+      // $scope.registerCredentials = {};
+      // $scope.registerSuccess = true;
+      $sessionStorage.jwt = data.jwt;
+      $state.go('search');
     })
     .error(function(err) {
       console.dir(err);
@@ -58,7 +61,7 @@ angular.module('fh.landing',[
       .success(function(data) {
         console.dir(data);
         $sessionStorage.jwt = data.jwt;
-        $state.go('home');
+        $state.go('search');
       })
       .error(function(err) {
         console.dir(err);
