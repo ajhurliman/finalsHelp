@@ -178,11 +178,6 @@ gulp.task('qa', ['webserverNoTar'], function() {
     return protractorTest();
 });
 
-gulp.task('localImgs', function() {
-    return gulp.src('src/assets/images/**/*', {base: 'src/assets/images'})
-        .pipe(gulp.dest('./build/hal/assets/'));
-});
-
 gulp.task('clean', function(){
     return clean(['./build', './bin']);
 });
@@ -237,8 +232,8 @@ gulp.task('appTemplates', function() {
         }))
         .pipe(concat('templates-app.js'))
         .pipe(uglify())
-        .pipe(gulp.dest('./build/hal'))
-        .pipe(gulp.dest('./build/sbn'));
+        .pipe(gulp.dest('./build/hal'));
+        // .pipe(gulp.dest('./build/sbn'));
 });
 
 gulp.task('componentTemplates', function() {
@@ -249,8 +244,8 @@ gulp.task('componentTemplates', function() {
         }))
         .pipe(concat('templates-components.js'))
         .pipe(uglify())
-        .pipe(gulp.dest('./build/hal'))
-        .pipe(gulp.dest('./build/sbn'));
+        .pipe(gulp.dest('./build/hal'));
+        // .pipe(gulp.dest('./build/sbn'));
 });
 
 gulp.task('halLess', function () {
@@ -332,16 +327,16 @@ gulp.task('vendorJs', function () {
             .pipe(uglify())
             .pipe(concat(vendorJsFilename))
             .pipe(sourcemaps.write())
-            .pipe(gulp.dest('./build/hal'))
-            .pipe(gulp.dest('./build/sbn'));
+            .pipe(gulp.dest('./build/hal'));
+            // .pipe(gulp.dest('./build/sbn'));
     } else {
         console.log('concatenating vendorJs');
         return gulp.src(constants.VENDOR_JS_FILES)
             .pipe(sourcemaps.init())
             .pipe(concat(vendorJsFilename))
             .pipe(sourcemaps.write())
-            .pipe(gulp.dest('./build/hal'))
-            .pipe(gulp.dest('./build/sbn'));
+            .pipe(gulp.dest('./build/hal'));
+            // .pipe(gulp.dest('./build/sbn'));
     }
 });
 
@@ -356,16 +351,16 @@ gulp.task('appJs', ['halConfig', 'sbnConfig'], function() {
             .pipe(uglify())
             .pipe(concat(appJsFilename))
             .pipe(sourcemaps.write())
-            .pipe(gulp.dest('./build/hal'))
-            .pipe(gulp.dest('./build/sbn'));
+            .pipe(gulp.dest('./build/hal'));
+            // .pipe(gulp.dest('./build/sbn'));
     } else {
         console.log('concatenating appJs');
         return gulp.src(templateFiles)
             .pipe(sourcemaps.init())
             .pipe(concat(appJsFilename))
             .pipe(sourcemaps.write())
-            .pipe(gulp.dest('./build/hal'))
-            .pipe(gulp.dest('./build/sbn'));
+            .pipe(gulp.dest('./build/hal'));
+            // .pipe(gulp.dest('./build/sbn'));
     }
 });
 
@@ -380,16 +375,16 @@ gulp.task('appJsSync', function() {
             .pipe(uglify())
             .pipe(concat(appJsFilename))
             .pipe(sourcemaps.write())
-            .pipe(gulp.dest('./build/hal'))
-            .pipe(gulp.dest('./build/sbn'));
+            .pipe(gulp.dest('./build/hal'));
+            // .pipe(gulp.dest('./build/sbn'));
     } else {
         console.log('concatenating appJs');
         return gulp.src(templateFiles)
             .pipe(sourcemaps.init())
             .pipe(concat(appJsFilename))
             .pipe(sourcemaps.write())
-            .pipe(gulp.dest('./build/hal'))
-            .pipe(gulp.dest('./build/sbn'));
+            .pipe(gulp.dest('./build/hal'));
+            // .pipe(gulp.dest('./build/sbn'));
     }
 });
 
@@ -409,30 +404,6 @@ gulp.task('sbnConfig', function(){
 
 gulp.task('build', function() {
     runSequence(
-        'halAssets',
-        'sbnAssets',
-        'halAssetsSubdirs',
-        'sbnAssetsSubdirs',
-        'halAssetsWCS',
-        'sbnAssetsWCS',
-        'halVendorFonts',
-        'sbnVendorFonts',
-        'appTemplates',
-        'appJs',
-        'vendorJs',
-        'halIndexTemplate',
-        'sbnIndexTemplate',
-        'componentTemplates',
-        // 'localImgs',
-        'halConfig',
-        'sbnConfig',
-        'copyFiles'
-    );
-});
-
-gulp.task('buildNoTar', function() {
-    runSequence(
-        'clean',
         'halAssets',
         'sbnAssets',
         'halAssetsSubdirs',
@@ -597,12 +568,12 @@ gulp.task('buildSync', function() {
     runSequence(
         'clean',
         'halAssets',
-        'sbnAssets',
+        // 'sbnAssets',
         'halVendorFonts',
-        'sbnVendorFonts',
+        // 'sbnVendorFonts',
         'appTemplates',
         'halConfig',
-        'sbnConfig',
+        // 'sbnConfig',
         'appJsSync',
         'vendorJs',
         'componentTemplates',
@@ -610,7 +581,7 @@ gulp.task('buildSync', function() {
         // 'sbnLess',
         'cssminSync',
         'halIndexTemplateSync',
-        'sbnIndexTemplateSync',
+        // 'sbnIndexTemplateSync',
         'halAssetsSubdirs',
         // 'unitSync',
         'watch'

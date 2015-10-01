@@ -1,0 +1,9 @@
+/vendor
+/tests
+/src
+/node_modules
+/db
+/config
+/bower_components
+/build/sbn
+fake_package.json
