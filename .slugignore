@@ -6,4 +6,5 @@
 /config
 /bower_components
 /build/sbn
+/build/hal/vendor
 fake_package.json
