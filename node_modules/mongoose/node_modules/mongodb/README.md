@@ -9,11 +9,11 @@
 The MongoDB driver is the high level part of the 2.0 or higher MongoDB driver and is meant for end users.
 
 ## MongoDB Node.JS Driver
- 
+
 | what          | where                                          |
 |---------------|------------------------------------------------|
 | documentation | http://mongodb.github.io/node-mongodb-native/  |
-| api-doc        | http://mongodb.github.io/node-mongodb-native/  |
+| api-doc        | http://mongodb.github.io/node-mongodb-native/2.0/api/  |
 | source        | https://github.com/mongodb/node-mongodb-native |
 | mongodb       | http://www.mongodb.org/                        |
 
@@ -43,7 +43,7 @@ http://jira.mongodb.org/browse/NODE
 
 QuickStart
 ==========
-The quick start guide will show you how to setup a simple application using node.js and MongoDB. It scope is only how to set up the driver and perform the simple crud operations. For more in depth coverage we encourage reading the tutorials.
+The quick start guide will show you how to setup a simple application using node.js and MongoDB. Its scope is only how to set up the driver and perform the simple crud operations. For more in depth coverage we encourage reading the tutorials.
 
 Create the package.json file
 ----------------------------
@@ -240,7 +240,7 @@ var removeDocument = function(db, callback) {
     assert.equal(1, result.result.n);
     console.log("Removed the document with the field a equal to 3");
     callback(result);
-  });    
+  });
 }
 ```
 

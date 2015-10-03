@@ -7,6 +7,6 @@ var classSchema = mongoose.Schema({
   descrip: {type: String},
   date: {type: Date, index: true},
   createdBy: {type: mongoose.Schema.Types.ObjectId, index: true}
-}, { autoIndex: false });
+});
 
 module.exports = mongoose.model('Class', classSchema, 'classes');

@@ -1,6 +1,6 @@
 'use strict';
 
-// require("appdynamics").profile({
+// require('appdynamics').profile({
 //     controllerHostName: 'paid150.saas.appdynamics.com',
 //     controllerPort: 443, // If SSL, be sure to enable the next line     
 //     controllerSslEnabled: true, // Optional - use if connecting to controller via SSL  
@@ -16,7 +16,6 @@ var bodyParser  = require( 'body-parser' );
 var passport    = require( 'passport' );
 var mongoose    = require( 'mongoose' );
 var express     = require( 'express' );
-console.log('yo');
 var app         = express();
 process.env.PWD = process.cwd();
 
