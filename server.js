@@ -3,7 +3,7 @@
 require("appdynamics").profile({
     controllerHostName: 'paid150.saas.appdynamics.com',
     controllerPort: 443, // If SSL, be sure to enable the next line     
-    controllerSslEnabled: true // Optional - use if connecting to controller via SSL  
+    controllerSslEnabled: true, // Optional - use if connecting to controller via SSL  
     accountName: 'FinalsHelpcom', // Required for a controller running in multi-tenant mode
     accountAccessKey: 'ml8a3qr7o9oi', // Required for a controller running in multi-tenant mode
     applicationName: 'FinalsHelp',
