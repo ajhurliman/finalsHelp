@@ -137,15 +137,13 @@ app.post('/api/papers', jwtAuth, multipartyMiddleware, function(req, res) {
 
   // get all papers from a class without pdf
   app.get('/api/papers/class/:classId', function(req, res) {
+    
     var query = Paper.find({classId: req.params.classId});
 
     query.select('-img');
 
     query.exec(function(err, papers) {
       if (err) return res.status(500).send('database error');
-      // papers.map(function( paper ) {
-      //   paper.img = null;
-      // });
       return res.json(papers);
     });
   });

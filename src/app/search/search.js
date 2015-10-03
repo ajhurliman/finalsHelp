@@ -12,29 +12,23 @@ angular.module('fh.search', [
         templateUrl: 'search/search.tpl.html'
       }
     },
-    pageTitle: 'Search',
-    resolve: {
-      allClasses: function( $http, $sessionStorage ) {
-        return $http({
-          method: 'GET',
-          url: 'api/classes/all',
-          headers: {
-            jwt: $sessionStorage.jwt
-          }
-        }).then(function( res ) {
-          return res.data;
-        }, function( err ) {
-          console.log(err);
-        });
-      }
-    }
+    pageTitle: 'Search'
   });
 })
 
-.controller('SearchController', function( $scope, $http, $sessionStorage, allClasses, $timeout ) {
-  $scope.allClasses = allClasses;
+.controller('SearchController', function( $scope, $http, $sessionStorage, $timeout ) {
+  $http.defaults.headers.common['jwt'] = $sessionStorage.jwt;
   $scope.query = {};
   var PAPERS_URL = '/api/papers';
+
+  $http({
+    method: 'GET',
+    url: 'api/classes/all'
+  }).then(function( res ) {
+    $scope.allClasses = res.data;
+  }, function( err ) {
+    console.log(err);
+  });
 
   $scope.findPapersByClass = function(query) {
     $http({

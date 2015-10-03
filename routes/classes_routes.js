@@ -23,9 +23,16 @@ module.exports = function(app, appSecret, mongoose) {
 
   //find all classes
   app.get('/api/classes/all', jwtAuth, formParser, function(req, res) {
-    Class.find({}, function( err, data ) {
-      res.json(data);
+    
+    var query = Class.find({});
+
+    query.select('-img');
+
+    query.exec(function (err, classes) {
+      if ( err ) return res.status(500).send( 'error finding classes' );
+      res.json(classes);
     });
+
   });
 
   //delete a class
