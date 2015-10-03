@@ -67,8 +67,10 @@ app.post('/api/papers', jwtAuth, multipartyMiddleware, function(req, res) {
 
   //get a paper
   app.get('/api/papers/single/:paperId', function(req, res) {
+    console.time('findSinglePaper');
     Paper.findById(req.params.paperId, function(err, paper) {
       if (err) return res.status(500).send('paper not found');
+      console.timeEnd('findSinglePaper');
       return res.json( paper );
     });
   });
@@ -137,13 +139,14 @@ app.post('/api/papers', jwtAuth, multipartyMiddleware, function(req, res) {
 
   // get all papers from a class without pdf
   app.get('/api/papers/class/:classId', function(req, res) {
-    
+    console.time('getPapersByClass');
     var query = Paper.find({classId: req.params.classId});
 
     query.select('-img');
 
     query.exec(function(err, papers) {
       if (err) return res.status(500).send('database error');
+      console.timeEnd('getPapersByClass');
       return res.json(papers);
     });
   });
