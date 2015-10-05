@@ -83,31 +83,18 @@ function getTemplateJSFiles() {
 }
 
 function getApplicationConfiguration(companyCode) {
-    var longCompanyCode = (companyCode === 'HAL'?'holland':'seabourn');
+    var longCompanyCode = (companyCode === 'UW'?'holland':'seabourn');
 
     return {
         name: 'ApplicationConfiguration',
         constants: {
             Configuration: {
-                halPorta: {
-                    clientId: 'secondaryFlow' //*******CHANGE TO 'olci' when DSSF endpoints are ready
-                },
-                disableRTD: (env === 'e2e'),
-                enableAjaxLogging: (env === 'prod'),
                 timeoutInMillis: 15000, // request timeout 15 seconds
                 tokenTimeout: 15 * 60 * 1000, // 15 minutes
                 companyCode: companyCode,
                 appName: companyCode.toLowerCase()
-                // frontend: {
-                //     baseUrl: constants.SERVER_MAP[env][longCompanyCode].frontend
-                // },
-                // frontendBooking: {
-                //     baseUrl: constants.SERVER_MAP[env][longCompanyCode].frontendBooking
-                // }
             }
-        },
-        //wrap: 'amd',
-        space: '    '
+        }
     };
 }
 
@@ -147,23 +134,23 @@ gulp.task('clean', function(){
     return clean(['./build', './bin']);
 });
 
-gulp.task('halAssets', function() {
+gulp.task('uwAssets', function() {
     return gulp.src(getAssetsFiles(), {'base': '.'})
-        .pipe(copy('./build/hal'));
+        .pipe(copy('./build/uw'));
 });
 
-gulp.task('sbnAssets', function() {
+gulp.task('wsuAssets', function() {
     return gulp.src(getAssetsFiles(), {'base': '.'})
         .pipe(copy('./build/sbn'));
 });
 
-gulp.task('halVendorFonts', function() {
+gulp.task('uwVendorFonts', function() {
     return gulp.src(constants.VENDOR_ASSET_FILES, {'base': '.'})
         .pipe(flatten())
-        .pipe(gulp.dest('./build/hal/assets/fonts'));
+        .pipe(gulp.dest('./build/uw/assets/fonts'));
 });
 
-gulp.task('sbnVendorFonts', function() {
+gulp.task('wsuVendorFonts', function() {
     return gulp.src(constants.VENDOR_ASSET_FILES, {'base': '.'})
         .pipe(flatten())
         .pipe(gulp.dest('./build/sbn/assets/fonts'));
@@ -171,10 +158,10 @@ gulp.task('sbnVendorFonts', function() {
 
 gulp.task('uwAssetsSubdirs', function(){
     return gulp.src('./src/assets/**/*', {"base": "./src/assets"})
-        .pipe(gulp.dest('./build/hal/assets'));
+        .pipe(gulp.dest('./build/uw/assets'));
 });
 
-gulp.task('sbnAssetsSubdirs', function(){
+gulp.task('wsuAssetsSubdirs', function(){
     return gulp.src('./src/assets/**/*', {"base": "./src/assets"})
         .pipe(gulp.dest('./build/sbn/assets'));
 });
@@ -187,7 +174,7 @@ gulp.task('appTemplates', function() {
         }))
         .pipe(concat('templates-app.js'))
         .pipe(uglify())
-        .pipe(gulp.dest('./build/hal'));
+        .pipe(gulp.dest('./build/uw'));
         // .pipe(gulp.dest('./build/sbn'));
 });
 
@@ -199,17 +186,17 @@ gulp.task('componentTemplates', function() {
         }))
         .pipe(concat('templates-components.js'))
         .pipe(uglify())
-        .pipe(gulp.dest('./build/hal'));
+        .pipe(gulp.dest('./build/uw'));
         // .pipe(gulp.dest('./build/sbn'));
 });
 
-gulp.task('halLess', function () {
+gulp.task('uwLess', function () {
     return gulp.src('./src/less/main.less')
         .pipe(sourcemaps.init())
         .pipe(less())
         .pipe(rename('olci.css'))
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest('./build/hal/assets'));
+        .pipe(gulp.dest('./build/uw/assets'));
 });
 
 // gulp.task('sbnLess', function () {
@@ -221,7 +208,7 @@ gulp.task('halLess', function () {
 //         .pipe(gulp.dest('./build/sbn/assets'));
 // });
 
-gulp.task('cssmin', ['halLess'/*,'sbnLess'*/],  function() {
+gulp.task('cssmin', ['uwLess'/*,'sbnLess'*/],  function() {
     return gulp.src('./build/**/*.css')
         .pipe(cssmin())
         .pipe(gulp.dest('./build'));
@@ -233,24 +220,14 @@ gulp.task('cssminSync', function() {
         .pipe(gulp.dest('./build'));
 });
 
-gulp.task('halIndexTemplate', ['appTemplates', 'componentTemplates', 'cssmin'],  function() {
+gulp.task('uwIndexTemplateSync', function() {
     return gulp.src('src/index.html', {base: './src'})
         .pipe(template({
             styles: [].concat(['assets/olci.css'], constants.VENDOR_CSS_FILES),
             scripts: [vendorJsFilename, appJsFilename, 'templates-app.js', 'templates-components.js', 'src/components/configuration.js'],
             version: pkg.version
         }))
-        .pipe(gulp.dest('./build/hal'));
-});
-
-gulp.task('halIndexTemplateSync', function() {
-    return gulp.src('src/index.html', {base: './src'})
-        .pipe(template({
-            styles: [].concat(['assets/olci.css'], constants.VENDOR_CSS_FILES),
-            scripts: [vendorJsFilename, appJsFilename, 'templates-app.js', 'templates-components.js', 'src/components/configuration.js'],
-            version: pkg.version
-        }))
-        .pipe(gulp.dest('./build/hal'));
+        .pipe(gulp.dest('./build/uw'));
 });
 
 gulp.task('sbnIndexTemplate', ['appTemplates', 'componentTemplates', 'cssmin'],  function() {
@@ -282,7 +259,7 @@ gulp.task('vendorJs', function () {
             .pipe(uglify())
             .pipe(concat(vendorJsFilename))
             .pipe(sourcemaps.write())
-            .pipe(gulp.dest('./build/hal'));
+            .pipe(gulp.dest('./build/uw'));
             // .pipe(gulp.dest('./build/sbn'));
     } else {
         console.log('concatenating vendorJs');
@@ -290,12 +267,12 @@ gulp.task('vendorJs', function () {
             .pipe(sourcemaps.init())
             .pipe(concat(vendorJsFilename))
             .pipe(sourcemaps.write())
-            .pipe(gulp.dest('./build/hal'));
+            .pipe(gulp.dest('./build/uw'));
             // .pipe(gulp.dest('./build/sbn'));
     }
 });
 
-gulp.task('appJs', ['halConfig', 'sbnConfig'], function() {
+gulp.task('appJs', ['uwConfig', 'sbnConfig'], function() {
     var templateFiles = getTemplateJSFiles();
 
     if (isReleaseBuild()) {
@@ -306,7 +283,7 @@ gulp.task('appJs', ['halConfig', 'sbnConfig'], function() {
             .pipe(uglify())
             .pipe(concat(appJsFilename))
             .pipe(sourcemaps.write())
-            .pipe(gulp.dest('./build/hal'));
+            .pipe(gulp.dest('./build/uw'));
             // .pipe(gulp.dest('./build/sbn'));
     } else {
         console.log('concatenating appJs');
@@ -314,7 +291,7 @@ gulp.task('appJs', ['halConfig', 'sbnConfig'], function() {
             .pipe(sourcemaps.init())
             .pipe(concat(appJsFilename))
             .pipe(sourcemaps.write())
-            .pipe(gulp.dest('./build/hal'));
+            .pipe(gulp.dest('./build/uw'));
             // .pipe(gulp.dest('./build/sbn'));
     }
 });
@@ -330,7 +307,7 @@ gulp.task('appJsSync', function() {
             .pipe(uglify())
             .pipe(concat(appJsFilename))
             .pipe(sourcemaps.write())
-            .pipe(gulp.dest('./build/hal'));
+            .pipe(gulp.dest('./build/uw'));
             // .pipe(gulp.dest('./build/sbn'));
     } else {
         console.log('concatenating appJs');
@@ -338,16 +315,16 @@ gulp.task('appJsSync', function() {
             .pipe(sourcemaps.init())
             .pipe(concat(appJsFilename))
             .pipe(sourcemaps.write())
-            .pipe(gulp.dest('./build/hal'));
+            .pipe(gulp.dest('./build/uw'));
             // .pipe(gulp.dest('./build/sbn'));
     }
 });
 
-gulp.task('halConfig', function(){
+gulp.task('uwConfig', function(){
     return gulp.src('version.txt')
-        .pipe(ngConstant(getApplicationConfiguration('HAL')))
+        .pipe(ngConstant(getApplicationConfiguration('UW')))
         .pipe(rename('configuration.js'))
-        .pipe(gulp.dest('./build/hal/src/components/'));
+        .pipe(gulp.dest('./build/uw/src/components/'));
 });
 
 gulp.task('sbnConfig', function(){
@@ -362,102 +339,6 @@ gulp.task('copyFiles', function() {
     gulp.src(['./build/**/*', '!./build/**/olci.css'], {"base": "."})
         .pipe(copy('./bin'));
 });
-
-gulp.task(releaseString, ['build'], function() {
-    // this is different from the build task in only that isReleaseBuild will return true
-});
-
-gulp.task('bump', function(){
-    var version = null;
-    var deferred = Q.defer();
-    gulp.src(['package.json', 'bower.json'])
-        .pipe(bump())
-        .pipe(tap(function(file){
-            if(version){ return; }
-            var json = JSON.parse(String(file.contents));
-            version = json.version;
-        }))
-        .pipe(gulp.dest('./test'))
-        .on('end', function(){
-            gulp.src(['version.txt'])
-                .pipe(jeditor(function(json){
-                    json.versionInfo.version = version;
-                    return json;
-                }))
-                .pipe(gulp.dest('./'))
-                .pipe(git.commit('Releasing version '+version))
-                .pipe(git.tag("v" + version, "", function (err) {  // How do I get version here?
-                    if (err){
-                        deferred.reject();
-                        throw err;
-                    }
-                }))
-                .on('end', function(){
-                    deferred.resolve();
-                })
-                .on('error', function(e){ throw e; });
-        });
-    return deferred.promise;
-});
-
-
-gulp.task('protractor', ['webserver'], function() {
-    gulp.src(["./test/specs/*.js"])
-      .pipe(protractor({
-          configFile: "test/protractor.config.js",
-          args: ['--baseUrl', 'https://localhost:4321']
-      }))
-      .on('error', function(e) { throw e });
-});
-
-gulp.task('unit', function() {
-    return unitTest();
-});
-
-gulp.task('unitSync', function() {
-    return unitTest();
-});
-
-gulp.task('unitSingle', function() {
-    return unitTest(true);
-});
-
-gulp.task('startHALServer', function() {
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-    return startWebServer('./build/hal', 4321, 4322);
-});
-
-gulp.task('startSBNServer', function() {
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-    return startWebServer('./build/sbn', 4040, 4041);
-});
-
-gulp.task('startHALServerSync', function() {
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-    return startWebServer('./build/hal', 4321, 4322);
-});
-
-gulp.task('startSBNServerSync', function() {
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-    return startWebServer('./build/sbn', 4040, 4041);
-});
-
-gulp.task('webserver', function() {
-    runSequence(
-        'build',
-        'startHALServer',
-        'startSBNServer'
-    );
-});
-
-gulp.task('webserverNoTar', function() {
-    runSequence(
-        'buildNoTar',
-        'startHALServerSync',
-        'startSBNServerSync'
-    );
-});
-
 
 gulp.task('watch', function() {
     var templateFiles = getTemplateJSFiles();
@@ -475,43 +356,34 @@ gulp.task('watch', function() {
     gulp.watch(constants.APP_JS_FILES, ['appJs']);
 
     gulp.watch(templateFiles, logChangedFile);
-    gulp.watch(templateFiles, ['halAssets', 'sbnAssets']);
+    gulp.watch(templateFiles, ['uwAssets', 'wsuAssets']);
 
     gulp.watch('src/assets/**/*', logChangedFile);
-    gulp.watch('src/assets/**/*', ['uwAssetsSubdirs', 'sbnAssetsSubdirs']);
+    gulp.watch('src/assets/**/*', ['uwAssetsSubdirs', 'wsuAssetsSubdirs']);
 
     gulp.watch('src/**/*.less', logChangedFile);
     gulp.watch('src/**/*.less', ['cssmin', 'unitSingle', 'appTemplates']);
 });
 
-
-//////////////////////////////////////////////////////////////////////////////////                                                                    
-//  _____             _                              _____     _ _   _          //
-// |   __|_ _ ___ ___| |_ ___ ___ ___ ___ _ _ ___   | __  |_ _|_| |_| |         //
-// |__   | | |   |  _|   |  _| . |   | . | | |_ -|  | __ -| | | | | . |         //
-// |_____|_  |_|_|___|_|_|_| |___|_|_|___|___|___|  |_____|___|_|_|___|         //
-//       |___|                                                                  //
-//////////////////////////////////////////////////////////////////////////////////  
 gulp.task('default', function() {
     runSequence(
         'clean',
-        'halAssets',
-        // 'sbnAssets',
-        'halVendorFonts',
-        // 'sbnVendorFonts',
+        'uwAssets',
+        // 'wsuAssets',
+        'uwVendorFonts',
+        // 'wsuVendorFonts',
         'appTemplates',
-        'halConfig',
+        'uwConfig',
         // 'sbnConfig',
         'appJsSync',
         'vendorJs',
         'componentTemplates',
-        'halLess',
+        'uwLess',
         // 'sbnLess',
         'cssminSync',
-        'halIndexTemplateSync',
+        'uwIndexTemplateSync',
         // 'sbnIndexTemplateSync',
         'uwAssetsSubdirs',
-        // 'unitSync',
         'watch'
     );
 });

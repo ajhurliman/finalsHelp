@@ -32,7 +32,7 @@ require( './routes/papers_routes' )( app, app.get( 'jwtSecret' ), mongoose );
 require( './routes/classes_routes' )( app, app.get( 'jwtSecret' ), mongoose );
 require( './routes/tokens_routes' )( app, mongoose );
 
-app.use(express.static( process.env.PWD + '/build/hal' ) );
+app.use(express.static( process.env.PWD + '/build/uw' ) );
 
 app.set( 'port', process.env.PORT || 3000 );
 app.listen( app.get( 'port' ), function() {
