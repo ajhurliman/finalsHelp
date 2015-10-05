@@ -143,41 +143,6 @@ function protractorTest() {
         });
 }
 
-function unitTest(singleRun) {
-    var deferred = Q.defer();
-    var karmaconf = {
-        configFile: __dirname + '/config/karma.conf.hal.js',
-        singleRun: singleRun
-    };
-
-    if(env === 'dev' && !argv.browsers && os.platform().toLowerCase().indexOf('win') > -1){
-        //force windows to use Chrome_small because of a PhantomJS bug
-        karmaconf.browsers = ['Chrome_small'];
-    }else if(argv.browsers){
-        karmaconf.browsers = argv.browsers.split(',');
-    }
-    if(argv.reporters){
-        karmaconf.reporters = argv.reporters.split(',');
-    }
-
-    karma.start(karmaconf, function(err) {
-        console.log('Karma has exited with ' + err);
-        deferred.resolve();
-
-        if(!singleRun) {
-            process.exit(err);
-        }
-    });
-
-    return deferred.promise;
-}
-
-gulp.task('killSelenium', shell.task(['sh ./test/scripts/killSelenium.sh']));
-
-gulp.task('qa', ['webserverNoTar'], function() {
-    return protractorTest();
-});
-
 gulp.task('clean', function(){
     return clean(['./build', './bin']);
 });
@@ -204,7 +169,7 @@ gulp.task('sbnVendorFonts', function() {
         .pipe(gulp.dest('./build/sbn/assets/fonts'));
 });
 
-gulp.task('halAssetsSubdirs', function(){
+gulp.task('uwAssetsSubdirs', function(){
     return gulp.src('./src/assets/**/*', {"base": "./src/assets"})
         .pipe(gulp.dest('./build/hal/assets'));
 });
@@ -212,16 +177,6 @@ gulp.task('halAssetsSubdirs', function(){
 gulp.task('sbnAssetsSubdirs', function(){
     return gulp.src('./src/assets/**/*', {"base": "./src/assets"})
         .pipe(gulp.dest('./build/sbn/assets'));
-});
-
-gulp.task('halAssetsWCS', function(){
-    return gulp.src('./src/wcs/**/*', {"base": "./src/wcs"})
-        .pipe(gulp.dest('./build/hal/wcs'));
-});
-
-gulp.task('sbnAssetsWCS', function(){
-    return gulp.src('./src/wcs/**/*', {"base": "./src/wcs"})
-        .pipe(gulp.dest('./build/sbn/wcs'));
 });
 
 gulp.task('appTemplates', function() {
@@ -402,28 +357,6 @@ gulp.task('sbnConfig', function(){
         .pipe(gulp.dest('./build/sbn/src/components/'));
 });
 
-gulp.task('build', function() {
-    runSequence(
-        'halAssets',
-        'sbnAssets',
-        'halAssetsSubdirs',
-        'sbnAssetsSubdirs',
-        'halAssetsWCS',
-        'sbnAssetsWCS',
-        'halVendorFonts',
-        'sbnVendorFonts',
-        'appTemplates',
-        'appJs',
-        'vendorJs',
-        'halIndexTemplate',
-        'sbnIndexTemplate',
-        'componentTemplates',
-        'halConfig',
-        'sbnConfig',
-        'copyFiles'
-    );
-});
-
 
 gulp.task('copyFiles', function() {
     gulp.src(['./build/**/*', '!./build/**/olci.css'], {"base": "."})
@@ -545,16 +478,11 @@ gulp.task('watch', function() {
     gulp.watch(templateFiles, ['halAssets', 'sbnAssets']);
 
     gulp.watch('src/assets/**/*', logChangedFile);
-    gulp.watch('src/assets/**/*', ['halAssetsSubdirs', 'sbnAssetsSubdirs']);
+    gulp.watch('src/assets/**/*', ['uwAssetsSubdirs', 'sbnAssetsSubdirs']);
 
     gulp.watch('src/**/*.less', logChangedFile);
     gulp.watch('src/**/*.less', ['cssmin', 'unitSingle', 'appTemplates']);
 });
-
-
-
-gulp.task('default', ['build', 'webserver', 'watch', 'unit']);
-gulp.task('buildDev', ['webserverNoTar', 'watch', 'unit']);
 
 
 //////////////////////////////////////////////////////////////////////////////////                                                                    
@@ -564,7 +492,7 @@ gulp.task('buildDev', ['webserverNoTar', 'watch', 'unit']);
 // |_____|_  |_|_|___|_|_|_| |___|_|_|___|___|___|  |_____|___|_|_|___|         //
 //       |___|                                                                  //
 //////////////////////////////////////////////////////////////////////////////////  
-gulp.task('buildSync', function() {
+gulp.task('default', function() {
     runSequence(
         'clean',
         'halAssets',
@@ -582,7 +510,7 @@ gulp.task('buildSync', function() {
         'cssminSync',
         'halIndexTemplateSync',
         // 'sbnIndexTemplateSync',
-        'halAssetsSubdirs',
+        'uwAssetsSubdirs',
         // 'unitSync',
         'watch'
     );

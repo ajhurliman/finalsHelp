@@ -1,13 +1,3 @@
-/*
- * ModalService.spec.js
- *
- * Created: Tuesday, May 19, 2014
- * (c) Copyright 2014 Holland America, Inc. - All Rights Reserved
- * This is unpublished proprietary source code of Holland America, Inc.
- * The copyright notice above does not evidence any actual or intended
- * publication of such source code.
- */
-
  describe('ModalService module', function() {
     var service, $modal, AnalyticsService;
 
