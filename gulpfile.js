@@ -141,7 +141,7 @@ gulp.task('uwAssets', function() {
 
 gulp.task('wsuAssets', function() {
     return gulp.src(getAssetsFiles(), {'base': '.'})
-        .pipe(copy('./build/sbn'));
+        .pipe(copy('./build/wsu'));
 });
 
 gulp.task('uwVendorFonts', function() {
@@ -153,7 +153,7 @@ gulp.task('uwVendorFonts', function() {
 gulp.task('wsuVendorFonts', function() {
     return gulp.src(constants.VENDOR_ASSET_FILES, {'base': '.'})
         .pipe(flatten())
-        .pipe(gulp.dest('./build/sbn/assets/fonts'));
+        .pipe(gulp.dest('./build/wsu/assets/fonts'));
 });
 
 gulp.task('uwAssetsSubdirs', function(){
@@ -163,7 +163,7 @@ gulp.task('uwAssetsSubdirs', function(){
 
 gulp.task('wsuAssetsSubdirs', function(){
     return gulp.src('./src/assets/**/*', {"base": "./src/assets"})
-        .pipe(gulp.dest('./build/sbn/assets'));
+        .pipe(gulp.dest('./build/wsu/assets'));
 });
 
 gulp.task('appTemplates', function() {
@@ -175,7 +175,7 @@ gulp.task('appTemplates', function() {
         .pipe(concat('templates-app.js'))
         .pipe(uglify())
         .pipe(gulp.dest('./build/uw'));
-        // .pipe(gulp.dest('./build/sbn'));
+        // .pipe(gulp.dest('./build/wsu'));
 });
 
 gulp.task('componentTemplates', function() {
@@ -187,7 +187,7 @@ gulp.task('componentTemplates', function() {
         .pipe(concat('templates-components.js'))
         .pipe(uglify())
         .pipe(gulp.dest('./build/uw'));
-        // .pipe(gulp.dest('./build/sbn'));
+        // .pipe(gulp.dest('./build/wsu'));
 });
 
 gulp.task('uwLess', function () {
@@ -199,16 +199,16 @@ gulp.task('uwLess', function () {
         .pipe(gulp.dest('./build/uw/assets'));
 });
 
-// gulp.task('sbnLess', function () {
-//     return gulp.src('./src/less/main.sbn.less')
+// gulp.task('wsuLess', function () {
+//     return gulp.src('./src/less/main.wsu.less')
 //         .pipe(sourcemaps.init())
 //         .pipe(less())
 //         .pipe(rename('olci.css'))
 //         .pipe(sourcemaps.write())
-//         .pipe(gulp.dest('./build/sbn/assets'));
+//         .pipe(gulp.dest('./build/wsu/assets'));
 // });
 
-gulp.task('cssmin', ['uwLess'/*,'sbnLess'*/],  function() {
+gulp.task('cssmin', ['uwLess'/*,'wsuLess'*/],  function() {
     return gulp.src('./build/**/*.css')
         .pipe(cssmin())
         .pipe(gulp.dest('./build'));
@@ -230,24 +230,14 @@ gulp.task('uwIndexTemplateSync', function() {
         .pipe(gulp.dest('./build/uw'));
 });
 
-gulp.task('sbnIndexTemplate', ['appTemplates', 'componentTemplates', 'cssmin'],  function() {
+gulp.task('wsuIndexTemplateSync', function() {
     return gulp.src('src/index.html', {base: './src'})
         .pipe(template({
             styles: [].concat(['assets/olci.css'], constants.VENDOR_CSS_FILES),
             scripts: [vendorJsFilename, appJsFilename, 'templates-app.js', 'templates-components.js', 'src/components/configuration.js'],
             version: pkg.version
         }))
-        .pipe(gulp.dest('./build/sbn'));
-});
-
-gulp.task('sbnIndexTemplateSync', function() {
-    return gulp.src('src/index.html', {base: './src'})
-        .pipe(template({
-            styles: [].concat(['assets/olci.css'], constants.VENDOR_CSS_FILES),
-            scripts: [vendorJsFilename, appJsFilename, 'templates-app.js', 'templates-components.js', 'src/components/configuration.js'],
-            version: pkg.version
-        }))
-        .pipe(gulp.dest('./build/sbn'));
+        .pipe(gulp.dest('./build/wsu'));
 });
 
 gulp.task('vendorJs', function () {
@@ -260,7 +250,7 @@ gulp.task('vendorJs', function () {
             .pipe(concat(vendorJsFilename))
             .pipe(sourcemaps.write())
             .pipe(gulp.dest('./build/uw'));
-            // .pipe(gulp.dest('./build/sbn'));
+            // .pipe(gulp.dest('./build/wsu'));
     } else {
         console.log('concatenating vendorJs');
         return gulp.src(constants.VENDOR_JS_FILES)
@@ -268,11 +258,11 @@ gulp.task('vendorJs', function () {
             .pipe(concat(vendorJsFilename))
             .pipe(sourcemaps.write())
             .pipe(gulp.dest('./build/uw'));
-            // .pipe(gulp.dest('./build/sbn'));
+            // .pipe(gulp.dest('./build/wsu'));
     }
 });
 
-gulp.task('appJs', ['uwConfig', 'sbnConfig'], function() {
+gulp.task('appJs', ['uwConfig', 'wsuConfig'], function() {
     var templateFiles = getTemplateJSFiles();
 
     if (isReleaseBuild()) {
@@ -284,7 +274,7 @@ gulp.task('appJs', ['uwConfig', 'sbnConfig'], function() {
             .pipe(concat(appJsFilename))
             .pipe(sourcemaps.write())
             .pipe(gulp.dest('./build/uw'));
-            // .pipe(gulp.dest('./build/sbn'));
+            // .pipe(gulp.dest('./build/wsu'));
     } else {
         console.log('concatenating appJs');
         return gulp.src(templateFiles)
@@ -292,7 +282,7 @@ gulp.task('appJs', ['uwConfig', 'sbnConfig'], function() {
             .pipe(concat(appJsFilename))
             .pipe(sourcemaps.write())
             .pipe(gulp.dest('./build/uw'));
-            // .pipe(gulp.dest('./build/sbn'));
+            // .pipe(gulp.dest('./build/wsu'));
     }
 });
 
@@ -308,7 +298,7 @@ gulp.task('appJsSync', function() {
             .pipe(concat(appJsFilename))
             .pipe(sourcemaps.write())
             .pipe(gulp.dest('./build/uw'));
-            // .pipe(gulp.dest('./build/sbn'));
+            // .pipe(gulp.dest('./build/wsu'));
     } else {
         console.log('concatenating appJs');
         return gulp.src(templateFiles)
@@ -316,7 +306,7 @@ gulp.task('appJsSync', function() {
             .pipe(concat(appJsFilename))
             .pipe(sourcemaps.write())
             .pipe(gulp.dest('./build/uw'));
-            // .pipe(gulp.dest('./build/sbn'));
+            // .pipe(gulp.dest('./build/wsu'));
     }
 });
 
@@ -327,11 +317,11 @@ gulp.task('uwConfig', function(){
         .pipe(gulp.dest('./build/uw/src/components/'));
 });
 
-gulp.task('sbnConfig', function(){
+gulp.task('wsuConfig', function(){
     return gulp.src('version.txt')
-        .pipe(ngConstant(getApplicationConfiguration('SBN')))
+        .pipe(ngConstant(getApplicationConfiguration('WSU')))
         .pipe(rename('configuration.js'))
-        .pipe(gulp.dest('./build/sbn/src/components/'));
+        .pipe(gulp.dest('./build/wsu/src/components/'));
 });
 
 
@@ -362,7 +352,7 @@ gulp.task('watch', function() {
     gulp.watch('src/assets/**/*', ['uwAssetsSubdirs', 'wsuAssetsSubdirs']);
 
     gulp.watch('src/**/*.less', logChangedFile);
-    gulp.watch('src/**/*.less', ['cssmin', 'unitSingle', 'appTemplates']);
+    gulp.watch('src/**/*.less', ['cssmin', 'appTemplates']);
 });
 
 gulp.task('default', function() {
@@ -374,15 +364,15 @@ gulp.task('default', function() {
         // 'wsuVendorFonts',
         'appTemplates',
         'uwConfig',
-        // 'sbnConfig',
+        // 'wsuConfig',
         'appJsSync',
         'vendorJs',
         'componentTemplates',
         'uwLess',
-        // 'sbnLess',
+        // 'wsuLess',
         'cssminSync',
         'uwIndexTemplateSync',
-        // 'sbnIndexTemplateSync',
+        // 'wsuIndexTemplateSync',
         'uwAssetsSubdirs',
         'watch'
     );
