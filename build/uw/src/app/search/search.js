@@ -1,5 +1,6 @@
 angular.module('fh.search', [
   'ui.select',
+  'cgBusy',
   'ngStorage'
 ])
 
@@ -31,7 +32,7 @@ angular.module('fh.search', [
   });
 
   $scope.findPapersByClass = function(query) {
-    $http({
+    $scope.busyFindingPapers = $http({
       method: 'GET',
       url: PAPERS_URL + '/class/' + query.classId
     }).then(function( res ) {
@@ -42,7 +43,7 @@ angular.module('fh.search', [
   };
 
   $scope.findImage = function( paperId ) {
-    $http({
+    $scope.busyFindingPaperImage = $http({
       method: 'GET',
       url: PAPERS_URL + '/single/' + paperId
     }).then(function( res ) {

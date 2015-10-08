@@ -4,7 +4,6 @@
 
 angular.module('fh', [
     'ngStorage',
-    'cgBusy',
     'ui.router',
     'ui.bootstrap',
     'ui.bootstrap.showErrors',
