@@ -19,8 +19,10 @@ angular.module('fh.search', [
 
 .controller('SearchController', function( $scope, $http, $sessionStorage, $timeout ) {
   $http.defaults.headers.common['jwt'] = $sessionStorage.jwt;
+  $scope.rendered = false;
   $scope.query = {};
   var PAPERS_URL = '/api/papers';
+  var page;
 
   $http({
     method: 'GET',
@@ -55,13 +57,32 @@ angular.module('fh.search', [
 
   $scope.$watch('paper', function() {
     if ( !$scope.paper ) return;
-    
     $timeout(function() {
-      renderPdf( $scope.paper );
+      renderPdfInitial( $scope.paper );
     }, 100);
   });
 
-  function renderPdf( paper ) {
+  function renderPdf( page ) {
+    var canvas = document.getElementById( 'display-paper' );
+    var context = canvas.getContext('2d');
+
+    $scope.pdf.getPage( page ).then(function( page ) {
+      var scale = 1;
+      var viewport = page.getViewport(scale);
+
+      canvas.height = viewport.height;
+      canvas.width = viewport.width;
+
+      var renderContext = {
+        canvasContext: context,
+        viewport: viewport
+      };
+      page.render(renderContext);
+    })
+  }
+
+  function renderPdfInitial( paper ) {
+    $scope.rendered = true;
     var canvas = document.getElementById( 'display-paper' );
     var context = canvas.getContext('2d');
 
@@ -81,7 +102,27 @@ angular.module('fh.search', [
           };
           page.render(renderContext);
         });
+
+        $scope.pdf = pdf;
+        page = 1;
+
+        document.getElementById('previous-page').addEventListener('click',
+          function() {
+            if ( page > 1 ) {
+              page--;
+              renderPdf( page );
+            }
+        });
+        document.getElementById('next-page').addEventListener('click',
+          function() {
+            if ( $scope.pdf.numPages > page ) {
+              page++;
+              renderPdf( page );
+            }
+        });
       });
+
+
     } else {
       context.clearRect(0, 0, canvas.width, canvas.height);
     }
