@@ -40,9 +40,11 @@
     <!-- search results  -->  
     <div class="col-sm-3">
       <div ng-repeat="paper in papers">
-        <a href="" ng-click="findImage( paper._id )">
-          {{paper.title}}
-        </a>
+        <li>
+          <a href="" ng-click="findImage( paper._id )">
+            <small>{{paper.title}}</small>
+          </a>
+        </li> 
       </div>
     </div>
 
