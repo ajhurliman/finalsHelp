@@ -1,41 +1,43 @@
 <div class="search-page">
-  <div class="row">
-    <div class="col-sm-4">
-      <h1 class="text-left">Find Papers</h1>
+  <div class="row well" id="search-bar">
+
+    <!-- search panel class search -->
+    <div class="col-sm-3" id="class-search">
+      <div class="col-sm-12">
+        <h1 class="text-left">Find Papers</h1>
+      </div>
+
+      <div class="col-sm-12">
+        <ui-select ng-model="query.classId" theme="bootstrap">
+          <ui-select-match placeholder="Pick a class">{{$select.selected.title}}</ui-select-match>
+          <ui-select-choices repeat="class._id as class in allClasses | filter:$select.search">
+            {{class.title}}
+            <div ng-bind-html="class.title | highlight: $select.search"></div>
+          </ui-select-choices>
+        </ui-select>
+      </div>
+
+      <div cg-busy="{ promise:busyFindingPapers, message: 'Finding Papers...' }"></div>
+      <div cg-busy="{ promise:busyFindingPaperImage, message: 'Finding Papers...' }"></div>  
+
+      <div class="col-sm-12">
+        <button id="find-papers-btn" class="btn btn-lg btn-block btn-primary" ng-click="findPapersByClass( query )">Get 'em</button>
+      </div>
+    </div> <!-- end search panel class search -->
+
+    
+    <div class="col-sm-9">
+      Soon to come: filters!
     </div>
   </div>
 
-
-  <!-- class -->
-  <div class="row">
-    <div class="col-sm-4">
-      <ui-select ng-model="query.classId" theme="bootstrap">
-        <ui-select-match placeholder="Pick a class">{{$select.selected.title}}</ui-select-match>
-        <ui-select-choices repeat="class._id as class in allClasses | filter:$select.search">
-          {{class.title}}
-          <div ng-bind-html="class.title | highlight: $select.search"></div>
-        </ui-select-choices>
-      </ui-select>
-    </div>
-  </div>
-
-  <div cg-busy="{ promise:busyFindingPapers, message: 'Finding Papers...' }"></div>
-  <div cg-busy="{ promise:busyFindingPaperImage, message: 'Finding Papers...' }"></div>
+  
   
   <br>
 
-  <div class="row" id="search-bar">
-    <div class="col-sm-3">
-      <button class="btn btn-lg btn-block btn-primary" ng-click="findPapersByClass( query )">Get 'em</button>
-    </div>
-
-    <div class="col-sm-9">
-      filters go here
-    </div>
-      
-  </div>
-
+  
   <div class="row">
+    <!-- search results  -->  
     <div class="col-sm-3">
       <div ng-repeat="paper in papers">
         <a href="" ng-click="findImage( paper._id )">
@@ -44,36 +46,36 @@
       </div>
     </div>
 
-    <div class="col-sm-9">
-      <div ng-if="rendered">
+    <!-- previewer -->
+    <div class="col-sm-9" ng-show="rendered">
+      <!-- previous page button -->
+      <div class="col-sm-3">
+        <a href="" id="previous-page">Previous Page</a>
+      </div>
 
-        <!-- previous page button -->
-        <div class="col-sm-3">
-          <a href="" id="previous-page">Previous Page</a>
-        </div>
+      <!-- zoom icons -->
+      <div class="col-sm-3">
+        <!-- <span class="glyphicon glyphicon-zoom-out" id="zoom-out-icon"></span>
+        <span class="glyphicon glyphicon-zoom-in" id="zoom-in-icon"></span> -->
+      </div>
 
-        <!-- zoom icons -->
-        <div class="col-sm-3">
-          <span class="glyphicon glyphicon-zoom-out" id="zoom-out-icon"></span>
-          <span class="glyphicon glyphicon-zoom-in" id="zoom-in-icon"></span>
-        </div>
+      <!-- pdf page nav -->
+      <div class="col-sm-3">
+        <!-- <span>
+          Page:
+        </span>
+        <input type="text"> -->
+      </div>
 
-        <!-- pdf page nav -->
-        <div class="col-sm-3">
-          <span>
-            Page:
-          </span>
-          <input type="text">
-        </div>
-
-        <!-- next page button -->
-        <div class="col-sm-3">
-          <a href="" id="next-page" class="pull-right">Next Page</a>
-        </div>
-        
+      <!-- next page button -->
+      <div class="col-sm-3">
+        <a href="" id="next-page" class="pull-right">Next Page</a>
       </div>
       
-      <canvas id="display-paper" show-pdf-modal></canvas>
+      <div class="text-center">
+        <canvas id="display-paper" show-pdf-modal></canvas>  
+      </div>
+      
     </div>
   </div>
 </div>
