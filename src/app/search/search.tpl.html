@@ -4,9 +4,9 @@
       <h1 class="text-left">Find Papers</h1>
     </div>
   </div>
-</div>
 
-<!-- class -->
+
+  <!-- class -->
   <div class="row">
     <div class="col-sm-4">
       <ui-select ng-model="query.classId" theme="bootstrap">
@@ -24,23 +24,56 @@
   
   <br>
 
+  <div class="row" id="search-bar">
+    <div class="col-sm-3">
+      <button class="btn btn-lg btn-block btn-primary" ng-click="findPapersByClass( query )">Get 'em</button>
+    </div>
+
+    <div class="col-sm-9">
+      filters go here
+    </div>
+      
+  </div>
+
   <div class="row">
-    <div class="col-sm-4">
-      <button class="btn btn-lg btn-block btn-primary" ng-click="findPapersByClass( query )">Go!</button>
+    <div class="col-sm-3">
+      <div ng-repeat="paper in papers">
+        <a href="" ng-click="findImage( paper._id )">
+          {{paper.title}}
+        </a>
+      </div>
+    </div>
+
+    <div class="col-sm-9">
+      <div ng-if="rendered">
+
+        <!-- previous page button -->
+        <div class="col-sm-3">
+          <a href="" id="previous-page">Previous Page</a>
+        </div>
+
+        <!-- zoom icons -->
+        <div class="col-sm-3">
+          <span class="glyphicon glyphicon-zoom-out" id="zoom-out-icon"></span>
+          <span class="glyphicon glyphicon-zoom-in" id="zoom-in-icon"></span>
+        </div>
+
+        <!-- pdf page nav -->
+        <div class="col-sm-3">
+          <span>
+            Page:
+          </span>
+          <input type="text">
+        </div>
+
+        <!-- next page button -->
+        <div class="col-sm-3">
+          <a href="" id="next-page" class="pull-right">Next Page</a>
+        </div>
+        
+      </div>
+      
+      <canvas id="display-paper" show-pdf-modal></canvas>
     </div>
   </div>
-
-  <div ng-repeat="paper in papers">
-    <a href="" ng-click="findImage( paper._id )">
-      {{paper.title}}
-    </a>
-  </div>
-
-  <br>
-
-  <div ng-if="rendered">
-    <a href="" id="previous-page">Previous Page</a>
-    <a href="" id="next-page" class="pull-right">Next Page</a>
-  </div>
-  
-  <canvas id="display-paper" show-pdf-modal></canvas>
+</div>
