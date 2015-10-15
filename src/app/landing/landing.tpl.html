@@ -56,9 +56,11 @@
         </div>
       </div>
 
+
       <div class="form-group">
         <input ng-model="registerCredentials.addCode" type="addCode" name="addCode" id="add-code" class="form-control input-lg" placeholder="Add Code (it's case sensitive)" tabindex="9">
       </div>
+
 
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
@@ -66,15 +68,23 @@
         </div>
       </div>
 
+
       <div class="row">
+
         <div class="col-xs-12 col-md-12">
           <input type="submit" value="Register" class="btn btn-primary btn-block btn-lg" tabindex="10">
         </div>
+
+        <div class="col-sm-12 error-message">
+          <div class="alert alert-danger" role="alert" collapse="!registrationError">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            {{ registrationError }}
+          </div>
+        </div>
+
       </div>
 
-      <p>
-        <small class="success-tag text-center" collapse="!registerSuccess">Success!</small>
-      </p>
 
     </form>
   </div>

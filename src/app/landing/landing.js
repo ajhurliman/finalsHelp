@@ -43,6 +43,7 @@ angular.module('fh.landing',[
       $state.go('search');
     })
     .error(function(err) {
+      $scope.registrationError = err;
       console.dir(err);
       $scope.registerCredentials.password = '';
       $scope.registerCredentials.passwordConfirm = '';

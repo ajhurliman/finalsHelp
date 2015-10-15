@@ -11,14 +11,14 @@ module.exports = function(app, appSecret, passport, mongoose) {
     console.log(req.body);
 
     User.findOne({'basic.email': req.body.email}, function(err, user) {
-      if (err) return res.status(500).send('server error');
-      if (user) return res.status(500).send('cannot create that user');
-      if (req.body.password !== req.body.passwordConfirm) return res.status(500).send('passwords do not match');
+      if (err) return res.status(500).send('Server error!');
+      if (user) return res.status(500).send('Email already registered!');
+      if (req.body.password !== req.body.passwordConfirm) return res.status(500).send('Passwords do not match!');
 
       Token.findOne({'code': req.body.token}, function(err, token) {
-        if (err) return res.status(500).send('server error');
-        if (!token) return res.status(500).send('token not found');
-        if (token.redeemed) return res.status(500).send('token already redeemed');
+        if (err) return res.status(500).send('Server error!');
+        if (!token) return res.status(500).send('Invalid token!');
+        if (token.redeemed) return res.status(500).send('Token already redeemed!');
 
         var newUser = new User();
 
