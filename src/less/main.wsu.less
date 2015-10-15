@@ -156,64 +156,6 @@ body {
 //     padding-top: 8px;
 // }
 
-.olci-btn {
-    width: 100%;
-    box-shadow: 1px 1px 1px rgba(0, 0, 0, .35);
-    text-transform: uppercase;
-    border-color: #333333;
-    border-width: 1px;
-    color: white;
-    line-height: 1em;
-
-    &:hover, &:active, &:focus {
-        color: white;
-    }
-
-    &.blue-btn {
-        height: 50px;
-        font-size: 0.875rem;
-        position: relative;
-        .Gradient(top, #A6938F, @mediumThemeColor);
-        &:hover, &:active, &.selected {
-            .Gradient(top, @mediumThemeColor, #A6938F);
-            box-shadow: inset 0 5px 5px rgba(0, 0, 0, .35);
-        }
-
-        &.checkbox-btn {
-            &:after {
-                content: ' ';
-                width: 16px;
-                height: 16px;
-                background-color: white;
-                border: 1px solid @mediumThemeColor;
-                right: 5px;
-                bottom: 5px;
-                position: absolute;
-                color: #339933;
-            }
-            &.selected:after {
-                content: '✓';
-                // content: '';
-                // font: normal normal normal 20px/1 FontAwesome;
-                border-color: #339933;
-            }
-        }
-    }
-
-    &.green-btn {
-        height: 44px;
-        font-size: 1.125em;
-        .Gradient(top, #228822, #115522);
-        box-shadow: 1px 1px 1px rgba(0, 0, 0, .35);
-        font-weight: 700;
-        &:hover {
-            .Gradient(top, #22BB33, #227733);
-        }
-    }
-
-}
-
-
 
 .hal-container {
     width: 100%;

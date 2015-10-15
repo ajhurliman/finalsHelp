@@ -1,7 +1,7 @@
 /**
  * This is the main application stylesheet. It should include or import all
  * stylesheets used throughout the application as this is the only stylesheet in
- * the Grunt configuration that is automatically processed.
+ * the Gulp configuration that is automatically processed.
  */
 
 @font-face {
@@ -9,15 +9,6 @@
     font-style: normal;
     font-weight: 400;
     src: local('Source Sans Pro'), local('SourceSansPro-Regular'), url(https://fonts.gstatic.com/s/sourcesanspro/v9/ODelI1aHBYDBqgeIAH2zlNHq-FFgoDNV3GTKpHwuvtI.woff) format('woff');
-}
-
-@media print {
-    #hal-header {
-        display: none;
-    }
-    .button-green {
-        display: none;
-    }
 }
 
 /**
@@ -28,17 +19,6 @@
 @import 'bootstrap.less';
 @import 'select.less';
 @import 'angular-busy.min.css';
-
-/**
- * Next, fontawesome
- 
-
-@import 'font-awesome.less';
-**/
-
-/**
- * Constants and mixins, some of which may override Bootstrap and Font-awesome defaults
- */
 @import 'variables.less';
 @import 'mixins.less';
 
@@ -128,7 +108,7 @@ svg {
 
 
 
-.hal-container {
+.finals-help-container {
     width: 100%;
     background: #fff;
     margin: 0 auto;
@@ -169,69 +149,6 @@ svg {
     padding-left: 10px;
 }
 
-.popover {
-    border-color: @border;
-    border-radius: 4px;
-    background-color: @tileMainBg;
-    &.top>.arrow, {
-        border-top-color: @border;
-    }
-    &.top>.arrow:after {
-        border-top-color: @tileMainBg;
-    }
-    &.right>.arrow, {
-        border-right-color: @border;
-    }
-    &.right>.arrow:after {
-        border-right-color: @tileMainBg;
-    }
-    &.bottom>.arrow, {
-        border-bottom-color: @border;
-    }
-    &.bottom>.arrow:after {
-        border-bottom-color: @tileMainBg;
-    }
-    &.left>.arrow, {
-        border-left-color: @border;
-    }
-    &.left>.arrow:after {
-        border-left-color: @tileMainBg;
-    }
-}
-
-// This fixes the jump when a div is collapsing.  That occurs because margins
-// are collapsed when overflow is set to hidden.  A pixel of padding will
-// uncollapse the margins.
-
-.collapse-helper {
-    &.collapse.in {
-      display: inherit;
-      visibility: visible;
-      padding-top: 1px;
-    }
-    &.collapse {
-      display: inherit;
-      visibility: hidden;
-      padding-top: 1px;
-      overflow: hidden;
-    }
-    &.collapsing {
-      padding-top: 1px;
-    }
-}
-
-
-.hal-value-proposition {
-    text-align: center;
-    color: @gray-light;
-    font-weight: bold;
-
-    p {
-        margin: 0;
-        padding: 5px 0px;
-    }
-}
-
 .fluid {
     display: block;
     overflow: hidden;
@@ -247,79 +164,13 @@ svg {
     text-shadow: 0 0px 1px rgba(0, 0, 0, .75);
 }
 
-.buy-now, .button-confirm, .continue-button, .select-button {
-    color: #fff;
-    display: block;
-    border: 1px solid #2b822b;
-    border-radius: 5px;
-    #gradient .vertical(#63c963, #2c832c);
-    padding: 4px 0;
-    text-align: center;
-    text-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
-    text-transform: uppercase;
-    min-width: 200px;
-    &:hover, &:active {
-        color: #fff;
-        #gradient .vertical(#3e8c45, #235229);
-    }
-
-    &.disabled, &:disabled{
-        background: #aaa;
-        border-color: #666;
-        cursor: not-allowed;
-        .reset-filter();
-    }
-}
-
 .section-title-view-all {
     font-size: 12px;
-}
-
-.can-see-false {
-    display: none !important;
 }
 
 .error-text {
     color:red;
 }
-
-
-
-// FOR TESTING PURPOSES ONLY
-// DELETE 
-
-.grid-wrapper {
-    position: relative;
-    pointer-events: none;
-    & > div {
-        position: absolute;
-        width: 100%;
-        height: 1000px;
-        z-index: 10;
-    }
-    .grid-column {
-        min-height: 100%;
-        padding: 0;
-        border-left: 1px solid #999;
-
-        &:nth-child(even) {
-            background-color: fade(red, 25%);
-        }
-    }
-    .grid-toggle {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 10px;
-      height: 10px;
-      z-index: 50;
-      border: 1px solid;
-      pointer-events: auto;
-    }
-}
-
-// END TEST LESS
-
 
 
 /**

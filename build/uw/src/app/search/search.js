@@ -21,6 +21,7 @@ angular.module('fh.search', [
   $http.defaults.headers.common['jwt'] = $sessionStorage.jwt;
   $scope.rendered = false;
   $scope.query = {};
+  $scope.sortPeriodReverse = true;
   var PAPERS_URL = '/api/papers';
   var page;
 
@@ -32,6 +33,10 @@ angular.module('fh.search', [
   }, function( err ) {
     console.log(err);
   });
+
+  $scope.togglePeriodReverse = function() {
+    $scope.sortPeriodReverse = !$scope.sortPeriodReverse;
+  };
 
   $scope.findPapersByClass = function(query) {
     $scope.busyFindingPapers = $http({
@@ -54,13 +59,6 @@ angular.module('fh.search', [
       console.log( err );
     });
   };
-
-  $scope.$watch('paper', function() {
-    if ( !$scope.paper ) return;
-    $timeout(function() {
-      renderPdfInitial( $scope.paper );
-    }, 100);
-  });
 
   function renderPdf( page ) {
     var canvas = document.getElementById( 'display-paper' );
@@ -127,4 +125,30 @@ angular.module('fh.search', [
       context.clearRect(0, 0, canvas.width, canvas.height);
     }
   }
+
+  $scope.period = function(paper) {
+    var seasons = {
+      SP: 0.1,
+      SU: 0.2,
+      FA: 0.3,
+      WI: 0.4
+    };
+    var season = seasons[ paper.period.slice( 0, 2 ) ];
+    var year = +paper.period.slice( 2, 4 );
+    if ( year <= 50 ) {
+      year = year + 2000;  
+    } else {
+      year = year + 1900;
+    }
+    
+    return year + season;
+  }
+
+  $scope.$watch('paper', function() {
+    if ( !$scope.paper ) return;
+    $timeout(function() {
+      renderPdfInitial( $scope.paper );
+    }, 100);
+  });
+
 });

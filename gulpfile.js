@@ -16,7 +16,6 @@ var flatGlob           = require('flatten-glob');
 var pkg                = require('./package.json');
 var jeditor            = require('gulp-json-editor');
 var flatten            = require('gulp-flatten');
-var Q                  = require('q');
 var tap                = require('gulp-tap');
 var jshint             = require('gulp-jshint');
 var stylish            = require('jshint-stylish');
@@ -32,23 +31,13 @@ var runSequence        = require('run-sequence');
 var BuildConfiguration = require('./config/BuildConfiguration');
 
 var env = argv.env || 'dev';
-var appJsFilename = 'olciApp.js',
-    vendorJsFilename = 'olciVendor.js',
+var release = argv.release || false;
+var appJsFilename = 'finalsHelpApp.js';
+var vendorJsFilename = 'vendor.js';
 // following string signifies a non-debug, ready to deploy version of the app
-    releaseString = 'release';
+var releaseString = 'release';
 
 var buildConfiguration = new BuildConfiguration(argv);
-
-if (env === 'dev') {
-    console.log('this is dev');
-}
-else {
-    console.log('this is not dev');
-}
-
-function isReleaseBuild() {
-    return (argv['_'].indexOf(releaseString) !== -1);
-}
 
 function mergeArrays() {
     var outArr = [];
@@ -194,7 +183,7 @@ gulp.task('uwLess', function () {
     return gulp.src('./src/less/main.less')
         .pipe(sourcemaps.init())
         .pipe(less())
-        .pipe(rename('olci.css'))
+        .pipe(rename('finalsHelp.css'))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('./build/uw/assets'));
 });
@@ -203,7 +192,7 @@ gulp.task('uwLess', function () {
 //     return gulp.src('./src/less/main.wsu.less')
 //         .pipe(sourcemaps.init())
 //         .pipe(less())
-//         .pipe(rename('olci.css'))
+//         .pipe(rename('finalsHelp.css'))
 //         .pipe(sourcemaps.write())
 //         .pipe(gulp.dest('./build/wsu/assets'));
 // });
@@ -223,7 +212,7 @@ gulp.task('cssminSync', function() {
 gulp.task('uwIndexTemplateSync', function() {
     return gulp.src('src/index.html', {base: './src'})
         .pipe(template({
-            styles: [].concat(['assets/olci.css'], constants.VENDOR_CSS_FILES),
+            styles: [].concat(['assets/finalsHelp.css'], constants.VENDOR_CSS_FILES),
             scripts: [vendorJsFilename, appJsFilename, 'templates-app.js', 'templates-components.js', 'src/components/configuration.js'],
             version: pkg.version
         }))
@@ -233,7 +222,7 @@ gulp.task('uwIndexTemplateSync', function() {
 gulp.task('wsuIndexTemplateSync', function() {
     return gulp.src('src/index.html', {base: './src'})
         .pipe(template({
-            styles: [].concat(['assets/olci.css'], constants.VENDOR_CSS_FILES),
+            styles: [].concat(['assets/finalsHelp.css'], constants.VENDOR_CSS_FILES),
             scripts: [vendorJsFilename, appJsFilename, 'templates-app.js', 'templates-components.js', 'src/components/configuration.js'],
             version: pkg.version
         }))
@@ -241,14 +230,14 @@ gulp.task('wsuIndexTemplateSync', function() {
 });
 
 gulp.task('vendorJs', function () {
-    if (isReleaseBuild()) {
+    if (release) {
         console.log('uglifying vendorJs');
         return gulp.src(constants.VENDOR_JS_FILES)
-            .pipe(sourcemaps.init())
+            // .pipe(sourcemaps.init())
             .pipe(annotate())
             .pipe(uglify())
             .pipe(concat(vendorJsFilename))
-            .pipe(sourcemaps.write())
+            // .pipe(sourcemaps.write())
             .pipe(gulp.dest('./build/uw'));
             // .pipe(gulp.dest('./build/wsu'));
     } else {
@@ -262,41 +251,18 @@ gulp.task('vendorJs', function () {
     }
 });
 
-gulp.task('appJs', ['uwConfig', 'wsuConfig'], function() {
-    var templateFiles = getTemplateJSFiles();
-
-    if (isReleaseBuild()) {
-        console.log('uglifying appJs');
-        return gulp.src(templateFiles)
-            .pipe(sourcemaps.init())
-            .pipe(annotate())
-            .pipe(uglify())
-            .pipe(concat(appJsFilename))
-            .pipe(sourcemaps.write())
-            .pipe(gulp.dest('./build/uw'));
-            // .pipe(gulp.dest('./build/wsu'));
-    } else {
-        console.log('concatenating appJs');
-        return gulp.src(templateFiles)
-            .pipe(sourcemaps.init())
-            .pipe(concat(appJsFilename))
-            .pipe(sourcemaps.write())
-            .pipe(gulp.dest('./build/uw'));
-            // .pipe(gulp.dest('./build/wsu'));
-    }
-});
 
 gulp.task('appJsSync', function() {
     var templateFiles = getTemplateJSFiles();
 
-    if (isReleaseBuild()) {
+    if (release) {
         console.log('uglifying appJs');
         return gulp.src(templateFiles)
-            .pipe(sourcemaps.init())
+            // .pipe(sourcemaps.init())
             .pipe(annotate())
             .pipe(uglify())
             .pipe(concat(appJsFilename))
-            .pipe(sourcemaps.write())
+            // .pipe(sourcemaps.write())
             .pipe(gulp.dest('./build/uw'));
             // .pipe(gulp.dest('./build/wsu'));
     } else {
@@ -326,7 +292,7 @@ gulp.task('wsuConfig', function(){
 
 
 gulp.task('copyFiles', function() {
-    gulp.src(['./build/**/*', '!./build/**/olci.css'], {"base": "."})
+    gulp.src(['./build/**/*', '!./build/**/finalsHelp.css'], {"base": "."})
         .pipe(copy('./bin'));
 });
 
@@ -343,7 +309,7 @@ gulp.task('watch', function() {
     gulp.watch(constants.VENDOR_JS_FILES, ['vendorJs']);
 
     gulp.watch(constants.APP_JS_FILES, logChangedFile);
-    gulp.watch(constants.APP_JS_FILES, ['appJs']);
+    gulp.watch(constants.APP_JS_FILES, ['appJsSync']);
 
     gulp.watch(templateFiles, logChangedFile);
     gulp.watch(templateFiles, ['uwAssets', 'wsuAssets']);

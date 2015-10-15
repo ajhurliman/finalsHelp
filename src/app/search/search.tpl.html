@@ -31,12 +31,12 @@
         </h4>
 
         <div class="btn-group-vertical" role="group">
-          <button type="button" class="btn btn-default">Recent First</button>
-          <button type="button" class="btn btn-default">Recent Last</button>
+          <button ng-click="togglePeriodReverse()" type="button" class="btn btn-default">Reverse Order</button>
+          <!-- <button type="button" class="btn btn-default">Recent Last</button> -->
         </div>
       </div>
 
-      <div class="col-sm-5">
+      <!-- <div class="col-sm-5">
         <h4>
           Filter by Type:
         </h4>
@@ -65,7 +65,7 @@
           </label>
         </div>
 
-      </div>
+      </div> -->
     </div>
 
   </div>
@@ -80,10 +80,12 @@
   <div class="row">
     <!-- search results  -->  
     <div class="col-sm-3">
-      <div ng-repeat="paper in papers">
+      <div ng-repeat="paper in papers | orderBy:period:sortPeriodReverse">
         <li>
           <a href="" ng-click="findImage( paper._id )">
-            <small>{{paper.title}}</small>
+            <small>{{ paper.title }}</small>
+            {{paper.period}}
+
           </a>
         </li> 
       </div>
