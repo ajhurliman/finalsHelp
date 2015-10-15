@@ -15,10 +15,7 @@
             <div ng-bind-html="class.title | highlight: $select.search"></div>
           </ui-select-choices>
         </ui-select>
-      </div>
-
-      <div cg-busy="{ promise:busyFindingPapers, message: 'Finding Papers...' }"></div>
-      <div cg-busy="{ promise:busyFindingPaperImage, message: 'Finding Papers...' }"></div>  
+      </div>  
 
       <div class="col-sm-12">
         <button id="find-papers-btn" class="btn btn-lg btn-block btn-primary" ng-click="findPapersByClass( query )">Get 'em</button>
@@ -32,7 +29,9 @@
   </div>
 
   
-  
+  <div cg-busy="{ promise:busyFindingPapers, message: 'Finding Papers...' }"></div>
+  <div cg-busy="{ promise:busyFindingPaperImage, message: 'Finding Papers...' }"></div>
+
   <br>
 
   
