@@ -1,0 +1,16 @@
+#!/bin/sh
+#
+# This script starts the machine agent as a daemon. It is used by systemd to start the appdynamics-machine-agent
+# service (see etc/systemd/system/appdynamics-machine-agent.service).
+# To change environment variables, edit the etc/systemd/system/appdynamics-machine-agent.service file.
+
+prog="appdynamics-machine-agent"
+PIDFILE=$piddir/$prog
+
+# make sure needed dirs are there
+mkdir -p $piddir
+mkdir -p $lockdir
+
+echo -n $"Starting $prog:"
+
+JAVA_HOME=$JAVA_HOME $MACHINE_AGENT_HOME/bin/machine-agent -d -p $PIDFILE

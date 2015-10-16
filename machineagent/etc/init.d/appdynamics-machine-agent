@@ -1,0 +1,116 @@
+#!/bin/sh
+#
+# /etc/init.d/appdynamics-machine-agent
+#
+# This file describes the machine agent service. Copy it or place it in /etc/init.d to ensure the machine
+# agent is started as a service. If you installed the machine agent via an RPM or DEB package, it should
+# already be placed there.
+#
+# Copyright (c) 2014 AppDynamics Inc
+# All rights reserved
+#
+# chkconfig: 2345 95 05
+# description: AppDynamics Machine Agent
+# processname: MachineAgent
+# config: /etc/appdynamics/machine-agent/controller-info.xml
+# config: /etc/appdynamics/machine-agent/logging/log4j.xml
+# config: /etc/sysconfig/appdynamics-machine-agent
+# pidfile: /var/run/appdynamics-machine-agent
+#
+### BEGIN INIT INFO
+# Provides:          appdynamics-machine-agent
+# Required-Start:
+# Required-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: AppDynamics Machine Agent
+# Description:       Enable AppDynamics Machine Agent service provided by daemon.
+### END INIT INFO
+
+prog="appdynamics-machine-agent"
+lockfile="/var/lock/subsys/$prog"
+
+# Defaults. Do not edit these. They will be overwritten in updates.
+# Override in /etc/sysconfig/appdynamics-machine-agent
+MACHINE_AGENT_HOME=/opt/appdynamics/machine-agent
+JAVA_HOME=$MACHINE_AGENT_HOME/jre
+MACHINE_AGENT_USER=root
+PIDFILE="/var/run/appdynamics/$prog"
+
+# source script config, overwrite above variables
+[ -f /etc/sysconfig/appdynamics-machine-agent ] && . /etc/sysconfig/appdynamics-machine-agent
+
+# source function library (distribution-dependedent)
+if [ -f /etc/rc.d/init.d/functions ]; then
+    # redhat flavor
+    . /etc/rc.d/init.d/functions
+    start_cmd="daemon --pidfile $PIDFILE --user $MACHINE_AGENT_USER"
+    status_cmd="status -p $PIDFILE $prog"
+elif [ -f /lib/lsb/init-functions ]; then
+    # debian flavor
+    . /lib/lsb/init-functions
+    start_cmd="start_daemon -p $PIDFILE -- `which sudo` -u $MACHINE_AGENT_USER"
+    status_cmd="status_of_proc -p $PIDFILE $prog $prog"
+else
+    echo "Unable to find function library" 1>&2
+    exit 1
+fi
+stop_cmd="killproc -p $PIDFILE $prog"
+
+RETVAL=0
+
+checkroot() {
+    # Check to see if we're running this script as root or sudo
+    if [ `id -u` -ne 0 ]; then
+        echo "This script must be run as sudo or root" 1>&2
+        exit 1
+    fi
+}
+
+start() {
+    checkroot
+
+    # make sure needed dirs are there
+    sudo -u $MACHINE_AGENT_USER mkdir -p `dirname $PIDFILE`
+    sudo -u $MACHINE_AGENT_USER mkdir -p /var/lock/subsys
+
+    echo -n $"Starting $prog:"
+    JAVA_HOME=$JAVA_HOME $start_cmd $MACHINE_AGENT_HOME/bin/machine-agent -d -p $PIDFILE
+    RETVAL=$?
+    [ "$RETVAL" = 0 ] && touch $lockfile
+    echo
+}
+
+stop() {
+    checkroot
+    echo -n $"Stopping $prog:"
+    $stop_cmd
+    RETVAL=$?
+    [ "$RETVAL" = 0 ] && rm -f $lockfile
+    echo
+}
+
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    restart)
+        if [ -f $lockfile ] ; then
+            stop
+            # avoid race
+            sleep 3
+            start
+        fi
+        ;;
+    status)
+        $status_cmd
+        RETVAL=$?
+        ;;
+    *)    (10)
+        echo $"Usage: $0 {start|stop|restart|status}"
+        RETVAL=1
+esac
+exit $RETVAL
