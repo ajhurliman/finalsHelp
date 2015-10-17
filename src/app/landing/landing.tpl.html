@@ -17,7 +17,16 @@
         <div class="col-xs-12 col-md-12">
           <input type="submit" value="Sign In" class="btn btn-primary btn-block btn-lg" tabindex="3">
         </div>
+
+        <div class="col-sm-12 error-message">
+          <div class="alert alert-danger" role="alert" collapse="!loginError">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            {{ loginError }}
+          </div>
+        </div>
       </div>
+
     </form>
   </div>
 

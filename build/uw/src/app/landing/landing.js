@@ -19,6 +19,15 @@ angular.module('fh.landing',[
   var USERS_URL = '/api/users';
 
   $scope.register = function( credentials ) {
+    if ( !credentials.name ||
+         !credentials.email ||
+         !credentials.password ||
+         !credentials.passwordConfirm ||
+         !credentials.addCode ) {
+      $scope.registrationError = 'Please complete the form before submitting';
+      return;
+    }
+
     var newUser = {
       name: credentials.name,
       phone: credentials.phone,
@@ -65,6 +74,7 @@ angular.module('fh.landing',[
         $state.go('search');
       })
       .error(function(err) {
+        $scope.loginError = err;
         console.dir(err);
       });
   };
