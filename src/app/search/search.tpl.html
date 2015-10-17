@@ -76,20 +76,89 @@
 
   <br>
 
-  
-  <div class="row">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>
+          Title
+          
+        </th>
+
+        <th>
+          Quarter
+          <span ng-show="sortPeriod.reverse && sortPeriod.active" class="glyphicon glyphicon-chevron-down" ng-click="togglePeriodReverse()"></span>
+          <span ng-show="!sortPeriod.reverse && sortPeriod.active" class="glyphicon glyphicon-chevron-up" ng-click="togglePeriodReverse()"></span>
+        </th>
+
+        <th ng-mouseover="hoverInOrOut()" ng-mouseleave="hoverInOrOut()">
+          Type
+          <span 
+              ng-show="sortType.reverse && sortType.active || hoverEdit" 
+              class="glyphicon glyphicon-chevron-down" 
+
+              ng-click="toggleTypeReverse()">
+          </span>
+          <span ng-show="!sortType.reverse && sortType.active" class="glyphicon glyphicon-chevron-up" ng-click="toggleTypeReverse()"></span>
+        </th>
+        
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr ng-repeat="paper in papers | orderBy:period:sortPeriodReverse">
+        <td>
+          <a href="" ng-click="findImage( paper._id )">
+            {{ paper.title }}
+          </a>
+        </td>
+
+        <td>
+          {{paper.period}}
+        </td>
+        <td>
+          {{paper.type}}
+        </td>
+      </tr>
+
+      <!-- <tr ng-repeat"paper in papers | orderBy:period:sortPeriodReverse">
+        <td>
+          {{paper.title}}
+        </td>
+
+        <td>
+          {{paper.period}}
+        </td>
+        <td>
+          {{paper.date}}
+        </td>
+      </tr> -->
+    </tbody>
+  </table>
+
+  <!-- search results table -->
+  <!-- <div class="panel panel-default">
+
+    <div class="panel-heading">
+        Results
+    </div>
+    
+    <div class="panel-body">
+      
+    </div>
+
+  </div> -->
+
+  <!-- <div class="row"> -->
     <!-- search results  -->  
-    <div class="col-sm-3">
+    <!-- <div class="col-sm-3">
       <div ng-repeat="paper in papers | orderBy:period:sortPeriodReverse">
         <li>
           <a href="" ng-click="findImage( paper._id )">
             <small>{{ paper.title }}</small>
-            {{paper.period}}
-
           </a>
         </li> 
       </div>
-    </div>
+    </div> -->
 
     <!-- previewer -->
     <div class="col-sm-9" ng-show="rendered">

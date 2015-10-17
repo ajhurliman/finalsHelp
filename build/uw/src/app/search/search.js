@@ -19,10 +19,19 @@ angular.module('fh.search', [
 
 .controller('SearchController', function( $scope, $http, $sessionStorage, $timeout ) {
   $http.defaults.headers.common['jwt'] = $sessionStorage.jwt;
-  $scope.rendered = false;
-  $scope.query = {};
-  $scope.sortPeriodReverse = true;
-  var PAPERS_URL = '/api/papers';
+
+  $scope.rendered   = false;
+  $scope.query      = {};
+  var PAPERS_URL    = '/api/papers';
+  $scope.sortPeriod = {
+    active: true,
+    reverse: true
+  };
+  $scope.sortType   = {
+    active: false,
+    reverse: false
+  };
+
   var page;
 
   $http({
@@ -35,7 +44,22 @@ angular.module('fh.search', [
   });
 
   $scope.togglePeriodReverse = function() {
-    $scope.sortPeriodReverse = !$scope.sortPeriodReverse;
+    $scope.sortType.active    = false;
+    $scope.sortType.reverse   = false;
+    $scope.sortPeriod.active  = true;
+    $scope.sortPeriod.reverse = !$scope.sortPeriod.reverse;
+  };
+
+  $scope.toggleTypeReverse = function() {
+    $scope.sortPeriod.active  = false;
+    // \/\/\/ sortPeriod.reverse is reset to true because it's more natural to see larger dates (more recent) first
+    $scope.sortPeriod.reverse = true; 
+    $scope.sortType.active    = true;
+    $scope.sortType.reverse   = !$scope.sortType.reverse;
+  };
+
+  $scope.hoverInOrOut = function() {
+    this.hoverEdit = !this.hoverEdit;
   };
 
   $scope.findPapersByClass = function(query) {
