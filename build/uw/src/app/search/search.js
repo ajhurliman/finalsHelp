@@ -18,7 +18,7 @@ angular.module('fh.search', [
   });
 })
 
-.controller('SearchController', function( $scope, $http, $sessionStorage, $timeout ) {
+.controller('SearchController', function( $rootScope, $scope, $http, $sessionStorage, $timeout ) {
   $http.defaults.headers.common['jwt'] = $sessionStorage.jwt;
 
   $scope.reverse    = true;
@@ -119,7 +119,7 @@ angular.module('fh.search', [
       method: 'GET',
       url: PAPERS_URL + '/single/' + paperId
     }).then(function( res ) {
-      $scope.paper = res.data;
+      $scope.paperToRender = res.data;
     }, function( err ) {
       console.log( err );
     });
@@ -191,10 +191,11 @@ angular.module('fh.search', [
     }
   }
 
-  $scope.$watch('paper', function() {
-    if ( !$scope.paper ) return;
+  $scope.$watch('paperToRender', function() {
+    if ( !$scope.paperToRender ) return;
     $timeout(function() {
-      renderPdfInitial( $scope.paper );
+      // renderPdfInitial( $scope.paper );
+      $rootScope.$broadcast('pdf-ready-to-render');
     }, 100);
   });
 

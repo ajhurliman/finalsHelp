@@ -111,68 +111,12 @@
 
     <tbody>
       <tr ng-repeat="paper in displayPapers | orderBy:predicate:reverse">
-        <td><a href="" ng-click="findImage( paper._id )">{{ paper.title }}</a></td>
+        <td><a href="" ng-click="findImage( paper._id )" show-pdf-modal>{{ paper.title }}</a></td>
         <td>{{ paper.period | periodFilter }}</td>
         <td>{{ paper.type | typeFilter }}</td>
       </tr>
     </tbody>
   </table>
 
-  <!-- search results table -->
-  <!-- <div class="panel panel-default">
-
-    <div class="panel-heading">
-        Results
-    </div>
-    
-    <div class="panel-body">
-      
-    </div>
-
-  </div> -->
-
-  <!-- <div class="row"> -->
-    <!-- search results  -->  
-    <!-- <div class="col-sm-3">
-      <div ng-repeat="paper in papers | orderBy:period:sortPeriodReverse">
-        <li>
-          <a href="" ng-click="findImage( paper._id )">
-            <small>{{ paper.title }}</small>
-          </a>
-        </li> 
-      </div>
-    </div> -->
-
-    <!-- previewer -->
-    <div class="col-sm-9" ng-show="rendered">
-      <!-- previous page button -->
-      <div class="col-sm-3">
-        <a href="" id="previous-page">Previous Page</a>
-      </div>
-
-      <!-- zoom icons -->
-      <div class="col-sm-3">
-        <!-- <span class="glyphicon glyphicon-zoom-out" id="zoom-out-icon"></span>
-        <span class="glyphicon glyphicon-zoom-in" id="zoom-in-icon"></span> -->
-      </div>
-
-      <!-- pdf page nav -->
-      <div class="col-sm-3">
-        <!-- <span>
-          Page:
-        </span>
-        <input type="text"> -->
-      </div>
-
-      <!-- next page button -->
-      <div class="col-sm-3">
-        <a href="" id="next-page" class="pull-right">Next Page</a>
-      </div>
-      
-      <div class="text-center">
-        <canvas id="display-paper" show-pdf-modal></canvas>  
-      </div>
-      
-    </div>
   </div>
 </div>

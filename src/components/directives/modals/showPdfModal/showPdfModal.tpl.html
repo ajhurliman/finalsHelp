@@ -1,8 +1,43 @@
 <div class="modal-header">
   <span class="glyphicon glyphicon-remove pull-right" ng-click="close()"></span>
-  <p>ID: {{ paper._id }}</p>
-  <p>Title: {{ paper.title }}</p>
 </div>
 
+<!-- <div class="col-sm-4">
+  <a href=""  ng-disable="page === 1"><span class="glyphicon glyphicon-chevron-left"></span>Previous Page</a>
+</div> -->
 
-<canvas id="{{ modalId }}"></canvas>
+<!-- zoom icons -->
+<!-- <div class="col-sm-3"> -->
+  <!-- <span class="glyphicon glyphicon-zoom-out" id="zoom-out-icon"></span>
+  <span class="glyphicon glyphicon-zoom-in" id="zoom-in-icon"></span> -->
+<!-- </div> -->
+
+<!-- pdf page nav -->
+<!-- <div class="col-sm-2"> -->
+  <!-- <span>
+    Page:
+  </span>
+  <input type="text"> -->
+<!-- </div> -->
+
+<!-- next page button -->
+<!-- <div class="col-sm-3">
+  <a href="" class="pull-right">Next Page <span class="glyphicon glyphicon-chevron-right"></span></a>
+</div>
+ -->
+<div class="col-sm-12">
+  <nav>
+    <ul class="pager">
+
+      <li class="previous" ng-disabled="true">
+        <a href="#" id="previous-page-modal"><span aria-hidden="true">&larr;</span> Back</a>
+      </li>
+
+      <li class="next">
+        <a href="#" id="next-page-modal">Next <span aria-hidden="true">&rarr;</span></a>
+      </li>
+
+    </ul>
+  </nav>
+</div>
+<canvas id="rendered-pdf-modal"></canvas>
