@@ -37,7 +37,8 @@ var constants = {
         'vendor/angular-busy/dist/angular-busy.min.js',
         'vendor/angular-momentjs-service/release/angular-momentjs-service.min.js',
         'vendor/ng-file-upload/ng-file-upload.min.js',
-        'vendor/pdfjs-dist/build/pdf.combined.js'
+        'vendor/pdfjs-dist/build/pdf.combined.js',
+        'vendor/angular-smart-table/dist/smart-table.min.js'
     ],
 
     // File patterns for test files
