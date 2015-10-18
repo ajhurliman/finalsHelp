@@ -22,7 +22,7 @@ angular.module('fh.search', [
   $http.defaults.headers.common['jwt'] = $sessionStorage.jwt;
 
   $scope.reverse    = true;
-  $scope.predicate  = '-period';
+  $scope.predicate  = 'period';
   $scope.rendered   = false;
   $scope.query      = {};
   var PAPERS_URL    = '/api/papers';
@@ -228,4 +228,29 @@ angular.module('fh.search', [
 
     return '' + season + returnYear;
   }
-});
+})
+
+.filter('typeFilter', function() {
+  return function(inputType) {
+    switch (inputType) {
+      case 'H':
+        return 'Homework';
+        break;
+      case 'M':
+        return 'Midterm';
+        break;
+      case 'N':
+        return 'Notes';
+        break;
+      case 'Q':
+        return 'Quiz';
+        break;
+      case 'F':
+        return 'Final';
+        break;
+      case 'L':
+        return 'Lab';
+        break;
+    }
+  }
+})

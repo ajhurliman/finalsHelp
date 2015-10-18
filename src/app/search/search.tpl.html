@@ -79,9 +79,30 @@
   <table st-table="displayPapers" st-safe-src="papers" class="table table-striped">
     <thead>
       <tr>
-        <th ng-click="predicate = 'title'; reverse = !reverse;"  >Title</th>
-        <th ng-click="predicate = 'period'; reverse = !reverse;">Quarter</th>
-        <th ng-click="predicate = 'type'; reverse = !reverse;"   >Type</th>
+        <th>
+          <span ng-click="predicate = 'title'; reverse = !reverse;" class="sort-header">
+            Title
+            <span ng-show="(predicate === 'title' && reverse)" class="glyphicon glyphicon-chevron-down"></span>
+            <span ng-show="(predicate === 'title' && !reverse)" class="glyphicon glyphicon-chevron-up"></span>
+            <span ng-show="predicate !== 'title'" class="glyphicon glyphicon-chevron-up glyphicon-placeholder"></span>
+          </span>
+        </th>
+        <th>
+          <span ng-click="predicate = 'period'; reverse = !reverse;" class="sort-header">
+            Quarter
+            <span ng-show="(predicate === 'period' && reverse)" class="glyphicon glyphicon-chevron-down"></span>
+            <span ng-show="(predicate === 'period' && !reverse)" class="glyphicon glyphicon-chevron-up"></span>
+            <span ng-show="predicate !== 'period'" class="glyphicon glyphicon-chevron-up glyphicon-placeholder"></span>
+          </span>
+        </th>
+        <th>
+          <span ng-click="predicate = 'type'; reverse = !reverse;" class="sort-header">
+            Type
+            <span ng-show="(predicate === 'type' && reverse)" class="glyphicon glyphicon-chevron-down"></span>
+            <span ng-show="(predicate === 'type' && !reverse)" class="glyphicon glyphicon-chevron-up"></span>
+            <span ng-show="predicate !== 'type'" class="glyphicon glyphicon-chevron-up glyphicon-placeholder"></span>
+          </span>
+        </th>
       </tr>
       <tr>
         <th colspan="5"><input st-search="" class="form-control" placeholder="Global Search..." type="text"></th>
@@ -92,7 +113,7 @@
       <tr ng-repeat="paper in displayPapers | orderBy:predicate:reverse">
         <td><a href="" ng-click="findImage( paper._id )">{{ paper.title }}</a></td>
         <td>{{ paper.period | periodFilter }}</td>
-        <td>{{ paper.type }}</td>
+        <td>{{ paper.type | typeFilter }}</td>
       </tr>
     </tbody>
   </table>
