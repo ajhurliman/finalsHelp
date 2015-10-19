@@ -28,23 +28,23 @@ angular.module('fh.home', [
         }, function( err ) {
           console.log(err);
         });
-      },
-
-      tokens: function( $http ) {
-        return $http({
-          method: 'GET',
-          url: 'assets/tokens.json'
-        }).then(function( res ) {
-          return res.data;
-        }, function( err ) {
-          console.log(err);
-        });
       }
+
+      // tokens: function( $http ) {
+      //   return $http({
+      //     method: 'GET',
+      //     url: 'assets/tokens.json'
+      //   }).then(function( res ) {
+      //     return res.data;
+      //   }, function( err ) {
+      //     console.log(err);
+      //   });
+      // }
     }
   });
 })
 
-.controller('HomeController', function( $scope, $http, $sessionStorage, $timeout, giveFocus, Upload, allClasses, tokens ) {
+.controller('HomeController', function( $scope, $http, $sessionStorage, $timeout, giveFocus, Upload, allClasses ) {
   var PAPERS_URL = '/api/papers';
   $http.defaults.headers.common['jwt'] = $sessionStorage.jwt;
   $scope.allClasses = allClasses;
@@ -164,58 +164,58 @@ angular.module('fh.home', [
   };
 
   // re-renders the main canvas upon change
-  $scope.$watch('papersToEdit[0]', function() {
-    var canvas = document.getElementById('main-viewer');
-    var context = canvas.getContext('2d');
+  // $scope.$watch('papersToEdit[0]', function() {
+  //   var canvas = document.getElementById('main-viewer');
+  //   var context = canvas.getContext('2d');
 
-    if ( $scope.papersToEdit[0] ) {
-      PDFJS.getDocument( $scope.papersToEdit[0].img.data ).then(function( pdf ) {
-        pdf.getPage(1).then(function(page) {
+    // if ( $scope.papersToEdit[0] ) {
+    //   PDFJS.getDocument( $scope.papersToEdit[0].img.data ).then(function( pdf ) {
+    //     pdf.getPage(1).then(function(page) {
 
-          var scale = 0.8;
-          var viewport = page.getViewport(scale);
+    //       var scale = 0.8;
+    //       var viewport = page.getViewport(scale);
 
-          canvas.height = viewport.height;
-          canvas.width = viewport.width;
+    //       canvas.height = viewport.height;
+    //       canvas.width = viewport.width;
 
-          var renderContext = {
-            canvasContext: context,
-            viewport: viewport
-          };
-          page.render(renderContext);
-        });
-      });
-    } else {
-      context.clearRect(0, 0, canvas.width, canvas.height);
-    }
-  });
+    //       var renderContext = {
+    //         canvasContext: context,
+    //         viewport: viewport
+    //       };
+    //       page.render(renderContext);
+    //     });
+    //   });
+    // } else {
+    //   context.clearRect(0, 0, canvas.width, canvas.height);
+    // }
+  // });
 
   // re-renders the secondary canvas upon change
-  $scope.$watch('papersToEdit[1]', function() {
-    var canvas = document.getElementById('next-up-pdf-container');
-    var context = canvas.getContext('2d');
+  // $scope.$watch('papersToEdit[1]', function() {
+  //   var canvas = document.getElementById('next-up-pdf-container');
+  //   var context = canvas.getContext('2d');
 
-    if ( $scope.papersToEdit[1] ) {
-      PDFJS.getDocument( $scope.papersToEdit[1].img.data ).then(function( pdf ) {
-        pdf.getPage(1).then(function(page) {
+    // if ( $scope.papersToEdit[1] ) {
+    //   PDFJS.getDocument( $scope.papersToEdit[1].img.data ).then(function( pdf ) {
+    //     pdf.getPage(1).then(function(page) {
 
-          var scale = 0.2;
-          var viewport = page.getViewport(scale);
+    //       var scale = 0.2;
+    //       var viewport = page.getViewport(scale);
 
-          canvas.height = viewport.height;
-          canvas.width = viewport.width;
+    //       canvas.height = viewport.height;
+    //       canvas.width = viewport.width;
 
-          var renderContext = {
-            canvasContext: context,
-            viewport: viewport
-          };
-          page.render(renderContext);
-        });
-      });
-    } else {
-      context.clearRect(0, 0, canvas.width, canvas.height);
-    }
-  });
+    //       var renderContext = {
+    //         canvasContext: context,
+    //         viewport: viewport
+    //       };
+    //       page.render(renderContext);
+    //     });
+    //   });
+    // } else {
+    //   context.clearRect(0, 0, canvas.width, canvas.height);
+    // }
+  // });
 
   $scope.addClass = function( newClass ) {
     var postObj = {title: newClass};

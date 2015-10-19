@@ -46,7 +46,7 @@ app.post('/api/papers', jwtAuth, multipartyMiddleware, function(req, res) {
         newPaper.img.contentType = req.files.file.headers['content-type']
       }
 
-      newPaper.userId = req.user._id;   
+      newPaper.userId = req.user._id;
       newPaper.title = req.files.file.name;
       newPaper.creationDate = new Date();
 
