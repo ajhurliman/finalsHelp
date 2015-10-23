@@ -3,10 +3,7 @@
 var grid = require('gridfs-stream');
 var Paper = require('../models/paper');
 var updateObject = require('../lib/update-obj');
-
-var multiparty = require('connect-multiparty');
-var multipartyMiddleware = multiparty();
-var Grid = require('gridfs-stream');
+var formParser = require('../lib/form-parser');
 
 var fs = require('node-fs');
 
@@ -17,96 +14,32 @@ module.exports = function(app, appSecret, mongoose) {
   var formParser = require('../lib/form-parser')(mongoose.connection.db, mongoose.mongo);
   var removeImage = require('../lib/remove-image')(mongoose.connection.db, mongoose.mongo);
 
-  //add a paper
-  // app.post('/api/papers', jwtAuth, formParser, function(req, res) {
-  //   var newPaper = new Paper();
-  //   newPaper.classId = req.body.classId;
-  //   newPaper.userId = req.user._id;
-  //   newPaper.title = req.body.title;
-  //   newPaper.descrip = req.body.descrip;
-  //   newPaper.date = new Date();
-  //   if (req.body.image) newPaper.img = req.body.image;
-  //   newPaper.save(function(err, data) {
-  //     if (err) return res.status(500).send('error saving paper');
-  //     return res.json(data);
-  //   });
-  // });
+  // add a paper
+  app.post('/api/papers', jwtAuth, formParser, function(req, res) {
 
-//add a paper
-app.post('/api/papers', jwtAuth, multipartyMiddleware, function(req, res) {
-    console.dir(req.files.file);
     var newPaper = new Paper();
+    newPaper.userId = req.user._id;
+    newPaper.classId = req.body.classId;
+    newPaper.title = req.body.title;
+    newPaper.date = new Date();
 
-    fs.readFile(req.files.file.path, function ( dataErr, data ) {
-      // res.set('Content-Type', req.files.file.headers['content-type']);
+    if (req.body.image) newPaper.img = req.body.image;
 
-      if (data) {
-        var imgBuf = new Buffer(data, 'base64');
-        newPaper.img.data = imgBuf;
-        newPaper.img.contentType = req.files.file.headers['content-type']
-      }
-
-      newPaper.userId = req.user._id;
-      newPaper.title = req.files.file.name;
-      newPaper.creationDate = new Date();
-
-      newPaper.save(function(err, data) {
-        
-        if (err) {
-          return res.status(500).send('error reading paper stream');
-        }
-
-        return res.json( {
-          title: data.title,
-          _id: data._id,
-          period: data.period });
-      });
+    newPaper.save(function(err, data) {
+      if (err) return res.status(500).send('error saving paper');
+      return res.json(data);
     });
   });
-
 
   //get a paper
-  app.get('/api/papers/single/:paperId', function(req, res) {
-    console.time('findSinglePaper');
-    Paper.findById(req.params.paperId, function(err, paper) {
-      if (err) return res.status(500).send('paper not found');
-      console.timeEnd('findSinglePaper');
-      return res.json( paper );
-    });
-  });
-
-  //update a particular paper
-  app.put('/api/papers/single/:paperId',
-    jwtAuth,
-    permissions,
-    // formParser,
-    // updateObject,
-    // removeImage,
-  function(req, res) {
-
-    console.log(req.params.paperId);
-
-    // var updatedPaper = {
-    //   period: req.period,
-    //   type: req.type,
-    //   classId: req.class,
-    //   title: req.title,
-    // };
-
-    Paper.findOneAndUpdate({_id: req.params.paperId}, req.body, {'upsert': true, 'new': true}, function(err, paper) {
-      console.log('found paper, about to edit:', paper);
-      if (err) return res.status(500).send('error finding paper');
-      if (!paper) return res.status(204).send('paper doesn\'t exist');
-      return res.end('success');
-    });
-
-
-    //update the paper document
-    req.paper.update(req.updateObj, function(err, numAffected) {
-      if (err) return res.status(500).send('update not successful');
-      return res.json(numAffected);
-    });
-  });
+  // app.get('/api/papers/single/:paperId', function(req, res) {
+  //   console.time('findSinglePaper');
+  //   Paper.findById(req.params.paperId, function(err, paper) {
+  //     if (err) return res.status(500).send('paper not found');
+  //     console.timeEnd('findSinglePaper');
+  //     return res.json( paper );
+  //   });
+  // });
 
   //get a paper's image
   app.get('/api/papers/single/image/:paperId', function(req, res) {
@@ -127,6 +60,39 @@ app.post('/api/papers', jwtAuth, multipartyMiddleware, function(req, res) {
 
       readstream.pipe(res);
     });
+  });
+
+  //update a particular paper
+  app.put('/api/papers/single/:paperId',
+    jwtAuth,
+    // permissions,
+    // formParser,
+    // updateObject,
+    // removeImage,
+  function(req, res) {
+
+    console.log(req.params);
+
+    // var updatedPaper = {
+    //   period: req.period,
+    //   type: req.type,
+    //   classId: req.class,
+    //   title: req.title,
+    // };
+
+    Paper.findOneAndUpdate({_id: req.params.paperId}, req.body, {'upsert': true, 'new': true}, function(err, paper) {
+      console.log('found paper, about to edit:', paper);
+      if (err) return res.status(500).send('error finding paper');
+      if (!paper) return res.status(204).send('paper doesn\'t exist');
+      return res.end('success');
+    });
+
+
+    //update the paper document
+    // req.paper.update(req.updateObj, function(err, numAffected) {
+    //   if (err) return res.status(500).send('update not successful');
+    //   return res.json(numAffected);
+    // });
   });
 
   //get a particular user's papers

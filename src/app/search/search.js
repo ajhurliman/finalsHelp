@@ -114,16 +114,16 @@ angular.module('fh.search', [
     });
   }
 
-  $scope.findImage = function( paperId ) {
-    $scope.busyFindingPaperImage = $http({
-      method: 'GET',
-      url: PAPERS_URL + '/single/' + paperId
-    }).then(function( res ) {
-      $scope.paperToRender = res.data;
-    }, function( err ) {
-      console.log( err );
-    });
-  };
+  // $scope.findImage = function( paperId ) {
+  //   $scope.busyFindingPaperImage = $http({
+  //     method: 'GET',
+  //     url: PAPERS_URL + '/single/' + paperId
+  //   }).then(function( res ) {
+  //     $scope.paperToRender = res.data;
+  //   }, function( err ) {
+  //     console.log( err );
+  //   });
+  // };
 
   function renderPdf( page ) {
     var canvas = document.getElementById( 'display-paper' );

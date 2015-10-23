@@ -29,7 +29,7 @@ app.use( passport.initialize() );
 app.use( bodyParser.json() );
 
 require( './lib/passport' )( passport );
-require( './routes/users_routes' )( app, app.get( 'jwtSecret' ), passport, mongoose) ;
+require( './routes/users_routes' )( app, app.get( 'jwtSecret' ), passport, mongoose, process.env.PWD) ;
 require( './routes/papers_routes' )( app, app.get( 'jwtSecret' ), mongoose );
 require( './routes/classes_routes' )( app, app.get( 'jwtSecret' ), mongoose );
 require( './routes/tokens_routes' )( app, mongoose );

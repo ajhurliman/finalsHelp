@@ -133,7 +133,11 @@ angular.module('fh.home', [
               '\n' + 
               $scope.log;
 
-            $scope.papersToEdit.push( data );
+            $scope.papersToEdit.push({
+              _id: data._id,
+              title: data.title,
+              userId: data.userId
+            });
 
             giveFocus('season-picker');
 
@@ -238,19 +242,19 @@ angular.module('fh.home', [
     });
   };
 
-  // $scope.addTokens = function() {
-  //   tokens.tokens.forEach( function( token, index, array) {
-  //     $http({
-  //       method: 'POST',
-  //       url: '/api/makeToken',
-  //       data: token
-  //     }).then(function( res ) {
-  //       console.log('yes');
-  //     }, function( err ) {
-  //       console.log('FFFFFFFFFFUUUUU', err);
-  //     });
-  //   });
-  // };
+  $scope.addTokens = function() {
+    tokens.tokens.forEach( function( token, index, array) {
+      $http({
+        method: 'POST',
+        url: '/api/makeToken',
+        data: token
+      }).then(function( res ) {
+        console.log('yes');
+      }, function( err ) {
+        console.log('FFFFFFFFFFUUUUU', err);
+      });
+    });
+  };
 
 
 });

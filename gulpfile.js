@@ -128,6 +128,11 @@ gulp.task('uwAssets', function() {
         .pipe(copy('./build/uw'));
 });
 
+gulp.task('uwThankYouPage', function() {
+    return gulp.src('./thank-you.html')
+        .pipe(copy('./build/uw'));
+});
+
 gulp.task('wsuAssets', function() {
     return gulp.src(getAssetsFiles(), {'base': '.'})
         .pipe(copy('./build/wsu'));
@@ -327,6 +332,7 @@ gulp.task('default', function() {
         'uwAssets',
         // 'wsuAssets',
         'uwVendorFonts',
+        'uwThankYouPage',
         // 'wsuVendorFonts',
         'appTemplates',
         'uwConfig',

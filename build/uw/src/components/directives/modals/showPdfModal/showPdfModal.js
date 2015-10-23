@@ -15,15 +15,8 @@ angular.module('fh.directives.modals.showPdfModal', [
           backdrop: 'static',
           keyboard: false,
           resolve: {
-            paperToRender: function() {
-              return $http({
-                method: 'GET',
-                url: '/api/papers' + '/single/' + scope.paper._id
-              }).then(function( res ) {
-                return res.data;
-              }, function( err ) {
-                console.log( err );
-              });
+            paperToRenderId: function() {
+              return scope.paper._id
             }
           }
         });
@@ -32,18 +25,18 @@ angular.module('fh.directives.modals.showPdfModal', [
   };
 })
 
-.controller('ShowPdfModalController', function($scope, $timeout, ModalService, paperToRender) {
+.controller('ShowPdfModalController', function($scope, $timeout, ModalService, paperToRenderId) {
   $scope.close = function() {
     ModalService.closeModal();
   };
   var page;
-  $scope.paperToRender = paperToRender;
+  $scope.paperToRender = paperToRenderId;
 
   $timeout(function() {
     var canvas = document.getElementById('rendered-pdf-modal');
     var context = canvas.getContext('2d');
-    if ( paperToRender ) {
-      PDFJS.getDocument( paperToRender.img.data ).then(function( pdf ) {
+    if ( paperToRenderId ) {
+      PDFJS.getDocument( '/api/papers/single/image/' + paperToRenderId ).then(function( pdf ) {
         pdf.getPage(1).then(function( page ) {
 
           var scale = 1;
