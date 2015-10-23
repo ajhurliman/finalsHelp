@@ -243,7 +243,7 @@ angular.module('fh.home', [
   };
 
   $scope.addTokens = function() {
-    tokens.tokens.forEach( function( token, index, array) {
+    $scope.tokens.tokens.forEach( function( token, index, array) {
       $http({
         method: 'POST',
         url: '/api/makeToken',
