@@ -30,21 +30,21 @@ angular.module('fh.home', [
         });
       }
 
-      // tokens: function( $http ) {
-      //   return $http({
-      //     method: 'GET',
-      //     url: 'assets/tokens.json'
-      //   }).then(function( res ) {
-      //     return res.data;
-      //   }, function( err ) {
-      //     console.log(err);
-      //   });
-      // }
+      tokens: function( $http ) {
+        return $http({
+          method: 'GET',
+          url: 'assets/tokens.json'
+        }).then(function( res ) {
+          return res.data;
+        }, function( err ) {
+          console.log(err);
+        });
+      }
     }
   });
 })
 
-.controller('HomeController', function( $scope, $http, $sessionStorage, $timeout, giveFocus, Upload, allClasses ) {
+.controller('HomeController', function( $scope, $http, $sessionStorage, $timeout, giveFocus, Upload, tokens, allClasses ) {
   var PAPERS_URL = '/api/papers';
   $http.defaults.headers.common['jwt'] = $sessionStorage.jwt;
   $scope.allClasses = allClasses;
