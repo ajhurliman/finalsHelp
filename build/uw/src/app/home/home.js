@@ -28,7 +28,7 @@ angular.module('fh.home', [
         }, function( err ) {
           console.log(err);
         });
-      }
+      },
 
       tokens: function( $http ) {
         return $http({
