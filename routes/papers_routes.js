@@ -3,7 +3,7 @@
 var grid = require('gridfs-stream');
 var Paper = require('../models/paper');
 var updateObject = require('../lib/update-obj');
-var formParser = require('../lib/form-parser');
+
 
 var fs = require('node-fs');
 
@@ -15,20 +15,56 @@ module.exports = function(app, appSecret, mongoose) {
   var removeImage = require('../lib/remove-image')(mongoose.connection.db, mongoose.mongo);
 
   // add a paper
-  app.post('/api/papers', jwtAuth, formParser, function(req, res) {
-    console.dir(req.body);
-    var newPaper = new Paper();
-    newPaper.userId = req.user._id;
-    newPaper.classId = req.body.classId;
-    newPaper.title = req.body.title;
-    newPaper.date = new Date();
+  app.post('/api/papers', jwtAuth, function(req, res) {
+    console.log('file');
+    req.busboy.on('file', function(fieldname, file, filename) {
+      console.log('on file ************');
+      var gfs = grid(mongoose.connection.db, mongoose.mongo);
+      var writeStream = gfs.createWriteStream({});
 
-    if (req.body.image) newPaper.img = req.body.image;
 
-    newPaper.save(function(err, data) {
-      if (err) return res.status(500).send('error saving paper');
-      return res.json(data);
+      writeStream.on('close', function(data) {
+        var newPaper = new Paper();
+
+        newPaper.userId = req.user._id;
+        newPaper.img = data._id;
+        newPaper.title = filename;
+        newPaper.date = new Date();
+        
+        newPaper.save(function(err, data) {
+          if (err) return res.status(500).send('error saving paper');
+          return res.json(data);
+        });
+      });
+
+      file.on('data', function(data) {
+        writeStream.write(data);
+      });
+
+      file.on('end', function() {
+        writeStream.end();
+      });
     });
+
+    req.busboy.on('field', function(key, value, keyTruncated, valueTruncated) {
+      console.log('on field ***********');
+    });
+
+    req.pipe(req.busboy);
+
+    // old
+    // var newPaper = new Paper();
+    // newPaper.userId = req.user._id;
+    // newPaper.classId = req.body.classId;
+    // newPaper.title = req.body.title;
+    // newPaper.date = new Date();
+
+    // if (req.body.image) newPaper.img = req.body.image;
+
+    // newPaper.save(function(err, data) {
+    //   if (err) return res.status(500).send('error saving paper');
+    //   return res.json(data);
+    // });
   });
 
   //get a paper

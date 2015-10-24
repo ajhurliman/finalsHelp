@@ -17,6 +17,7 @@ var compress    = require( 'compression' );
 var bodyParser  = require( 'body-parser' );
 var passport    = require( 'passport' );
 var mongoose    = require( 'mongoose' );
+var busboy      = require( 'connect-busboy' );
 var express     = require( 'express' );
 var app         = express();
 process.env.PWD = process.cwd();
@@ -27,6 +28,7 @@ app.set('jwtSecret', process.env.SECRET || 'REMEMBERTOCHANGETHIS');
 app.use( compress() );
 app.use( passport.initialize() );
 app.use( bodyParser.json() );
+app.use( busboy() );
 
 require( './lib/passport' )( passport );
 require( './routes/users_routes' )( app, app.get( 'jwtSecret' ), passport, mongoose, process.env.PWD) ;
