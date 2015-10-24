@@ -16,7 +16,7 @@ module.exports = function(app, appSecret, mongoose) {
 
   // add a paper
   app.post('/api/papers', jwtAuth, formParser, function(req, res) {
-
+    console.dir(req.body);
     var newPaper = new Paper();
     newPaper.userId = req.user._id;
     newPaper.classId = req.body.classId;

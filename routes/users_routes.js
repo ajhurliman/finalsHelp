@@ -38,13 +38,11 @@ module.exports = function(app, appSecret, passport, mongoose, rootPath) {
           if (err) return res.status(500).send('Error registering user!');
 
           //send user an email
-          var transporter = nodemailer.createTransport({
-            service: 'Gmail',
-            auth: {
-              user: 'finalshelp@gmail.com',
-              pass: 'cockjew420'
-            }
-          });
+          // var transporter = nodemailer.createTransport({
+          //   service: 'Gmail',
+          //   auth: {
+          //   }
+          // });
 
           var mailOptions = {
             from: 'Finals Help ✔ <FinalsHelp@gmail.com>',
@@ -53,10 +51,10 @@ module.exports = function(app, appSecret, passport, mongoose, rootPath) {
             html: '<p>Hey!</p> <p>Thanks for signing up for FinalsHelp.com, click <a href="http://www.finalshelp.com/api/users/confirm/' + savedUser._id + '">here</a> to confirm your email.</p> <p>Cheers,</p><p>-The FinalsHelp.com team</p>'
           };
 
-          transporter.sendMail(mailOptions, function(err, data) {
-            if (err) return res.status(500).send(err);
+          // transporter.sendMail(mailOptions, function(err, data) {
+            // if (err) return res.status(500).send(err);
             res.json({jwt: newUser.generateToken(appSecret)});  
-          });
+          // });
         });
 
         //redeem token so nobody else can use it
