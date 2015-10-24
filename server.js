@@ -1,17 +1,17 @@
 'use strict';
 
-if ( process.env.MONGOLAB_URI ) {
-  require('appdynamics').profile({
-      controllerHostName: 'paid150.saas.appdynamics.com',
-      controllerPort: 443, // If SSL, be sure to enable the next line     
-      controllerSslEnabled: true, // Optional - use if connecting to controller via SSL  
-      accountName: 'FinalsHelpcom', // Required for a controller running in multi-tenant mode
-      accountAccessKey: 'ml8a3qr7o9oi', // Required for a controller running in multi-tenant mode
-      applicationName: 'FinalsHelp',
-      tierName: 'my tiear',
-      nodeName: 'process' // The controller will automatically append the node name with a unique number
-  });
-}
+// if ( process.env.MONGOLAB_URI ) {
+//   require('appdynamics').profile({
+//       controllerHostName: 'paid150.saas.appdynamics.com',
+//       controllerPort: 443, // If SSL, be sure to enable the next line     
+//       controllerSslEnabled: true, // Optional - use if connecting to controller via SSL  
+//       accountName: 'FinalsHelpcom', // Required for a controller running in multi-tenant mode
+//       accountAccessKey: 'ml8a3qr7o9oi', // Required for a controller running in multi-tenant mode
+//       applicationName: 'FinalsHelp',
+//       tierName: 'my tiear',
+//       nodeName: 'process' // The controller will automatically append the node name with a unique number
+//   });
+// }
 
 var compress    = require( 'compression' );
 var bodyParser  = require( 'body-parser' );

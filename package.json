@@ -17,7 +17,6 @@
   "license": "proprietary",
   "homepage": "finalshelp.com",
   "dependencies": {
-    "appdynamics": "4.1.1",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "1.13.1",
     "busboy": "0.2.11",
