@@ -16,24 +16,6 @@
   "author": "ajHurliman",
   "license": "proprietary",
   "homepage": "finalshelp.com",
-  "dependencies": {
-    "appdynamics": "^4.1.1",
-    "bcrypt-nodejs": "0.0.3",
-    "body-parser": "^1.13.1",
-    "busboy": "^0.2.11",
-    "compression": "^1.6.0",
-    "connect-busboy": "0.0.2",
-    "express": "^4.13.0",
-    "gridfs-stream": "^1.1.1",
-    "jwt-simple": "^0.3.0",
-    "lodash": "^3.10.0",
-    "mongoose": "^4.1.9",
-    "node-fs": "^0.1.7",
-    "nodemailer": "^1.8.0",
-    "nodemailer-wellknown": "^0.1.7",
-    "passport": "^0.2.2",
-    "passport-http": "^0.2.2",
-    "path": "^0.12.7"
-  },
+  "dependencies": {},
   "devDependencies": {}
 }
