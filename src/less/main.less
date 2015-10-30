@@ -1,9 +1,3 @@
-/**
- * This is the main application stylesheet. It should include or import all
- * stylesheets used throughout the application as this is the only stylesheet in
- * the Gulp configuration that is automatically processed.
- */
-
 @font-face {
     font-family: 'Source Sans Pro';
     font-style: normal;
@@ -11,22 +5,12 @@
     src: local('Source Sans Pro'), local('SourceSansPro-Regular'), url(https://fonts.gstatic.com/s/sourcesanspro/v9/ODelI1aHBYDBqgeIAH2zlNHq-FFgoDNV3GTKpHwuvtI.woff) format('woff');
 }
 
-/**
- * Before including our own style, we include the Twitter Bootstrap LESS files.
- * Only the ones used in the project should be imported as the rest are just wasting space.
- */
-
 @import 'bootstrap.less';
 @import 'select.less';
 @import 'angular-busy.min.css';
 @import 'variables.less';
 @import 'mixins.less';
 
-/**
- * Global style
- */
-
- /* Document level adjustments */
 html, body {
   font-size: 12px;
 }
@@ -107,7 +91,6 @@ svg {
 }
 
 
-
 .finals-help-container {
     width: 100%;
     background: #fff;
@@ -172,8 +155,4 @@ svg {
     color:red;
 }
 
-
-/**
- * LESS files from modules and directives
- **/
  @import './importCommon.less';

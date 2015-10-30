@@ -14,6 +14,7 @@ angular.module('fh', [
     'ApplicationConfiguration',
     'fh.landing',
     'fh.home',
+    'fh.account',
     'fh.search',
     'fh.findAndEdit',
     'fh.directives.mainHeader',

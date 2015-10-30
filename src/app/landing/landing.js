@@ -10,8 +10,7 @@ angular.module('fh.landing',[
         controller: 'LandingController',
         templateUrl: 'landing/landing.tpl.html'
       }
-    },
-    pageTitle: 'landingPage.pageTitle'
+    }
   });
 })
 
@@ -71,6 +70,7 @@ angular.module('fh.landing',[
       .success(function(data) {
         console.dir(data);
         $sessionStorage.jwt = data.jwt;
+        $sessionStorage.user = data.user;
         $state.go('search');
       })
       .error(function(err) {

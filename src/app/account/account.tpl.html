@@ -1,0 +1,66 @@
+<div class='account-page'>
+  <h4>Account Settings</h4>
+
+  <hr>
+
+  <table st-table='userProperties' class='table'>
+    <tbody>
+      <tr>
+        <td><strong>Email</strong></td>
+        <td>{{user.basic.email}}</td>
+        <td><a href="" class="btn btn-primary">Edit</a></td>
+      </tr>
+
+      <tr ng-hide="authSuccess">
+        <td><strong>Password</strong></td>
+
+        <td>
+          <input ng-model="oldPassword" type="password" class="form-control edit-password-input" placeholder="Current Password">
+        </td>
+        
+        <td>
+          <a href="" ng-click="authCheck(oldPassword)" ng-class="editPasswordEnabled()" class="btn btn-primary">Edit</a>
+        </td>
+      </tr>
+
+      <!-- edit email section -->
+      <tr ng-show="authSuccess">
+        <td><strong>Password</strong></td>
+
+        <td ng-show="authSuccess">
+          <input ng-model="newPassword" type="password" class="form-control edit-password-input" placeholder="New Password">
+        </td>
+        
+        <td ng-show="authSuccess">
+          <a href="" ng-click="updatePassword(newPassword, newPasswordConfirm)" ng-class="editPasswordEnabled()" class="btn btn-primary">Submit</a>
+        </td>
+      </tr>
+
+      <tr ng-show="authSuccess">
+        <td></td>
+        <td>
+          <input ng-model="newPasswordConfirm" type="password" class="form-control edit-password-input" placeholder="Confirm New Password">
+        </td>
+        <td></td>
+      </tr>
+
+    </tbody>
+  </table>
+  <div class="col-sm-4 error-message">
+    <div class="alert alert-danger" role="alert" collapse="!updatePasswordError">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      <span class="sr-only">Error:</span>
+      {{ updatePasswordError }}
+    </div>
+  </div>
+  <div class="col-sm-5"></div>
+  
+  <div class="col-sm-4 error-message">
+    <div class="alert alert-success" role="alert" collapse="!updatePasswordSuccess">
+      <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+      <span class="sr-only">Error:</span>
+      {{ updatePasswordSuccess }}
+    </div>
+  </div>
+
+</div>

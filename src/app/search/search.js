@@ -18,8 +18,12 @@ angular.module('fh.search', [
   });
 })
 
-.controller('SearchController', function( $rootScope, $scope, $http, $sessionStorage, $timeout ) {
+.controller('SearchController', function( $rootScope, $state, $scope, $http, $sessionStorage, $timeout ) {
   $http.defaults.headers.common['jwt'] = $sessionStorage.jwt;
+
+  if (!$sessionStorage.user) {
+    $state.go('landing');
+  }
 
   $scope.reverse    = true;
   $scope.predicate  = 'period';

@@ -8,6 +8,7 @@ var path = require('path');
 
 module.exports = function(app, appSecret, passport, mongoose, rootPath) {
   var formParser = require('../lib/form-parser')(mongoose.connection.db, mongoose.mongo);
+  var jwtAuth = require('../lib/jwt-auth')(appSecret);
 
   //add user
   app.post('/api/users', function(req, res) {
@@ -20,10 +21,10 @@ module.exports = function(app, appSecret, passport, mongoose, rootPath) {
       if (req.body.password !== req.body.passwordConfirm) return res.status(500).send('Passwords do not match!');
 
       //validate the token the client is trying to use
-      Token.findOne({'code': req.body.token}, function(err, token) {
-        if (err) return res.status(500).send('Server error!');
-        if (!token) return res.status(500).send('Invalid token!');
-        if (token.redeemed) return res.status(500).send('Token already redeemed!');
+      // Token.findOne({'code': req.body.token}, function(err, token) {
+        // if (err) return res.status(500).send('Server error!');
+        // if (!token) return res.status(500).send('Invalid token!');
+        // if (token.redeemed) return res.status(500).send('Token already redeemed!');
 
         var newUser = new User();
 
@@ -58,11 +59,11 @@ module.exports = function(app, appSecret, passport, mongoose, rootPath) {
         });
 
         //redeem token so nobody else can use it
-        token.redeemed = new Date().toString();
-        token.save(function(err) {
-          if (err) console.log('oops! failure saving the redemption of a token!');
-        });
-      });
+        // token.redeemed = new Date().toString();
+        // token.save(function(err) {
+        //   if (err) console.log('oops! failure saving the redemption of a token!');
+        // });
+      // });
     });
   });
 
@@ -79,9 +80,25 @@ module.exports = function(app, appSecret, passport, mongoose, rootPath) {
     });
   });
 
+  //update password
+  app.put('/api/users/password', jwtAuth, function(req, res) {
+    User.findOne({"_id": req.user._id}, function(err, user) {
+      if (!user) return res.status(500).send('user not found');
+      if (!req.body.newPassword) return res.status(400).send('no password sent');
+      user.basic.password = user.generateHash(req.body.newPassword);
+      user.save(function(err, savedUser) {
+        if (err) return res.status(500).send('Error saving password!');
+        res.json({jwt: savedUser.generateToken(appSecret)});  
+      })
+    });
+  });
+
   //sign user in
   app.get('/api/users', passport.authenticate('basic', {session: false}), function(req, res) {
-    return res.json({jwt: req.user.generateToken(appSecret)});
+    return res.json({
+      jwt: req.user.generateToken(appSecret),
+      user: req.user
+    });
   });
 
 };
