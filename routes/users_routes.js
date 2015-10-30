@@ -12,7 +12,7 @@ module.exports = function(app, appSecret, passport, mongoose, rootPath) {
 
   //add user
   app.post('/api/users', function(req, res) {
-    console.log(req.body);
+    req.body.email = req.body.email.toLowerCase();
 
     //make sure user doesn't already exist
     User.findOne({'basic.email': req.body.email}, function(err, user) {
