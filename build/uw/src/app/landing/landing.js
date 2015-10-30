@@ -48,6 +48,7 @@ angular.module('fh.landing',[
       // $scope.registerCredentials = {};
       // $scope.registerSuccess = true;
       $sessionStorage.jwt = data.jwt;
+      $sessionStorage.user = data.user;
       $state.go('search');
     })
     .error(function(err) {

@@ -54,7 +54,10 @@ module.exports = function(app, appSecret, passport, mongoose, rootPath) {
 
           // transporter.sendMail(mailOptions, function(err, data) {
             // if (err) return res.status(500).send(err);
-            res.json({jwt: newUser.generateToken(appSecret)});  
+            res.json({
+              jwt: newUser.generateToken(appSecret),
+              user: newUser
+            });  
           // });
         });
 
