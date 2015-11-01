@@ -14,7 +14,7 @@ angular.module('fh.landing',[
   });
 })
 
-.controller('LandingController', function ( $scope, $state, $http, $base64, $sessionStorage) {
+.controller('LandingController', function ( $rootScope, $scope, $state, $http, $base64, $sessionStorage) {
   var USERS_URL = '/api/users';
 
   $scope.register = function( credentials ) {
@@ -72,6 +72,7 @@ angular.module('fh.landing',[
         console.dir(data);
         $sessionStorage.jwt = data.jwt;
         $sessionStorage.user = data.user;
+        $rootScope.user = data.user;
         $state.go('search');
       })
       .error(function(err) {

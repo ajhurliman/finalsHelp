@@ -1,10 +1,23 @@
 <header class="main-header">
-  <!-- <a ui-sref="home" target="_blank"> -->
-  <h5 class="text-right"><a href="mailTo:james.hurliman@gmail.com" target="_blank">Help<a></h5>
-    
-    <img id="logo-main" src="./assets/images/finalhelp160.png" alt="">
-  <!-- </a> -->
+  
+  <!-- welcome message -->
+  <span ng-show="user">Welcome, {{ user.basic.email }}</span>
 
+  <!-- logout button -->
+  <span ng-show="user">
+    <button ng-click="logout()" class="btn btn-link">Logout</button>
+  </span>
+
+  <!-- help link -->
+  <span>
+    <button ng-click="sendEmail()" class="btn btn-link pull-right">Help</button>
+  </span>
+    
+  <!-- logo -->
+  <img id="logo-main" src="./assets/images/finalhelp160.png" alt="">
+
+
+  <!-- navbar -->
   <nav id="navbar-primary" class="navbar navbar-default">
     <div class="container-fluid">
       <div class="navbar-header">
