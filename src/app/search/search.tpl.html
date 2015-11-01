@@ -10,7 +10,7 @@
       <div class="col-sm-12">
         <ui-select ng-model="query.classId" theme="bootstrap">
           <ui-select-match placeholder="Pick a class">{{$select.selected.title}}</ui-select-match>
-          <ui-select-choices repeat="class._id as class in allClasses | filter:$select.search">
+          <ui-select-choices repeat="class._id as class in allClasses | filter:$select.search | orderBy:'title'">
             {{class.title}}
             <div ng-bind-html="class.title | highlight: $select.search"></div>
           </ui-select-choices>
