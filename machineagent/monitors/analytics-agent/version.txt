@@ -1,6 +1,0 @@
-buildName=25-4.1.5.next-build
-buildHash=90228abda4d0c0fda0b04cad731ff5922323f173
-buildTimestamp=2015-10-14T22:41:25+0000
-buildNumber=4444
-jobName=build-machine-agent
-version=4.1.5.2
